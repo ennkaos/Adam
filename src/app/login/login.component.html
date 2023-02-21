@@ -1,0 +1,56 @@
+<div class="w-25 mt-5 m-auto">
+  <div class="col d-flex flex-column">
+    <form formGroup="form" (ngSubmit)="onSubmit(form.value)" class="form-group">
+      <div class="mb-3 row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-12">
+          <input
+            placeholder="email"
+            type="text"
+            class="form-control bg-primary text-light"
+            formControlName="email"
+            minlength="4"
+            required
+            id="staticEmail"
+            [class.is-invalid]="
+              form.get('email')?.invalid && form.get('email')?.touched
+            "
+          />
+          <div class="invalid-feedback"></div>
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="inputPassword " class="col-sm-2 col-form-label"
+          >Password</label
+        >
+        <div class="col-sm-12">
+          <input
+            placeholder="password"
+            type="password"
+            required
+            formControlName="password"
+            class="form-control bg-primary text-light"
+            [class.is-invalid]="
+              form.get('password')?.invalid && form.get('password')?.touched
+            "
+            id="inputPassword"
+          />
+          <div class="invalid-feedback"></div>
+        </div>
+      </div>
+      <p>
+        You don't have an account ? Please
+        <span
+          ><a class="item-link active" routerLink="/register">Register</a></span
+        >
+      </p>
+
+      <button [disabled]="form.invalid" class="btn btn-primary">Log In</button>
+    </form>
+    <div class="row">
+      <p>{{ "Form Dirty " + form.dirty }}</p>
+      <p>{{ "Form Invalid " + form.invalid }}</p>
+      <p>{{ "Form Touched " + form.touched }}</p>
+    </div>
+  </div>
+</div>
