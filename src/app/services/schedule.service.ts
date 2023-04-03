@@ -7,8 +7,8 @@ import { Schedule } from '../models/Schedule';
   providedIn: 'root',
 })
 export class ScheduleService {
-  url: String = 'https://localhost:3000';
-  schedule!: Observable<Schedule>;
+  url: String = 'http://localhost:3000';
+  schedule!: Observable<[Schedule]>;
 
   constructor(public http: HttpClient) {}
 
@@ -19,11 +19,11 @@ export class ScheduleService {
       'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
     }),
   };
-  getSchedule(): Observable<Schedule> {
+  getSchedule(): Observable<[Schedule]> {
     this.schedule = this.http
       .get(this.url + '/schedule', this.httpOptions)
       .pipe(
-        tap((result: Schedule) => {
+        tap((result: any) => {
           JSON.stringify(result);
         })
       );
