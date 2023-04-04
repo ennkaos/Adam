@@ -1,4 +1,7 @@
-<ng-container *ngIf="schedule | async as schedule; else newDeb">
+<ng-container
+  class="d-flex justify-content-center align-items-center"
+  *ngIf="schedule | async as schedule; else newDeb"
+>
   <div class="d-flex">
     <div class="d-flex flex-row m-3">
       <button
@@ -7,47 +10,43 @@
         (click)="onChangeSerieSelect(item.id)"
         [disabled]="selectedSerie === item.id"
       >
-        {{ item.nume }}
+        {{ item.name }}
       </button>
     </div>
   </div>
-  <div class="d-flex flex-row" *ngIf="this.showSerie">
+  <div class="d-flex flex-row mt-5" *ngIf="this.showSerie">
     <div class="d-flex flex-column ms-3">
       <div style="height: 50px">
         <h5>Days</h5>
       </div>
+      <div style="height: 70px"></div>
       <div
-        style="height: 300px; width: 100px"
-        class="border 2px success text-center d-flex justify-content-center align-items-center"
+        style="height: 408px; width: 130px; margin-top: -1.5px"
+        class="border 2px success text-center d-flex justify-content-between"
         *ngFor="let item of days"
       >
-        <p>{{ item }}</p>
-      </div>
-    </div>
-    <div class="d-flex flex-column">
-      <div style="height: 50px">
-        <h5>Hours</h5>
-      </div>
-
-      <div class="d-flex flex-column" *ngFor="let item of days">
         <div
-          style="height: 30px"
-          class="border 2px success text-center d-flex justify-content-center align-items-center"
-          *ngFor="let item of hours"
+          class="text-center d-flex justify-content-center align-items-center"
         >
-          {{ item }}
+          <p>{{ item }}</p>
+        </div>
+        <div class="d-flex flex-column">
+          <div
+            style="width: 50px"
+            class="border 2px success cell text-center d-flex justify-content-center align-self-end"
+            *ngFor="let item of hours"
+          >
+            <p>{{ item }}</p>
+          </div>
         </div>
       </div>
     </div>
     <div
-      class="d-flex flex-column text-center"
-      style="height: 350px"
-      *ngFor="let item of this.showSerie.Serie"
+      *ngFor="let item of this.showSerie.groups"
+      class="d-flex flex-row flex-grow border-right-5"
+      style="border-right: 1px solid green"
     >
-      <h5>Grupa: {{ item.id }}</h5>
-      <div class="d-flex flex-row text-center" *ngFor="let item2 of item.grupa">
-        <div class="text-center">Subgrupa: {{ item.id }}</div>
-      </div>
+      <app-group [groups]="item"></app-group>
     </div>
   </div>
 </ng-container>

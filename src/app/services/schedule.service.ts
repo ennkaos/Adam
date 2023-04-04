@@ -8,7 +8,7 @@ import { Schedule } from '../models/Schedule';
 })
 export class ScheduleService {
   url: String = 'http://localhost:3000';
-  schedule!: Observable<[Schedule]>;
+  schedule!: Observable<Schedule>;
 
   constructor(public http: HttpClient) {}
 
@@ -19,7 +19,7 @@ export class ScheduleService {
       'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
     }),
   };
-  getSchedule(): Observable<[Schedule]> {
+  getSchedule(): Observable<Schedule> {
     this.schedule = this.http
       .get(this.url + '/schedule', this.httpOptions)
       .pipe(

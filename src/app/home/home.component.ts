@@ -12,9 +12,9 @@ import { ScheduleService } from '../services/schedule.service';
 })
 export class HomeComponent {
   selectedSerie: any = null;
-  showSerie!: Schedule;
-  schedule!: Observable<[Schedule]>;
-  scheduleResult!: Schedule[];
+  showSerie!: SerieModel;
+  schedule!: Observable<Schedule>;
+  scheduleResult!: SerieModel[];
   days: string[] = ['Luni', 'Marti', 'Miercuri', 'Joi', 'Vineri'];
   hours: string[] = [
     '8-9',
@@ -34,15 +34,15 @@ export class HomeComponent {
     this.schedule = this.scheduleService.getSchedule();
     this.schedule.subscribe((e) => {
       console.log('Subscription Started ...');
-      this.scheduleResult = e;
+      console.log(e.series);
+      this.scheduleResult = e.series;
     });
   }
-  onChangeSerieSelect(event: string): void {
+  onChangeSerieSelect(event: number): void {
     this.selectedSerie = event;
     console.log(this.selectedSerie);
     this.showSerie = this.scheduleResult.filter(
-      (e: Schedule) => e.id === this.selectedSerie
+      (result) => result.id === this.selectedSerie
     )[0];
-    console.log(this.showSerie);
   }
 }

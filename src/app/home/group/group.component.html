@@ -1,0 +1,17 @@
+<div class="d-flex flex-column text-center">
+  <h5>{{ this.groups.name }}</h5>
+  <div class="d-flex flex-row justify-content-between">
+    <div
+      *ngFor="let item of groups.subgroups"
+      class="d-flex flex-column m-1 w-50"
+    >
+      <p>{{ item.name }}</p>
+    </div>
+  </div>
+  <p>Disciplina si sala</p>
+  <div class="d-flex flex-row">
+    <div *ngFor="let item of groups.subgroups">
+      <app-subgroup [subgroup]="item"></app-subgroup>
+    </div>
+  </div>
+</div>
