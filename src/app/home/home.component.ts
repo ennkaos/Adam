@@ -38,6 +38,7 @@ export class HomeComponent {
       this.scheduleResult = e.series;
     });
   }
+
   onChangeSerieSelect(event: number): void {
     this.selectedSerie = event;
     console.log(this.selectedSerie);

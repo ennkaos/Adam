@@ -8,8 +8,8 @@
       <p>{{ item.name }}</p>
     </div>
   </div>
-  <p>Disciplina si sala</p>
-  <div class="d-flex flex-row">
+
+  <div class="d-flex flex-row mt-3">
     <div *ngFor="let item of groups.subgroups">
       <app-subgroup [subgroup]="item"></app-subgroup>
     </div>

@@ -1,21 +1,21 @@
 export interface AppointmentModel {
   id: number;
 
-  Groups: string;
+  groups: string;
 
-  teacherName: string;
+  teachersName: string;
 
-  dayNumber: string;
+  dayNumber: number;
 
   subjectName: string;
 
   className: string;
 
-  roomId: string;
+  roomId: number;
 
-  StartTimeSlot: string;
+  startTimeSlot: number;
 
-  TimeSlotsUsed: string;
+  timeSlotsUsed: number;
 
-  Group: string;
+  group: string;
 }

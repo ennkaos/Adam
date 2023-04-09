@@ -1,8 +1,36 @@
 <table class="table">
   <tbody *ngFor="let itemDays of arrayListDays; index as i">
     <tr *ngFor="let itemHours of arrayListHours; index as j">
-      <td></td>
-      <td>Otto</td>
+      <div
+        *ngIf="
+          this.subgroup.days[i] !== undefined &&
+          this.subgroup.days[i].appointments[j] !== undefined &&
+          this.subgroup.days[i].appointments[j].startTimeSlot ===
+            itemHours + 1 &&
+          this.subgroup.days[i].appointments[j].timeSlotsUsed === 2
+            ? i + 2
+            : other_content
+        "
+        class="timeSlot2 border border-success text-center"
+      >
+        <p>Something</p>
+      </div>
+
+      <div
+        *ngIf="
+          this.subgroup.days[i] !== undefined &&
+          this.subgroup.days[i].appointments[j] !== undefined &&
+          this.subgroup.days[i].appointments[j].startTimeSlot ===
+            itemHours + 1 &&
+          this.subgroup.days[i].appointments[j].timeSlotsUsed === 3
+            ? i + 3
+            : other_content
+        "
+        class="timeSlot3 border border-success text-center"
+      >
+        <p>something</p>
+      </div>
+      <ng-template class="timeSlot1" #other_content></ng-template>
     </tr>
   </tbody>
 </table>
