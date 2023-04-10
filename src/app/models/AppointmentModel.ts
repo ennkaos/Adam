@@ -17,5 +17,15 @@ export interface AppointmentModel {
 
   timeSlotsUsed: number;
 
+  IsOnParity: Parity;
+
+  IsLab: boolean;
+
   group: string;
+}
+
+enum Parity {
+  even,
+  both,
+  odd,
 }

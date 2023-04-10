@@ -1,36 +1,35 @@
-<table class="table">
-  <tbody *ngFor="let itemDays of arrayListDays; index as i">
-    <tr *ngFor="let itemHours of arrayListHours; index as j">
+<table class="table mt-4">
+  <tbody *ngFor="let itemDays of this.subgroup.days; index as i">
+    <tr *ngFor="let itemAppointments of itemDays.appointments; index as j">
       <div
         *ngIf="
-          this.subgroup.days[i] !== undefined &&
-          this.subgroup.days[i].appointments[j] !== undefined &&
-          this.subgroup.days[i].appointments[j].startTimeSlot ===
-            itemHours + 1 &&
-          this.subgroup.days[i].appointments[j].timeSlotsUsed === 2
-            ? i + 2
-            : other_content
+          itemAppointments !== null && itemAppointments.IsLab;
+          else isCourse
         "
-        class="timeSlot2 border border-success text-center"
       >
-        <p>Something</p>
-      </div>
+        <div
+          *ngIf="
+            itemAppointments !== null &&
+            itemAppointments.timeSlotsUsed !== null &&
+            itemAppointments.timeSlotsUsed === 2
+          "
+          [ngClass]="itemAppointments.IsLab ? 'border border-success' : ''"
+          class="timeSlot2 text-center"
+        ></div>
 
-      <div
-        *ngIf="
-          this.subgroup.days[i] !== undefined &&
-          this.subgroup.days[i].appointments[j] !== undefined &&
-          this.subgroup.days[i].appointments[j].startTimeSlot ===
-            itemHours + 1 &&
-          this.subgroup.days[i].appointments[j].timeSlotsUsed === 3
-            ? i + 3
-            : other_content
-        "
-        class="timeSlot3 border border-success text-center"
-      >
-        <p>something</p>
+        <div
+          *ngIf="
+            itemAppointments !== null &&
+            itemAppointments.timeSlotsUsed !== null &&
+            itemAppointments.timeSlotsUsed === 3
+          "
+          [ngClass]="itemAppointments.IsLab ? 'border border-success' : ''"
+          class="timeSlot3"
+        >
+          <p>something</p>
+        </div>
+        <div class="timeSlot1" *ngIf="this.itemAppointments == null"></div>
       </div>
-      <ng-template class="timeSlot1" #other_content></ng-template>
     </tr>
   </tbody>
 </table>
