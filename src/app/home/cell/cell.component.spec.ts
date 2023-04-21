@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SubgroupComponent } from './subgroup.component';
+import { CellComponent } from './cell.component';
 
-describe('SubgroupComponent', () => {
-  let component: SubgroupComponent;
-  let fixture: ComponentFixture<SubgroupComponent>;
+describe('CellComponent', () => {
+  let component: CellComponent;
+  let fixture: ComponentFixture<CellComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SubgroupComponent ]
+      declarations: [ CellComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SubgroupComponent);
+    fixture = TestBed.createComponent(CellComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
