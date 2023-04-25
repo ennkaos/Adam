@@ -1,9 +1,9 @@
-<div *ngIf="item !== null && item !== undefined" class="d-flex flex-column">
-  <div class="text-center">{{ item.className }}</div>
-  <div class="text-center">{{ item.subjectName }}</div>
-</div>
 <div
-  class="d-flex flex-column"
-  *ngIf="item === null && item === undefined"
-  #nullItem
-></div>
+  *ngIf="item !== null && item !== undefined"
+  class="border border-bottom-0 border-dark d-flex flex-column bg-success text-light"
+>
+  <div class="text-center font-small">{{ item.className }}</div>
+  <div class="text-center font-small">{{ item.subjectName }}</div>
+</div>
+<div *ngIf="item === null" class="border border-dark w-100 h-100"></div>
+<div *ngIf="item === undefined" class="w-100 h-100 bg-success"></div>

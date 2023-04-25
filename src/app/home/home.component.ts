@@ -224,35 +224,24 @@ export class HomeComponent {
   }
   filterArray() {
     this.scheduleDay.map((day) => {
-      day.hours.forEach((item: any, index: any) => {
-        item.appointments.forEach((e: any) => {
+      this.indexAr = [];
+      day.hours.forEach((item: any, index: number) => {
+        item.appointments.forEach((e: any, index2: any) => {
           if (
-            e !== null &&
-            e !== undefined &&
-            item.appointments[index + 1] !== null &&
-            item.appointments[index + 1] !== undefined &&
-            e.roomId === item.appointments[index + 1].roomId
+            e &&
+            item.appointments[index2 + 1] &&
+            e.roomId === item.appointments[index2 + 1].roomId
           ) {
-            console.log(index);
-            this.indexAr.push(index);
+            item.appointments.splice(index2, index2 + 1);
           } else if (
-            e !== null &&
-            e !== undefined &&
-            item.appointments[index - 1] !== undefined &&
-            item.appointments[index - 1] !== null &&
-            e.roomId === item.appointments[index - 1].roomId
+            e &&
+            item.appointments[index2 - 1] &&
+            e.roomId === item.appointments[index2 - 1].roomId
           ) {
-            console.log(index);
-            this.indexAr.push(index);
+            item.appointments.splice(index2, index2 - 1);
           }
         });
-        this.indexAr.forEach((item2, index2) => {
-          if (index2 !== 0) item.appointments.splice(item2, item2 + 1);
-          if ((index2 = this.indexAr.length - 1))
-            item.appointments.splice(item2 - 1, item2);
-        });
-
-        this.indexAr = [];
+        console.log(item);
       });
     });
   }

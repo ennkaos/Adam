@@ -3,8 +3,21 @@
 
 }
 
-.cellNothing{
+.rowNothing{
   height: 41.33px !important;
-  width:25% !important;
+
 
 }
+.LabGroups{
+  height: 41.33px !important;
+  width: 100% ;
+}
+.cellNothing{
+  height: 41.33px !important;
+  width:100% !important;
+
+}
+
+
+
+

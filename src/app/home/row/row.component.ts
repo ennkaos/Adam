@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { AppointmentModel } from 'src/app/models/AppointmentModel';
 
 @Component({
   selector: 'app-row',
@@ -10,5 +11,12 @@ export class RowComponent {
   indexAr: number[] = [];
   ngOnInit(): void {
     console.log(this.item);
+  }
+  getClassOfNg(item: AppointmentModel): String {
+    if (item && item.groups === true && item.IsLab) {
+      return 'LabGroups';
+    } else {
+      return 'cellNothing';
+    }
   }
 }

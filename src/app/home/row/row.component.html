@@ -1,5 +1,6 @@
 <app-cell
-  [ngClass]="item !== null && item !== undefined ? 'rowNothing' : 'cellNothing'"
-  *ngFor="let item of item; index as i"
-  [item]="item"
+  class="rowNull"
+  *ngFor="let item2 of item; index as i"
+  [ngClass]="getClassOfNg(item2)"
+  [item]="item2"
 ></app-cell>

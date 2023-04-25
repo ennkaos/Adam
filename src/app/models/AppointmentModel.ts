@@ -1,7 +1,7 @@
 export interface AppointmentModel {
   id: number;
 
-  groups: string;
+  groups: boolean;
 
   teachersName: string;
 

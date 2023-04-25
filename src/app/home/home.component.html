@@ -66,13 +66,6 @@
         <app-row
           *ngFor="let itemH of item.hours; let i = index"
           [item]="itemH.appointments"
-          [ngClass]="
-            itemH.appointments.length > 1 &&
-            itemH.appointments[0] === undefined &&
-            item.hours[i + 1].appointments[0] === null
-              ? ' border-bottom'
-              : ''
-          "
           class="text-center d-flex w-100 justify-content-around rowNull"
         >
         </app-row>
