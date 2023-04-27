@@ -62,10 +62,11 @@
           </div>
         </div>
       </div>
-      <div *ngFor="let item of scheduleDay" class="table1 marginNegative">
+      <div *ngFor="let item of scheduleDay" class="table1">
         <app-row
           *ngFor="let itemH of item.hours; let i = index"
           [item]="itemH.appointments"
+          [groupsLength]="item.subgroups"
           class="text-center d-flex w-100 justify-content-around rowNull"
         >
         </app-row>

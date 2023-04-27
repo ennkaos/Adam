@@ -1,9 +1,9 @@
 <div
   *ngIf="item !== null && item !== undefined"
-  class="border border-bottom-0 border-dark d-flex flex-column bg-success text-light"
+  class="border border-bottom-0 border-dark d-flex flex-column bg-secondary text-light"
 >
   <div class="text-center font-small">{{ item.className }}</div>
   <div class="text-center font-small">{{ item.subjectName }}</div>
 </div>
 <div *ngIf="item === null" class="border border-dark w-100 h-100"></div>
-<div *ngIf="item === undefined" class="w-100 h-100 bg-success"></div>
+<div *ngIf="item === undefined" class="w-100 h-100 bg-secondary"></div>

@@ -10,11 +10,21 @@
 }
 .LabGroups{
   height: 41.33px !important;
-  width: 100% ;
+
+  width:100%;
+}
+.LabGroupsTogheter{
+  height: 41.33px !important;
+  width:200%;
+}
+.LabNotTogheter{
+  height: 41.33px !important;
+  width:100%;
 }
 .cellNothing{
   height: 41.33px !important;
-  width:100% !important;
+
+  width:100%;
 
 }
 
