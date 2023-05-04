@@ -1,6 +1,7 @@
 import { group } from '@angular/animations';
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ export class LoginComponent {
   accountType!: string;
   form!: FormGroup;
 
-  constructor(public fb: FormBuilder) {}
+  constructor(public fb: FormBuilder, private loginService: LoginService) {}
   ngOnInit(): void {
     this.isAdmin = true;
 
@@ -22,9 +23,11 @@ export class LoginComponent {
       password: new FormControl(),
     });
   }
-  async onSubmit(value: boolean) {
+  onSubmit() {
+    console.log('asd');
     const email = this.form.value.email;
     const password = this.form.value.password;
-    //@TODO LOGIC and SERVICE for LOGIN
+
+    this.loginService.loginRequest(email, password);
   }
 }

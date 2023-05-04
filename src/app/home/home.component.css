@@ -1,8 +1,4 @@
-.cellNothing{
-  height: 41.33px !important;
-  width:25% !important;
 
-}
 .rowNull{
   height: 41.33px !important;
 }
@@ -11,7 +7,7 @@
 .table1{
   display:grid;
   grid-auto-flow: row;
-  height: 497.67px;
+  height: 498.67px;
 
 
 }

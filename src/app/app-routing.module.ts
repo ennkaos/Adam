@@ -2,12 +2,19 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginGuard } from './login.guard';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {
     path: 'login',
     loadChildren: () =>
       import('./login/login.module').then((m) => m.LoginModule),
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
+    canActivate: [LoginGuard],
   },
 
   {
@@ -34,17 +41,14 @@ const routes: Routes = [
       import('./add-room/add-room.module').then((m) => m.AddRoomModule),
     canActivate: [LoginGuard],
   },
-  {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
-    canActivate: [LoginGuard],
-  },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+
   {
     path: 'register',
     loadChildren: () =>
       import('./register/register.module').then((m) => m.RegisterModule),
   },
+  { path: ' ', redirectTo: '/home', pathMatch: 'full' },
+
   { path: '**', component: PageNotFoundComponent },
 ];
 

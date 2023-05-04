@@ -1,11 +1,10 @@
 <div class="w-25 mt-5 m-auto">
   <div class="col d-flex flex-column">
-    <form formGroup="form" (ngSubmit)="onSubmit(form.value)" class="form-group">
+    <form formGroup="form" (ngSubmit)="onSubmit()" class="form-group">
       <div class="mb-3 row">
         <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
         <div class="col-sm-12">
           <input
-            placeholder="email"
             type="text"
             class="form-control bg-primary text-light"
             formControlName="email"
@@ -25,7 +24,6 @@
         >
         <div class="col-sm-12">
           <input
-            placeholder="password"
             type="password"
             required
             formControlName="password"
@@ -33,7 +31,7 @@
             [class.is-invalid]="
               form.get('password')?.invalid && form.get('password')?.touched
             "
-            id="inputPassword"
+            id="password"
           />
           <div class="invalid-feedback"></div>
         </div>

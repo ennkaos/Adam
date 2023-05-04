@@ -21,7 +21,7 @@
       </div>
       <div style="height: 70px"></div>
       <div
-        style="height: 497px; width: 130px; margin-top: -1.5px"
+        style="height: 497.5px; width: 130px"
         class="border 2px success text-center d-flex justify-content-between"
         *ngFor="let item of days"
       >
@@ -33,7 +33,7 @@
         <div class="d-flex flex-column">
           <div
             style="width: 50px"
-            class="border 2px success cell text-center d-flex justify-content-center align-self-end"
+            class="border 2px success text-center d-flex justify-content-center align-self-end"
             *ngFor="let item of hours"
           >
             <p>{{ item }}</p>
@@ -66,7 +66,7 @@
         <app-row
           *ngFor="let itemH of item.hours; let i = index"
           [item]="itemH.appointments"
-          [groupsLength]="item.subgroups"
+          [groupsLength]="lengthSerie"
           class="text-center d-flex w-100 justify-content-around rowNull"
         >
         </app-row>

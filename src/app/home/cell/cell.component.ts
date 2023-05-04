@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AppointmentModel } from 'src/app/models/AppointmentModel';
+import { AppointmentModel, Parity } from 'src/app/models/AppointmentModel';
 
 @Component({
   selector: 'app-cell',
@@ -10,4 +10,22 @@ export class CellComponent {
   @Input() item!: AppointmentModel;
 
   ngOnInit(): void {}
+  isOdd(parity: Parity): string {
+    if (parity === Parity.odd) {
+      return 'bg-success';
+    } else if (parity === Parity.even) {
+      return 'bg-danger';
+    } else {
+      return 'bg-primary';
+    }
+  }
+  isTextOdd(parity: Parity): string {
+    if (parity === Parity.odd) {
+      return 'Saptamana Impara';
+    } else if (parity === Parity.even) {
+      return 'Saptamana Par';
+    } else {
+      return 'Saptamana Comuna';
+    }
+  }
 }

@@ -1,12 +1,16 @@
 .rowNull{
   height: 41.33px !important;
   width:25% !important;
+  z-index: -1;
 }
 
 .cellNothing{
   height: 41.33px !important;
   width:25% !important;
 
+}
+.tran{
+ transform: translateY(50%);
 }
 .cellCourse{
   height: 41.33px !important;
@@ -19,3 +23,12 @@
   font-size: 0.85rem !important;
 }
 
+.badge {
+
+  color: white;
+  padding: 4px 8px;
+  text-align: center;
+  margin-bottom: 2px;
+  border-radius: 10 px;
+  z-index: 1;
+}

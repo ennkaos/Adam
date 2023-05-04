@@ -1,9 +1,18 @@
 <div
   *ngIf="item !== null && item !== undefined"
-  class="border border-bottom-0 border-dark d-flex flex-column bg-secondary text-light"
+  class="border bg-dark border-bottom-0 border-light d-flex flex-column justify-content-around text-light"
 >
-  <div class="text-center font-small">{{ item.className }}</div>
-  <div class="text-center font-small">{{ item.subjectName }}</div>
+  <div [ngClass]="isOdd(item.IsOnParity)" class="badge">
+    {{ isTextOdd(item.IsOnParity) }}
+  </div>
+  <div class="text-center font-small d-flex flex-row justify-content-around">
+    <div class="text-center tran font-small">
+      {{ item.subjectName }}
+    </div>
+    <div class="text-center tran font-small">
+      {{ item.className }}
+    </div>
+  </div>
 </div>
 <div *ngIf="item === null" class="border border-dark w-100 h-100"></div>
-<div *ngIf="item === undefined" class="w-100 h-100 bg-secondary"></div>
+<div *ngIf="item === undefined" class="w-100 h-100 bg-dark"></div>

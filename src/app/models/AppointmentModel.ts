@@ -24,8 +24,8 @@ export interface AppointmentModel {
   group: string;
 }
 
-enum Parity {
-  even,
-  both,
-  odd,
+export enum Parity {
+  even = 'even',
+  both = 'both',
+  odd = 'odd',
 }
