@@ -7,24 +7,35 @@ import { Schedule } from '../models/Schedule';
   providedIn: 'root',
 })
 export class ScheduleService {
-  url: String = 'http://localhost:3000';
+  url: String = '/api';
   schedule!: Observable<Schedule>;
 
   constructor(public http: HttpClient) {}
 
   httpOptions = {
     headers: new HttpHeaders({
+      'Content-type': 'application/json;charset=UTF-8',
       'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
     }),
   };
+
   getSchedule(): Observable<Schedule> {
     this.schedule = this.http
       .get(this.url + '/schedule', this.httpOptions)
       .pipe(
         tap((result: any) => {
           JSON.stringify(result);
+        })
+      );
+    return this.schedule;
+  }
+
+  getPulaMea(): Observable<any> {
+    this.schedule = this.http
+      .get(this.url + '/RequestModels/1', this.httpOptions)
+      .pipe(
+        tap((result: any) => {
+          console.log(JSON.stringify(result));
         })
       );
     return this.schedule;

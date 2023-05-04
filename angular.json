@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+
             "outputPath": "dist/adam-project",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -59,12 +60,17 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "src/proxy.conf.json"
+          },
           "configurations": {
             "production": {
               "browserTarget": "AdamProject:build:production"
             },
             "development": {
-              "browserTarget": "AdamProject:build:development"
+              "browserTarget": "AdamProject:build:development",
+              "proxyConfig": "src/proxy.conf.json"
+
             }
           },
           "defaultConfiguration": "development"
