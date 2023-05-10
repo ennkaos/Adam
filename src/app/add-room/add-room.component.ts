@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ScheduleService } from '../services/schedule.service';
 import { Observable } from 'rxjs';
+import { AddRoomService } from './services/add-room-service';
 
 @Component({
   selector: 'app-add-room',
@@ -8,16 +8,16 @@ import { Observable } from 'rxjs';
   styleUrls: ['./add-room.component.css'],
 })
 export class AddRoomComponent {
-  schedule!: Observable<any>;
-  scheduleResult!: Observable<any>;
+  rooms!: Observable<any>;
+  roomsResult!: Observable<any>;
 
-  constructor(public scheduleService: ScheduleService) {}
+  constructor(public addroomService: AddRoomService) {}
   ngOnInit(): void {
-    this.schedule = this.scheduleService.getPulaMea();
-    this.schedule.subscribe((e) => {
+    this.rooms = this.addroomService.getRooms();
+    this.rooms.subscribe((e) => {
       console.log('Subscription Started ...');
 
-      this.scheduleResult = e;
+      this.roomsResult = e;
     });
   }
 }

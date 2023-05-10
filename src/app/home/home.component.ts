@@ -1,11 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
-import { FormControl, NgForm } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { AppointmentModel } from '../models/AppointmentModel';
-import { Schedule } from '../models/Schedule';
+import { Component } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { SerieModel } from '../models/SerieModel';
 import { ScheduleService } from '../services/schedule.service';
-import { days, hours, scheduleDay } from '../models/scheduleModel';
+import { days, hours, scheduleDay, serie } from '../models/scheduleModel';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +11,7 @@ import { days, hours, scheduleDay } from '../models/scheduleModel';
 })
 export class HomeComponent {
   selectedSerie: any = null;
+  serie!: string[];
   showSerie!: SerieModel;
   index: number = 0;
   indexAr: number[] = [];
@@ -21,24 +19,35 @@ export class HomeComponent {
   lengthSerie!: number;
   hours: any;
   days: any;
-  schedule!: Observable<Schedule>;
-  scheduleResult!: SerieModel[];
+  schedule!: Observable<SerieModel>;
+  scheduleResult!: SerieModel;
+  subscribtionSchedule!: Subscription;
 
   constructor(public scheduleService: ScheduleService) {
+    this.serie = serie;
     this.scheduleDay = scheduleDay;
     this.hours = hours;
     this.days = days;
   }
 
-  ngOnInit(): void {
-    this.schedule = this.scheduleService.getSchedule();
+  ngOnInit(): void {}
+  subscribeSchedule(value: string) {
+    this.schedule = this.scheduleService.getSchedule(value);
     this.schedule.subscribe((e) => {
       console.log('Subscription Started ...');
 
-      this.scheduleResult = e.series;
+      this.scheduleResult = e;
+      console.log(this.scheduleResult);
+      this.clearArray();
+      console.log(this.scheduleResult);
+      //this.showSerie = this.scheduleResult;
+      this.mappingArray();
+      this.filterArray();
     });
   }
-
+  unsubscribeSchedule() {
+    this.subscribtionSchedule.unsubscribe();
+  }
   clearArray() {
     this.scheduleDay.map((element: any) => {
       element.hours.map((e: any) => {
@@ -48,19 +57,19 @@ export class HomeComponent {
   }
 
   mappingArray() {
-    this.showSerie.groups.map((e) => {
-      this.lengthSerie = this.showSerie.groups.length;
-      e.subgroups.forEach((subgroup) => {
-        subgroup.days.forEach((day, index) => {
+    this.scheduleResult.grupe.map((e) => {
+      this.lengthSerie = this.scheduleResult.grupe.length;
+      e.subgrupe.forEach((subgroup) => {
+        subgroup.week.forEach((day, index) => {
           let counter: number = 0;
-          day.appointments.forEach((app, indexHours) => {
-            if (app && !app.IsLab && app.timeSlotsUsed === 2) {
+          day.reservations.forEach((app, indexHours) => {
+            if (app && !app.isLab && app.timeSlotsUsed === 2) {
               this.scheduleDay[index].hours[counter].appointments.push(app);
               this.scheduleDay[index].hours[counter + 1].appointments.push(
                 undefined
               );
               counter = counter + 2;
-            } else if (app && !app.IsLab && app.timeSlotsUsed === 3) {
+            } else if (app && !app.isLab && app.timeSlotsUsed === 3) {
               this.scheduleDay[index].hours[counter].appointments.push(app);
               this.scheduleDay[index].hours[counter + 1].appointments.push(
                 undefined
@@ -69,13 +78,13 @@ export class HomeComponent {
                 undefined
               );
               counter = counter + 3;
-            } else if (app && app.IsLab && app.timeSlotsUsed === 2) {
+            } else if (app && app.isLab && app.timeSlotsUsed === 2) {
               this.scheduleDay[index].hours[counter].appointments.push(app);
               this.scheduleDay[index].hours[counter + 1].appointments.push(
                 undefined
               );
               counter = counter + 2;
-            } else if (app && app.IsLab && app.timeSlotsUsed === 3) {
+            } else if (app && app.isLab && app.timeSlotsUsed === 3) {
               this.scheduleDay[index].hours[counter].appointments.push(app);
               this.scheduleDay[index].hours[counter + 1].appointments.push(
                 undefined
@@ -95,26 +104,23 @@ export class HomeComponent {
     });
   }
 
-  onChangeSerieSelect(event: number): void {
+  onChangeSerieSelect(event: string): void {
+    // this.unsubscribeSchedule();
     this.selectedSerie = event;
-    this.clearArray();
-
-    this.showSerie = this.scheduleResult.filter(
-      (result) => result.id === this.selectedSerie
-    )[0];
-    this.mappingArray();
-    this.filterArray();
+    this.subscribeSchedule(this.selectedSerie);
   }
   filterArray() {
     this.scheduleDay.map((day: any) => {
       this.indexAr = [];
       day.hours.forEach((item: any) => {
-        item.appointments.forEach((e: any, index2: number) => {
-          if (e && !e.IsLab) {
-            item.appointments.splice(index2 + 1, item.appointments.length);
-          } else if (e && e.IsLab) {
-            if (e.groups) {
-              item.appointments.splice(index2, 1);
+        item.appointments.forEach((item2: any, index2: number) => {
+          if (item2 && item2 !== undefined) {
+            if (item2.isLab == false) {
+              item.appointments.splice(index2 + 1, item.appointments.length);
+            } else if (item2.isLab == true) {
+              if (item2.groups == true) {
+                item.appointments.splice(index2, 1);
+              }
             }
           }
         });

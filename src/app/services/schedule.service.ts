@@ -2,13 +2,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { Schedule } from '../models/Schedule';
+import { SerieModel } from '../models/SerieModel';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ScheduleService {
   url: String = '/api';
-  schedule!: Observable<Schedule>;
+  schedule!: Observable<SerieModel>;
 
   constructor(public http: HttpClient) {}
 
@@ -19,23 +20,12 @@ export class ScheduleService {
     }),
   };
 
-  getSchedule(): Observable<Schedule> {
+  getSchedule(value: string): Observable<SerieModel> {
     this.schedule = this.http
-      .get(this.url + '/schedule', this.httpOptions)
+      .get(this.url + '/schedule/' + value, this.httpOptions)
       .pipe(
         tap((result: any) => {
           JSON.stringify(result);
-        })
-      );
-    return this.schedule;
-  }
-
-  getPulaMea(): Observable<any> {
-    this.schedule = this.http
-      .get(this.url + '/RequestModels/1', this.httpOptions)
-      .pipe(
-        tap((result: any) => {
-          console.log(JSON.stringify(result));
         })
       );
     return this.schedule;

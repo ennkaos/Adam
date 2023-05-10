@@ -1,3 +1,18 @@
+export const serie: any = [
+  '1AA',
+  '2AA',
+  '3AA',
+  '4AA',
+  '1AB',
+  '2AB',
+  '3AB',
+  '4AB',
+  '4AC',
+  '1AC',
+  '2AC',
+  '3AC',
+  '4AC',
+];
 export const scheduleDay: any[] = [
   {
     day: 'Monday',

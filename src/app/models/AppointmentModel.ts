@@ -3,13 +3,13 @@ export interface AppointmentModel {
 
   groups: boolean;
 
-  teachersName: string;
+  teacherName: string;
 
   dayNumber: number;
 
   subjectName: string;
 
-  className: string;
+  roomName: string;
 
   roomId: number;
 
@@ -19,7 +19,7 @@ export interface AppointmentModel {
 
   IsOnParity: Parity;
 
-  IsLab: boolean;
+  isLab: boolean;
 
   group: string;
 }

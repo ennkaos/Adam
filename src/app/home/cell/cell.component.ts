@@ -23,9 +23,9 @@ export class CellComponent {
     if (parity === Parity.odd) {
       return 'Saptamana Impara';
     } else if (parity === Parity.even) {
-      return 'Saptamana Par';
+      return 'Saptamana Para';
     } else {
-      return 'Saptamana Comuna';
+      return 'In ambele saptamani';
     }
   }
 }

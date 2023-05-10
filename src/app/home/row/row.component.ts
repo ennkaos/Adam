@@ -10,15 +10,13 @@ export class RowComponent {
   @Input() item: any = [];
   @Input() groupsLength!: number;
   indexAr: number[] = [];
-  ngOnInit(): void {
-    console.log(this.item);
-  }
+  ngOnInit(): void {}
   getClassOfNg(item: AppointmentModel): String {
-    if (item && item.groups === true && item.IsLab === false) {
+    if (item && item.groups === true && item.isLab === false) {
       return 'LabGroups';
-    } else if (item && item.groups === true && item.IsLab === true) {
+    } else if (item && item.groups === true && item.isLab === true) {
       return 'LabGroupsTogheter';
-    } else if (item && item.groups === false && item.IsLab === true) {
+    } else if (item && item.groups === false && item.isLab === true) {
       return 'LabNotTogheter';
     } else {
       return 'cellNothing';
