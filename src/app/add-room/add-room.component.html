@@ -1,1 +1,52 @@
-<p>add-room works!</p>
+<ng-container *ngIf="rooms$ | async as Rooms; else loading4">
+  <div
+    class="card mt-3 border-shadow container mx-auto"
+    *ngIf="this.roomsResult.length != 0"
+  >
+    <h2 class="">Lista Sali</h2>
+    <table class="table table-hover bg-white">
+      <thead>
+        <tr>
+          <td scope="row">#</td>
+          <td scope="row">Nume</td>
+          <td scope="row">Capacitate</td>
+          <td scope="row">Sala de curs</td>
+          <td scope="row">Editeaza</td>
+          <td scope="row">Sterge</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let item of roomsResult"
+          [routerLink]="['details/', item.id]"
+          routerLinkActive="router-link-active"
+        >
+          <td scope="row">{{ item.id }}</td>
+          <td scope="row">{{ item.name }}</td>
+          <td scope="row">{{ item.capacity }}</td>
+          <td scope="row">
+            <i
+              *ngIf="item.labRoom"
+              class="bi bi-check-circle-fill text-success"
+            ></i>
+            <i
+              *ngIf="!item.labRoom"
+              class="bi bi-x-circle-fill text-danger"
+            ></i>
+          </td>
+          <td scope="row"><i class="bi bi-pencil-fill text-primary"></i></td>
+          <td scope="row">
+            <button (click)="delete(item.id)">
+              <i class="bi bi-trash3-fill text-danger"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-container>
+<ng-template #loading4>
+  <div class="spinner-border mx-auto" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</ng-template>
