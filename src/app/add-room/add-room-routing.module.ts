@@ -5,7 +5,18 @@ import { RoomsDetailsComponent } from './rooms-details/rooms-details.component';
 
 export const routes: Routes = [
   { path: '', component: AddRoomComponent },
-  { path: 'details/:id', component: RoomsDetailsComponent },
+  {
+    path: 'details/:id',
+    component: RoomsDetailsComponent,
+  },
+  {
+    path: 'update/:id',
+    component: RoomsDetailsComponent,
+  },
+  {
+    path: 'create',
+    component: RoomsDetailsComponent,
+  },
 ];
 
 @NgModule({

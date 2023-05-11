@@ -11,6 +11,7 @@ export class AddRoomService {
   room!: Observable<RoomsModel>;
   url: String = '/api';
   urlMock: string = 'http://localhost:3000';
+  status!: Object;
   constructor(public http: HttpClient) {}
 
   httpOptions = {
@@ -33,20 +34,15 @@ export class AddRoomService {
       throw error;
     }
   }
-  deleteRoom(id: number) {
+  deleteRoom(id: number): Object {
     try {
-      this.room = this.http
+      this.http
         .delete(this.urlMock + '/Rooms/' + id, this.httpOptions)
-        .pipe(
-          tap((result: any) => {
-            console.log(JSON.stringify(result));
-          })
-        );
-
-      return this.room;
+        .subscribe((response) => (this.status = response));
     } catch (error) {
       throw error;
     }
+    return this.status;
   }
   getRoom(id: number): Observable<RoomsModel> {
     try {

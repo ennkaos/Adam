@@ -3,6 +3,7 @@ import { Observable, switchMap } from 'rxjs';
 import { AddRoomService } from './services/add-room-service';
 import { RoomsModel } from '../models/RoomsModel';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-room',
@@ -13,7 +14,10 @@ export class AddRoomComponent {
   rooms$!: Observable<RoomsModel[]>;
   roomsResult!: RoomsModel[];
 
-  constructor(public addroomService: AddRoomService) {}
+  constructor(
+    public addroomService: AddRoomService,
+    private toastr: ToastrService
+  ) {}
   ngOnInit(): void {
     this.rooms$ = this.addroomService.getRooms();
     this.rooms$.subscribe((e) => {
@@ -24,8 +28,12 @@ export class AddRoomComponent {
   }
   delete(id: number): void {
     try {
-      this.addroomService.deleteRoom(id);
+      //@TODO connect toaster to service
+      const status = this.addroomService.deleteRoom(id);
+      this.toastr.success('Success');
+      this.ngOnInit();
     } catch (error) {
+      this.toastr.error('Ceva a mers gresit ..');
       throw error;
     }
   }

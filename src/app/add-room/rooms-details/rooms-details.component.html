@@ -3,17 +3,16 @@
     <div class="card-header">
       <h3>Detalii Sala</h3>
     </div>
-    <div class="card-body">
+    <div [formGroup]="profileForm" class="card-body">
       <h2>Sala</h2>
-      <div formGroupName="form" class="d-flex flex-row justify-content-around">
+      <div class="d-flex flex-row justify-content-around">
         <div>
           <label for="nume" class="m-3">Nume:</label>
           <input
             id="nume"
             class="m-3 form-control"
-            [disabled]="true"
             type="text"
-            [value]="roomResult.name"
+            formControlName="name"
           />
         </div>
 
@@ -22,24 +21,44 @@
           <input
             class="m-3 form-control"
             id="capacitate"
-            [disabled]="true"
             type="text"
-            [value]="roomResult.capacity"
+            formControlName="capacity"
           />
         </div>
 
-        <div>
+        <div *ngIf="!editable">
           <label for="labRoom" class="m-3">Sala Curs: </label>
           <i
-            *ngIf="roomResult.labRoom"
+            *ngIf="profileForm.value.labRoom"
             class="bi bi-check-circle-fill text-success"
           ></i>
           <i
-            *ngIf="!roomResult.labRoom"
+            *ngIf="!profileForm.value.labRoom"
             class="bi bi-x-circle-fill text-danger"
           ></i>
         </div>
+        <div class="form-check" *ngIf="editable">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="flexCheckIndeterminate"
+            formControlName="labRoom"
+          />
+          <label class="form-check-label" for="flexCheckIndeterminate">
+            Este sala de curs?
+          </label>
+        </div>
       </div>
+      <button *ngIf="editable" (click)="onSubmit()" class="btn btn-primary m-5">
+        Salveaza
+      </button>
+      <button
+        *ngIf="editable"
+        (click)="onReset()"
+        class="btn btn-secondary m-5"
+      >
+        Reseteaza
+      </button>
     </div>
   </div>
 </ng-container>
