@@ -29,11 +29,11 @@
         <div *ngIf="!editable">
           <label for="labRoom" class="m-3">Sala Curs: </label>
           <i
-            *ngIf="profileForm.value.labRoom"
+            *ngIf="!profileForm.value.labRoom"
             class="bi bi-check-circle-fill text-success"
           ></i>
           <i
-            *ngIf="!profileForm.value.labRoom"
+            *ngIf="profileForm.value.labRoom"
             class="bi bi-x-circle-fill text-danger"
           ></i>
         </div>
@@ -45,7 +45,7 @@
             formControlName="labRoom"
           />
           <label class="form-check-label" for="flexCheckIndeterminate">
-            Este sala de curs?
+            Este sala de laborator?
           </label>
         </div>
       </div>

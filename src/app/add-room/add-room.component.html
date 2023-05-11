@@ -46,13 +46,10 @@
             scope="row"
           >
             <i
-              *ngIf="item.labRoom"
+              *ngIf="!item.labRoom"
               class="bi bi-check-circle-fill text-success"
             ></i>
-            <i
-              *ngIf="!item.labRoom"
-              class="bi bi-x-circle-fill text-danger"
-            ></i>
+            <i *ngIf="item.labRoom" class="bi bi-x-circle-fill text-danger"></i>
           </td>
           <td
             scope="row"

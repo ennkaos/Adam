@@ -28,8 +28,8 @@ export class AddRoomComponent {
   }
   delete(id: number): void {
     try {
-      //@TODO connect toaster to service
       const status = this.addroomService.deleteRoom(id);
+      this.roomsResult.filter((e) => e.id !== id);
       this.toastr.success('Success');
       this.ngOnInit();
     } catch (error) {

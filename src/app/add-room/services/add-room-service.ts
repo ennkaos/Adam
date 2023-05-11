@@ -22,13 +22,11 @@ export class AddRoomService {
   };
   getRooms(): Observable<RoomsModel[]> {
     try {
-      this.rooms = this.http
-        .get(this.urlMock + '/Rooms/', this.httpOptions)
-        .pipe(
-          tap((result: any) => {
-            console.log(JSON.stringify(result));
-          })
-        );
+      this.rooms = this.http.get(this.url + '/Rooms/', this.httpOptions).pipe(
+        tap((result: any) => {
+          console.log(JSON.stringify(result));
+        })
+      );
       return this.rooms;
     } catch (error) {
       throw error;
@@ -37,7 +35,7 @@ export class AddRoomService {
   deleteRoom(id: number): Object {
     try {
       this.http
-        .delete(this.urlMock + '/Rooms/' + id, this.httpOptions)
+        .delete(this.url + '/Rooms/' + id, this.httpOptions)
         .subscribe((response) => (this.status = response));
     } catch (error) {
       throw error;
@@ -47,7 +45,7 @@ export class AddRoomService {
   getRoom(id: number): Observable<RoomsModel> {
     try {
       this.room = this.http
-        .get(this.urlMock + '/Rooms/' + id, this.httpOptions)
+        .get(this.url + '/Rooms/' + id, this.httpOptions)
         .pipe(
           tap((result: any) => {
             console.log(JSON.stringify(result));
