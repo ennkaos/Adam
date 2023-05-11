@@ -32,6 +32,18 @@ export class AddRoomService {
       throw error;
     }
   }
+  updateRoom(id: number, data: RoomsModel): Object {
+    console.log(this.url);
+    try {
+      this.http
+        .post(this.url + '/Rooms/' + id, data, this.httpOptions)
+        .subscribe((response) => (this.status = response));
+    } catch (error) {
+      throw error;
+    }
+    return this.status;
+  }
+
   deleteRoom(id: number): Object {
     try {
       this.http

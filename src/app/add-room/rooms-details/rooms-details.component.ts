@@ -17,13 +17,16 @@ export class RoomsDetailsComponent {
   editable!: boolean;
   profileForm!: FormGroup;
   roomResult!: RoomsModel;
+  roomId!: null | string;
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private addRoomService: AddRoomService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router2: Router
   ) {
     this.profileForm = this.fb.group({
+      id: [''],
       name: [''],
       capacity: [''],
       labRoom: [''],
@@ -32,22 +35,23 @@ export class RoomsDetailsComponent {
 
   ngOnInit(): void {
     this.router = this.route.snapshot.url.shift()?.path;
-    const roomId = this.route.snapshot.paramMap.get('id')
+    this.roomId = this.route.snapshot.paramMap.get('id')
       ? this.route.snapshot.paramMap.get('id')
       : null;
-    if (roomId !== null) {
+    if (this.roomId !== null) {
       if (this.router === 'details') {
         this.profileForm.disable();
         this.editable = false;
       } else {
         this.editable = true;
       }
-      this.room$ = this.addRoomService.getRoom(Number(roomId))
-        ? this.addRoomService.getRoom(Number(roomId))
+      this.room$ = this.addRoomService.getRoom(Number(this.roomId))
+        ? this.addRoomService.getRoom(Number(this.roomId))
         : EMPTY;
       this.room$.subscribe((e) => {
         this.roomResult = e;
         this.profileForm.controls['name'].setValue(this.roomResult.name);
+        this.profileForm.controls['id'].setValue(this.roomId);
         this.profileForm.controls['capacity'].setValue(
           this.roomResult.capacity
         );
@@ -56,7 +60,13 @@ export class RoomsDetailsComponent {
     }
   }
 
-  onSubmit() {}
+  onSubmit() {
+    console.log(this.profileForm.value, this.roomId);
+    if (!this.roomId) return this.toastr.warning('Nu exista Id-ul salii');
+    this.addRoomService.updateRoom(Number(this.roomId), this.profileForm.value);
+    this.router2.navigate(['add-room']);
+    return this.toastr.success('Sala a fost modificata cu succes');
+  }
   onReset() {
     console.log(this.profileForm.touched, this.router);
     if (this.profileForm.touched) {
