@@ -11,12 +11,17 @@ const routes: Routes = [
     loadChildren: () =>
       import('./login/login.module').then((m) => m.LoginModule),
   },
+
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
     canActivate: [LoginGuard],
   },
-
+  {
+    path: 'materii',
+    loadChildren: () =>
+      import('./materii/materii.module').then((m) => m.MateriiModule),
+  },
   {
     path: 'rezervari',
     loadChildren: () =>
