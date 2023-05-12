@@ -27,20 +27,27 @@ export class RoomsDetailsComponent {
     private addRoomService: AddRoomService,
     private toastr: ToastrService,
     private router2: Router
-  ) {
-    this.profileForm = this.fb.group({
-      // id: [''],
-      name: ['', Validators.required],
-      capacity: ['', Validators.required],
-      labRoom: ['', Validators.required],
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.router = this.route.snapshot.url.shift()?.path;
     this.roomId = this.route.snapshot.paramMap.get('id')
       ? this.route.snapshot.paramMap.get('id')
       : null;
+
+    this.profileForm =
+      this.router === 'create'
+        ? this.fb.group({
+            name: ['', Validators.required],
+            capacity: ['', Validators.required],
+            labRoom: [false, Validators.required],
+          })
+        : this.fb.group({
+            id: [''],
+            name: ['', Validators.required],
+            capacity: ['', Validators.required],
+            labRoom: [false, Validators.required],
+          });
 
     if (this.router === 'details') {
       this.profileForm.disable();
@@ -52,10 +59,12 @@ export class RoomsDetailsComponent {
       this.room$ = this.addRoomService.getRoom(Number(this.roomId))
         ? this.addRoomService.getRoom(Number(this.roomId))
         : EMPTY;
+
       this.room$.subscribe((e) => {
         this.roomResult = e;
+
         this.profileForm.controls['name'].setValue(this.roomResult.name);
-        // this.profileForm.controls['id'].setValue(this.roomId);
+        this.profileForm.controls['id'].setValue(this.roomId);
         this.profileForm.controls['capacity'].setValue(
           this.roomResult.capacity
         );
@@ -108,12 +117,11 @@ export class RoomsDetailsComponent {
     console.log(this.profileForm.touched, this.router);
     if (this.profileForm.touched) {
       if (this.router === 'create') {
-        this.profileForm = this.fb.group({
-          // id: [''],
-          name: ['', { validators: Validators.required, updateOn: 'blur' }],
-          capacity: ['', Validators.required],
-          labRoom: ['', Validators.required],
-        });
+        this.profileForm.controls['name'].setValue(this.roomResult.name);
+        this.profileForm.controls['capacity'].setValue(
+          this.roomResult.capacity
+        );
+        this.profileForm.controls['labRoom'].setValue(this.roomResult.labRoom);
         this.toastr.success('Resetat cu success');
       } else if (this.router === 'update') {
         this.profileForm = this.fb.group({
