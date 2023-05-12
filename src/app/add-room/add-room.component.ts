@@ -26,11 +26,11 @@ export class AddRoomComponent {
       this.roomsResult = e;
     });
   }
+  create() {}
   delete(id: number): void {
     try {
       const status = this.addroomService.deleteRoom(id);
       this.roomsResult.filter((e) => e.id !== id);
-      this.toastr.success('Success');
       this.ngOnInit();
     } catch (error) {
       this.toastr.error('Ceva a mers gresit ..');

@@ -1,29 +1,31 @@
-<ng-container *ngIf="room$ | async as Rooms; else loading4">
+<ng-container *ngIf="room$ || room$ | async as Rooms; else loading4">
   <div class="card container mt-3">
     <div class="card-header">
-      <h3>Detalii Sala</h3>
+      <h3>{{ router?.toUpperCase() }} Sala</h3>
     </div>
-    <div [formGroup]="profileForm" class="card-body">
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="card-body">
       <h2>Sala</h2>
-      <div class="d-flex flex-row justify-content-around">
+      <div class="d-flex flex-row g-3 justify-content-around needs-validation">
         <div>
           <label for="nume" class="m-3">Nume:</label>
           <input
             id="nume"
-            class="m-3 form-control"
+            class="m-3 form-control validationCustom01"
             type="text"
             formControlName="name"
           />
+          <div class="p">{{ this.profileForm.controls["name"].dirty }}</div>
         </div>
 
         <div>
           <label for="capacitate" class="m-3">Capacitate: </label>
           <input
-            class="m-3 form-control"
+            class="m-3 form-control validationCustom01"
             id="capacitate"
-            type="text"
+            type="number"
             formControlName="capacity"
           />
+          <div class="p">{{ this.profileForm.controls["capacity"].dirty }}</div>
         </div>
 
         <div *ngIf="!editable">
@@ -44,12 +46,13 @@
             id="flexCheckIndeterminate"
             formControlName="labRoom"
           />
+          <p>{{ this.profileForm.controls["labRoom"].dirty }}</p>
           <label class="form-check-label" for="flexCheckIndeterminate">
             Este sala de laborator?
           </label>
         </div>
       </div>
-      <button *ngIf="editable" (click)="onSubmit()" class="btn btn-primary m-5">
+      <button *ngIf="editable" type="submit" class="btn btn-primary m-5">
         Salveaza
       </button>
       <button
@@ -59,7 +62,7 @@
       >
         Reseteaza
       </button>
-    </div>
+    </form>
   </div>
 </ng-container>
 <ng-template #loading4>
