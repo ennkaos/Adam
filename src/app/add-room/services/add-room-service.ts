@@ -10,7 +10,7 @@ import { RoomsModel } from 'src/app/models/RoomsModel';
 export class AddRoomService {
   rooms!: Observable<RoomsModel[]>;
   room!: Observable<RoomsModel>;
-  url: String = 'http://localhost:3000';
+  url: String = '/api';
   urlMock: string = 'http://localhost:3000';
 
   constructor(public http: HttpClient, private toastr: ToastrService) {}
@@ -28,7 +28,7 @@ export class AddRoomService {
       this.http
         .post(this.url + '/Rooms/', profileForm, this.httpOptions)
         .subscribe((response) => console.log(response));
-      return this.toastr.success('Sala a fost modificata cu succes');
+      return this.toastr.success('Sala a fost adaugata cu succes');
     } catch (error) {
       return this.toastr.error('Ceva nu a mers bine');
     }
@@ -47,10 +47,10 @@ export class AddRoomService {
     }
   }
   updateRoom(id: number, data: RoomsModel): ActiveToast<any> {
-    console.log(this.url);
+    console.log(id, data);
     try {
       this.http
-        .put(this.url + '/Rooms/' + id, data, this.httpOptions)
+        .post(this.url + '/Rooms/' + id, data, this.httpOptions)
         .subscribe((response) => console.log(response));
       return this.toastr.success('Sala a fost modificata cu succes');
     } catch (error) {
@@ -60,6 +60,7 @@ export class AddRoomService {
 
   deleteRoom(id: number): ActiveToast<any> {
     try {
+      console.log(id);
       this.http
         .delete(this.url + '/Rooms/' + id, this.httpOptions)
         .subscribe((response) => console.log(response));

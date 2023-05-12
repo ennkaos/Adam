@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { Observable, switchMap } from 'rxjs';
 import { AddRoomService } from './services/add-room-service';
 import { RoomsModel } from '../models/RoomsModel';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterPreloader } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { ResourceLoader } from '@angular/compiler';
 
 @Component({
   selector: 'app-add-room',
@@ -26,12 +27,11 @@ export class AddRoomComponent {
       this.roomsResult = e;
     });
   }
-  create() {}
+
   delete(id: number): void {
     try {
-      const status = this.addroomService.deleteRoom(id);
-      this.roomsResult.filter((e) => e.id !== id);
-      this.ngOnInit();
+      this.addroomService.deleteRoom(id);
+      window.location.reload();
     } catch (error) {
       this.toastr.error('Ceva a mers gresit ..');
       throw error;
