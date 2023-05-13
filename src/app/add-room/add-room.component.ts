@@ -29,7 +29,7 @@ export class AddRoomComponent {
   delete(id: number): void {
     try {
       this.addroomService.deleteRoom(id);
-      this.ngOnInit();
+      this.roomsResult = this.roomsResult.filter((e) => e.id !== id);
     } catch (error) {
       this.toastr.error('Ceva a mers gresit ..');
       throw error;

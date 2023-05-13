@@ -1,54 +1,285 @@
-<div class="w-25 mt-5 m-auto">
-  <div class="col d-flex flex-column">
-    <form formGroup="form" (ngSubmit)="onSubmit()" class="form-group">
-      <div class="mb-3 row">
-        <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
-        <div class="col-sm-12">
-          <input
-            type="text"
-            class="form-control bg-primary text-light"
-            formControlName="email"
-            minlength="4"
-            required
-            id="staticEmail"
-            [class.is-invalid]="
-              form.get('email')?.invalid && form.get('email')?.touched
-            "
-          />
-          <div class="invalid-feedback"></div>
-        </div>
-      </div>
-      <div class="mb-3 row">
-        <label for="inputPassword " class="col-sm-2 col-form-label"
-          >Password</label
+<div
+  style="
+    max-width: 500px;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    margin: auto;
+  "
+>
+  <div style="width: 100%; margin: 0 50px">
+    <!-- Pills navs -->
+    <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+      <li class="nav-item" role="presentation">
+        <a
+          class="nav-link active"
+          style="background-color: rgb(25, 135, 84)"
+          id="tab-login"
+          data-mdb-toggle="pill"
+          href="#pills-login"
+          role="tab"
+          aria-controls="pills-login"
+          aria-selected="true"
+          >Login</a
         >
-        <div class="col-sm-12">
-          <input
-            type="password"
-            required
-            formControlName="password"
-            class="form-control bg-primary text-light"
-            [class.is-invalid]="
-              form.get('password')?.invalid && form.get('password')?.touched
-            "
-            id="password"
-          />
-          <div class="invalid-feedback"></div>
-        </div>
-      </div>
-      <p>
-        You don't have an account ? Please
-        <span
-          ><a class="item-link active" routerLink="/register">Register</a></span
+      </li>
+      <li class="nav-item" role="presentation">
+        <a
+          class="nav-link"
+          id="tab-register"
+          data-mdb-toggle="pill"
+          href="#pills-register"
+          role="tab"
+          aria-controls="pills-register"
+          aria-selected="false"
+          >Register</a
         >
-      </p>
+      </li>
+    </ul>
+    <!-- Pills navs -->
 
-      <button [disabled]="form.invalid" class="btn btn-primary">Log In</button>
-    </form>
-    <div class="row">
-      <p>{{ "Form Dirty " + form.dirty }}</p>
-      <p>{{ "Form Invalid " + form.invalid }}</p>
-      <p>{{ "Form Touched " + form.touched }}</p>
+    <!-- Pills content -->
+    <div style="width: 100%" class="tab-content">
+      <div
+        class="tab-pane fade show active"
+        id="pills-login"
+        role="tabpanel"
+        aria-labelledby="tab-login"
+      >
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="text-center mb-3">
+            <p>Sign in with:</p>
+            <button type="button" class="btn btn-link btn-floating mx-1">
+              <svg
+                width="20px"
+                height="20px"
+                xmlns="http://www.w3.org/2000/svg"
+                data-name="Ebene 1"
+                viewBox="0 0 1024 1024"
+                id="facebook-logo-2019"
+              >
+                <path
+                  fill="#1877f2"
+                  d="M1024,512C1024,229.23016,794.76978,0,512,0S0,229.23016,0,512c0,255.554,187.231,467.37012,432,505.77777V660H302V512H432V399.2C432,270.87982,508.43854,200,625.38922,200,681.40765,200,740,210,740,210V336H675.43713C611.83508,336,592,375.46667,592,415.95728V512H734L711.3,660H592v357.77777C836.769,979.37012,1024,767.554,1024,512Z"
+                />
+                <path
+                  fill="#fff"
+                  d="M711.3,660,734,512H592V415.95728C592,375.46667,611.83508,336,675.43713,336H740V210s-58.59235-10-114.61078-10C508.43854,200,432,270.87982,432,399.2V512H302V660H432v357.77777a517.39619,517.39619,0,0,0,160,0V660Z"
+                />
+              </svg>
+            </button>
+
+            <button type="button" class="btn btn-link btn-floating mx-1">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                id="google"
+                width="20px"
+                height="20px"
+              >
+                <path
+                  fill="#fbbb00"
+                  d="M113.47 309.408 95.648 375.94l-65.139 1.378C11.042 341.211 0 299.9 0 256c0-42.451 10.324-82.483 28.624-117.732h.014L86.63 148.9l25.404 57.644c-5.317 15.501-8.215 32.141-8.215 49.456.002 18.792 3.406 36.797 9.651 53.408z"
+                />
+                <path
+                  fill="#518ef8"
+                  d="M507.527 208.176C510.467 223.662 512 239.655 512 256c0 18.328-1.927 36.206-5.598 53.451-12.462 58.683-45.025 109.925-90.134 146.187l-.014-.014-73.044-3.727-10.338-64.535c29.932-17.554 53.324-45.025 65.646-77.911h-136.89V208.176h245.899z"
+                />
+                <path
+                  fill="#28b446"
+                  d="m416.253 455.624.014.014C372.396 490.901 316.666 512 256 512c-97.491 0-182.252-54.491-225.491-134.681l82.961-67.91c21.619 57.698 77.278 98.771 142.53 98.771 28.047 0 54.323-7.582 76.87-20.818l83.383 68.262z"
+                />
+                <path
+                  fill="#f14336"
+                  d="m419.404 58.936-82.933 67.896C313.136 112.246 285.552 103.82 256 103.82c-66.729 0-123.429 42.957-143.965 102.724l-83.397-68.276h-.014C71.23 56.123 157.06 0 256 0c62.115 0 119.068 22.126 163.404 58.936z"
+                />
+              </svg>
+            </button>
+
+            <button type="button" class="btn btn-link btn-floating mx-1">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20px"
+                height="20px"
+                viewBox="126.444 2.281 589 589"
+                id="twitter"
+              >
+                <circle cx="420.944" cy="296.781" r="294.5" fill="#2daae1" />
+                <path
+                  fill="#fff"
+                  d="M609.773 179.634c-13.891 6.164-28.811 10.331-44.498 12.204 16.01-9.587 28.275-24.779 34.066-42.86a154.78 154.78 0 0 1-49.209 18.801c-14.125-15.056-34.267-24.456-56.551-24.456-42.773 0-77.462 34.675-77.462 77.473 0 6.064.683 11.98 1.996 17.66-64.389-3.236-121.474-34.079-159.684-80.945-6.672 11.446-10.491 24.754-10.491 38.953 0 26.875 13.679 50.587 34.464 64.477a77.122 77.122 0 0 1-35.097-9.686v.979c0 37.54 26.701 68.842 62.145 75.961-6.511 1.784-13.344 2.716-20.413 2.716-4.998 0-9.847-.473-14.584-1.364 9.859 30.769 38.471 53.166 72.363 53.799-26.515 20.785-59.925 33.175-96.212 33.175-6.25 0-12.427-.373-18.491-1.104 34.291 21.988 75.006 34.824 118.759 34.824 142.496 0 220.428-118.052 220.428-220.428 0-3.361-.074-6.697-.236-10.021a157.855 157.855 0 0 0 38.707-40.158z"
+                />
+              </svg>
+            </button>
+
+            <button type="button" class="btn btn-link btn-floating mx-1">
+              <svg
+                width="20px"
+                height="20px"
+                xmlns="http://www.w3.org/2000/svg"
+                data-name="Layer 1"
+                viewBox="0 0 24 24"
+                id="github"
+              >
+                <path
+                  d="M12,2.2467A10.00042,10.00042,0,0,0,8.83752,21.73419c.5.08752.6875-.21247.6875-.475,0-.23749-.01251-1.025-.01251-1.86249C7,19.85919,6.35,18.78423,6.15,18.22173A3.636,3.636,0,0,0,5.125,16.8092c-.35-.1875-.85-.65-.01251-.66248A2.00117,2.00117,0,0,1,6.65,17.17169a2.13742,2.13742,0,0,0,2.91248.825A2.10376,2.10376,0,0,1,10.2,16.65923c-2.225-.25-4.55-1.11254-4.55-4.9375a3.89187,3.89187,0,0,1,1.025-2.6875,3.59373,3.59373,0,0,1,.1-2.65s.83747-.26251,2.75,1.025a9.42747,9.42747,0,0,1,5,0c1.91248-1.3,2.75-1.025,2.75-1.025a3.59323,3.59323,0,0,1,.1,2.65,3.869,3.869,0,0,1,1.025,2.6875c0,3.83747-2.33752,4.6875-4.5625,4.9375a2.36814,2.36814,0,0,1,.675,1.85c0,1.33752-.01251,2.41248-.01251,2.75,0,.26251.1875.575.6875.475A10.0053,10.0053,0,0,0,12,2.2467Z"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <p class="text-center">or:</p>
+
+          <!-- Email input -->
+          <div class="form-outline mb-4">
+            <input
+              placeholder="Email"
+              type="email"
+              id="loginName"
+              class="form-control"
+              formControlName="email"
+            />
+          </div>
+
+          <!-- Password input -->
+          <div class="form-outline mb-4">
+            <input
+              placeholder="Password"
+              type="password"
+              id="loginPassword"
+              class="form-control"
+              formControlName="password"
+            />
+          </div>
+
+          <!-- 2 column grid layout -->
+          <div class="row mb-4">
+            <div class="col-md-6 d-flex justify-content-center">
+              <!-- Checkbox -->
+              <div class="form-check mb-3 mb-md-0">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="loginCheck"
+                  checked
+                />
+                <label class="form-check-label" for="loginCheck">
+                  Remember me
+                </label>
+              </div>
+            </div>
+
+            <div class="col-md-6 d-flex justify-content-center">
+              <!-- Simple link -->
+              <a href="#!">Forgot password?</a>
+            </div>
+          </div>
+
+          <!-- Submit button -->
+          <button
+            type="submit"
+            style="min-width: 125px; height: 50px"
+            class="btn btn-success btn-block mb-4"
+          >
+            Sign in
+          </button>
+
+          <!-- Register buttons -->
+          <div class="text-center text-success">
+            <p>Not a member? <a href="#!">Register</a></p>
+          </div>
+        </form>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="pills-register"
+        role="tabpanel"
+        aria-labelledby="tab-register"
+      >
+        <form>
+          <div class="text-center mb-3">
+            <p>Sign up with:</p>
+            <button type="button" class="btn btn-link btn-floating mx-1">
+              <i class="fab fa-facebook-f"></i>
+            </button>
+
+            <button type="button" class="btn btn-link btn-floating mx-1">
+              <i class="fab fa-google"></i>
+            </button>
+
+            <button type="button" class="btn btn-link btn-floating mx-1">
+              <i class="fab fa-twitter"></i>
+            </button>
+
+            <button type="button" class="btn btn-link btn-floating mx-1">
+              <i class="fab fa-github"></i>
+            </button>
+          </div>
+
+          <p class="text-center">or:</p>
+
+          <!-- Name input -->
+          <div class="form-outline mb-4">
+            <input type="text" id="registerName" class="form-control" />
+            <label class="form-label" for="registerName">Name</label>
+          </div>
+
+          <!-- Username input -->
+          <div class="form-outline mb-4">
+            <input type="text" id="registerUsername" class="form-control" />
+            <label class="form-label" for="registerUsername">Username</label>
+          </div>
+
+          <!-- Email input -->
+          <div class="form-outline mb-4">
+            <input type="email" id="registerEmail" class="form-control" />
+            <label class="form-label" for="registerEmail">Email</label>
+          </div>
+
+          <!-- Password input -->
+          <div class="form-outline mb-4">
+            <input type="password" id="registerPassword" class="form-control" />
+            <label class="form-label" for="registerPassword">Password</label>
+          </div>
+
+          <!-- Repeat Password input -->
+          <div class="form-outline mb-4">
+            <input
+              type="password"
+              id="registerRepeatPassword"
+              class="form-control"
+            />
+            <label class="form-label" for="registerRepeatPassword"
+              >Repeat password</label
+            >
+          </div>
+
+          <!-- Checkbox -->
+          <div class="form-check d-flex justify-content-center mb-4">
+            <input
+              class="form-check-input me-2"
+              type="checkbox"
+              value=""
+              id="registerCheck"
+              checked
+              aria-describedby="registerCheckHelpText"
+            />
+            <label class="form-check-label" for="registerCheck">
+              I have read and agree to the terms
+            </label>
+          </div>
+
+          <!-- Submit button -->
+          <button type="submit" class="btn btn-success btn-block mb-3">
+            Sign in
+          </button>
+        </form>
+      </div>
     </div>
+    <!-- Pills content -->
   </div>
 </div>

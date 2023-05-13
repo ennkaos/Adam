@@ -12,7 +12,7 @@ export class LoginComponent {
   isAdmin!: boolean;
   accountName!: string;
   accountType!: string;
-  form!: FormGroup;
+  form!: FormGroup<any>;
 
   constructor(public fb: FormBuilder, private loginService: LoginService) {}
   ngOnInit(): void {
@@ -24,9 +24,9 @@ export class LoginComponent {
     });
   }
   onSubmit() {
-    console.log('asd');
     const email = this.form.value.email;
     const password = this.form.value.password;
+    console.log(this.form.value);
 
     this.loginService.loginRequest(email, password);
   }

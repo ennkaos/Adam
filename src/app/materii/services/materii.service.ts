@@ -23,7 +23,7 @@ export class MateriiService {
   create(profileForm: MateriiModel): ActiveToast<any> {
     try {
       this.http
-        .post(this.urlMock + '/MaterieModels/', profileForm, this.httpOptions)
+        .post(this.url + '/MaterieModels/', profileForm, this.httpOptions)
         .subscribe((response) => console.log(response));
       return this.toastr.success('Sala a fost adaugata cu succes');
     } catch (error) {
@@ -34,7 +34,7 @@ export class MateriiService {
   get(): Observable<MateriiModel[]> {
     try {
       return (this.materii = this.http
-        .get(this.urlMock + '/MaterieModels/', this.httpOptions)
+        .get(this.url + '/MaterieModels/', this.httpOptions)
         .pipe(
           tap((result: any) => {
             console.log(JSON.stringify(result));
@@ -48,11 +48,7 @@ export class MateriiService {
     console.log(id, data);
     try {
       this.http
-        .put(
-          this.urlMock + '/MaterieModels/' + id,
-          { ...data },
-          this.httpOptions
-        )
+        .post(this.url + '/MaterieModels/' + id, { ...data }, this.httpOptions)
         .subscribe((response) => console.log(HttpStatusCode.Accepted));
       return this.toastr.success('Sala a fost modificata cu succes');
     } catch (error) {
@@ -64,7 +60,7 @@ export class MateriiService {
     try {
       console.log(id);
       this.http
-        .delete(this.urlMock + '/MaterieModels/' + id, this.httpOptions)
+        .delete(this.url + '/MaterieModels/' + id, this.httpOptions)
         .subscribe((response) => console.log(response));
       return this.toastr.success('Sala a fost stearsa cu succes');
     } catch (error) {
@@ -74,7 +70,7 @@ export class MateriiService {
   getMaterie(id: number): Observable<MateriiModel> {
     try {
       this.materie = this.http
-        .get(this.urlMock + '/MaterieModels/' + id, this.httpOptions)
+        .get(this.url + '/MaterieModels/' + id, this.httpOptions)
         .pipe(
           tap((result: any) => {
             console.log(JSON.stringify(result));

@@ -15,7 +15,6 @@ export class LoginService {
       localStorage.setItem('user', user);
       localStorage.setItem('pass', pass);
     } else {
-      console.log('asdsd');
     }
   }
   isLogged(): boolean {
@@ -32,9 +31,9 @@ export class LoginService {
   logOut() {
     if (this.isLogged()) {
       localStorage.clear();
-      this.router.navigate(['/login']);
+      this.router.navigate(['login']);
     } else {
-      this.router.navigate(['/login']);
+      this.router.navigate(['login']);
     }
   }
 }

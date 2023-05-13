@@ -26,7 +26,7 @@ export class AddRoomService {
     try {
       console.log(profileForm);
       this.http
-        .post(this.urlMock + '/Rooms/', profileForm, this.httpOptions)
+        .post(this.url + '/Rooms/', profileForm, this.httpOptions)
         .subscribe((response) => console.log(response));
       return this.toastr.success('Sala a fost adaugata cu succes');
     } catch (error) {
@@ -36,13 +36,11 @@ export class AddRoomService {
 
   getRooms(): Observable<RoomsModel[]> {
     try {
-      this.rooms = this.http
-        .get(this.urlMock + '/Rooms/', this.httpOptions)
-        .pipe(
-          tap((result: any) => {
-            console.log(JSON.stringify(result));
-          })
-        );
+      this.rooms = this.http.get(this.url + '/Rooms/', this.httpOptions).pipe(
+        tap((result: any) => {
+          console.log({ xxx: JSON.stringify(result) });
+        })
+      );
       return this.rooms;
     } catch (error) {
       throw error;
@@ -52,7 +50,7 @@ export class AddRoomService {
     console.log(id, data);
     try {
       this.http
-        .post(this.urlMock + '/Rooms/' + id, data, this.httpOptions)
+        .post(this.url + '/Rooms/' + id, data, this.httpOptions)
         .subscribe((response) => console.log(response));
       return this.toastr.success('Sala a fost modificata cu succes');
     } catch (error) {
@@ -64,7 +62,7 @@ export class AddRoomService {
     try {
       console.log(id);
       this.http
-        .delete(this.urlMock + '/Rooms/' + id, this.httpOptions)
+        .delete(this.url + '/Rooms/' + id, this.httpOptions)
         .subscribe((response) => console.log(response));
       return this.toastr.success('Sala a fost stearsa cu succes');
     } catch (error) {
@@ -74,7 +72,7 @@ export class AddRoomService {
   getRoom(id: number): Observable<RoomsModel> {
     try {
       this.room = this.http
-        .get(this.urlMock + '/Rooms/' + id, this.httpOptions)
+        .get(this.url + '/Rooms/' + id, this.httpOptions)
         .pipe(
           tap((result: any) => {
             console.log(JSON.stringify(result));

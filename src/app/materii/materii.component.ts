@@ -27,14 +27,10 @@ export class MateriiComponent {
     });
   }
   delete(id: number | undefined): void {
-    this.subscriptionMaterii.unsubscribe();
-    try {
-      if (id) this.materiiService.delete(id);
-      this.ngOnInit();
-      // window.location.reload();
-    } catch (error) {
-      this.toastr.error('Ceva a mers gresit ..');
-      throw error;
-    }
+    if (id) this.materiiService.delete(id);
+
+    this.materiiResult = this.materiiResult.filter((e) => e.id !== id);
+    //this.ngOnInit();
+    //window.location.reload();
   }
 }

@@ -1,73 +1,71 @@
-<ng-container *ngIf="room$ || room$ | async as Rooms; else loading4">
-  <div class="card container mt-3">
-    <div class="card-header">
-      <h3>{{ router?.toUpperCase() }} Sala</h3>
-    </div>
-    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="card-body">
-      <h2>Sala</h2>
-      <div class="d-flex flex-row g-3 justify-content-around needs-validation">
-        <div>
-          <label for="nume" class="m-3">Nume:</label>
-          <input
-            id="nume"
-            class="m-3 form-control validationCustom01"
-            type="text"
-            formControlName="name"
-          />
-          <div class="p">{{ this.profileForm.controls["name"].dirty }}</div>
-        </div>
-
-        <div>
-          <label for="capacitate" class="m-3">Capacitate: </label>
-          <input
-            class="m-3 form-control validationCustom01"
-            id="capacitate"
-            type="number"
-            formControlName="capacity"
-          />
-          <div class="p">{{ this.profileForm.controls["capacity"].dirty }}</div>
-        </div>
-
-        <div *ngIf="!editable">
-          <label for="labRoom" class="m-3">Sala Curs: </label>
-          <i
-            *ngIf="!profileForm.value.labRoom"
-            class="bi bi-check-circle-fill text-success"
-          ></i>
-          <i
-            *ngIf="profileForm.value.labRoom"
-            class="bi bi-x-circle-fill text-danger"
-          ></i>
-        </div>
-        <div class="form-check" *ngIf="editable">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="flexCheckIndeterminate"
-            formControlName="labRoom"
-          />
-          <p>{{ this.profileForm.controls["labRoom"].dirty }}</p>
-          <label class="form-check-label" for="flexCheckIndeterminate">
-            Este sala de laborator?
-          </label>
-        </div>
+<div class="container">
+  <ng-container *ngIf="room$ || room$ | async as Rooms; else loading4">
+    <div class="card mt-3">
+      <div class="card-header">
+        <h3 style="text-transform: capitalize">{{ router }} Sala</h3>
       </div>
-      <button *ngIf="editable" type="submit" class="btn btn-primary m-5">
-        Salveaza
-      </button>
-      <button
-        *ngIf="editable"
-        (click)="onReset()"
-        class="btn btn-secondary m-5"
-      >
-        Reseteaza
-      </button>
-    </form>
-  </div>
-  <app-btn-sticky-back></app-btn-sticky-back>
-</ng-container>
-<ng-template #loading4>
-  <div class="spinner-border mx-auto" role="status">
-    <span class="visually-hidden">Loading...</span>
-  </div>
-</ng-template>
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="card-body">
+        <div class="d-flex flex-column needs-validation" style="gap: 20px">
+          <div>
+            <label for="nume" class="">Nume:</label>
+            <input
+              id="nume"
+              class="form-control validationCustom01"
+              type="text"
+              formControlName="name"
+            />
+          </div>
+          <div>
+            <label for="capacitate">Capacitate: </label>
+            <input
+              class="form-control validationCustom01"
+              id="capacitate"
+              type="number"
+              formControlName="capacity"
+            />
+          </div>
+          <div *ngIf="!editable">
+            <label for="labRoom" class="">Sala Curs: </label>
+            <i
+              *ngIf="!profileForm.value.labRoom"
+              class="bi bi-check-circle-fill text-success"
+            ></i>
+            <i
+              *ngIf="profileForm.value.labRoom"
+              class="bi bi-x-circle-fill text-danger"
+            ></i>
+          </div>
+          <div class="form-check" *ngIf="editable">
+            <label class="form-check-label" for="flexCheckIndeterminate">
+              Este sala de laborator?
+            </label>
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="flexCheckIndeterminate"
+              formControlName="labRoom"
+            />
+          </div>
+        </div>
+        <div class="mt-2" style="display: flex; gap: 5px">
+          <button *ngIf="editable" type="submit" class="btn btn-primary">
+            Salveaza
+          </button>
+          <button
+            *ngIf="editable"
+            (click)="onReset()"
+            class="btn btn-secondary"
+          >
+            Reseteaza
+          </button>
+        </div>
+      </form>
+    </div>
+    <app-btn-sticky-back></app-btn-sticky-back>
+  </ng-container>
+  <ng-template #loading4>
+    <div class="spinner-border mx-auto" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </ng-template>
+</div>
