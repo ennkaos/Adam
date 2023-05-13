@@ -10,10 +10,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
+import { BtnStickyBackComponent } from './shared/btn-sticky-back/btn-sticky-back.component';
+import { SharedModule } from './shared/shared/shared.module';
+
 @NgModule({
   declarations: [AppComponent, HeaderComponent, PageNotFoundComponent],
   imports: [
     AppRoutingModule,
+    SharedModule,
     BrowserAnimationsModule,
     NgbModule,
     ToastrModule.forRoot(),
@@ -21,6 +25,7 @@ import { ToastrModule } from 'ngx-toastr';
     ReactiveFormsModule,
   ],
   providers: [],
+  exports: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

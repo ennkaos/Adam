@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 import { Observable, switchMap } from 'rxjs';
 import { AddRoomService } from './services/add-room-service';
 import { RoomsModel } from '../models/RoomsModel';
-import { ActivatedRoute, RouterPreloader } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { ResourceLoader } from '@angular/compiler';
 
 @Component({
   selector: 'app-add-room',
@@ -31,7 +29,7 @@ export class AddRoomComponent {
   delete(id: number): void {
     try {
       this.addroomService.deleteRoom(id);
-      window.location.reload();
+      this.ngOnInit();
     } catch (error) {
       this.toastr.error('Ceva a mers gresit ..');
       throw error;

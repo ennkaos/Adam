@@ -1,20 +1,18 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActiveToast, ToastrService } from 'ngx-toastr';
+import { MateriiModel } from '../../models/MateriiModel';
 import { Observable, tap } from 'rxjs';
-import { RoomsModel } from 'src/app/models/RoomsModel';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AddRoomService {
-  rooms!: Observable<RoomsModel[]>;
-  room!: Observable<RoomsModel>;
+export class MateriiService {
+  materii!: Observable<MateriiModel[]>;
+  materie!: Observable<MateriiModel>;
   url: String = '/api';
   urlMock: string = 'http://localhost:3000';
-
   constructor(public http: HttpClient, private toastr: ToastrService) {}
-
   httpOptions = {
     headers: new HttpHeaders({
       'Content-type': 'application/json;charset=UTF-8',
@@ -22,11 +20,10 @@ export class AddRoomService {
     }),
   };
 
-  createRoom(profileForm: RoomsModel): ActiveToast<any> {
+  create(profileForm: MateriiModel): ActiveToast<any> {
     try {
-      console.log(profileForm);
       this.http
-        .post(this.urlMock + '/Rooms/', profileForm, this.httpOptions)
+        .post(this.urlMock + '/MaterieModels/', profileForm, this.httpOptions)
         .subscribe((response) => console.log(response));
       return this.toastr.success('Sala a fost adaugata cu succes');
     } catch (error) {
@@ -34,54 +31,57 @@ export class AddRoomService {
     }
   }
 
-  getRooms(): Observable<RoomsModel[]> {
+  get(): Observable<MateriiModel[]> {
     try {
-      this.rooms = this.http
-        .get(this.urlMock + '/Rooms/', this.httpOptions)
+      return (this.materii = this.http
+        .get(this.urlMock + '/MaterieModels/', this.httpOptions)
         .pipe(
           tap((result: any) => {
             console.log(JSON.stringify(result));
           })
-        );
-      return this.rooms;
+        ));
     } catch (error) {
       throw error;
     }
   }
-  updateRoom(id: number, data: RoomsModel): ActiveToast<any> {
+  update(id: number, data: MateriiModel): ActiveToast<any> {
     console.log(id, data);
     try {
       this.http
-        .post(this.urlMock + '/Rooms/' + id, data, this.httpOptions)
-        .subscribe((response) => console.log(response));
+        .put(
+          this.urlMock + '/MaterieModels/' + id,
+          { ...data },
+          this.httpOptions
+        )
+        .subscribe((response) => console.log(HttpStatusCode.Accepted));
       return this.toastr.success('Sala a fost modificata cu succes');
     } catch (error) {
       return this.toastr.error('Ceva nu a functionat ..');
     }
   }
 
-  deleteRoom(id: number): ActiveToast<any> {
+  delete(id: number): ActiveToast<any> {
     try {
       console.log(id);
       this.http
-        .delete(this.urlMock + '/Rooms/' + id, this.httpOptions)
+        .delete(this.urlMock + '/MaterieModels/' + id, this.httpOptions)
         .subscribe((response) => console.log(response));
       return this.toastr.success('Sala a fost stearsa cu succes');
     } catch (error) {
       return this.toastr.error('Ceva a mers gresit..');
     }
   }
-  getRoom(id: number): Observable<RoomsModel> {
+  getMaterie(id: number): Observable<MateriiModel> {
     try {
-      this.room = this.http
-        .get(this.urlMock + '/Rooms/' + id, this.httpOptions)
+      this.materie = this.http
+        .get(this.urlMock + '/MaterieModels/' + id, this.httpOptions)
         .pipe(
           tap((result: any) => {
             console.log(JSON.stringify(result));
           })
         );
 
-      return this.room;
+      return this.materie;
     } catch (error) {
       throw error;
     }

@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginGuard } from './login.guard';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+
   {
     path: 'login',
     loadChildren: () =>
@@ -52,7 +52,6 @@ const routes: Routes = [
     loadChildren: () =>
       import('./register/register.module').then((m) => m.RegisterModule),
   },
-  { path: ' ', redirectTo: '/home', pathMatch: 'full' },
 
   { path: '**', component: PageNotFoundComponent },
 ];

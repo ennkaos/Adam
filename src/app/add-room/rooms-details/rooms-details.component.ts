@@ -5,7 +5,6 @@ import { EMPTY, Observable, empty, of, tap } from 'rxjs';
 import { RoomsModel } from 'src/app/models/RoomsModel';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { EMPTY_OBSERVER } from 'rxjs/internal/Subscriber';
 
 @Component({
   selector: 'app-rooms-details',
@@ -19,7 +18,6 @@ export class RoomsDetailsComponent {
   profileForm!: FormGroup;
   roomResult!: RoomsModel;
   roomId!: null | string;
-  status!: string;
 
   constructor(
     private fb: FormBuilder,
