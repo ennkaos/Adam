@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { LoginService } from '../login.service';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -7,8 +8,15 @@ import { LoginService } from '../login.service';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
-  isLogged!: boolean;
+  isLogged: boolean = false;
   constructor(private loginService: LoginService) {}
-  ngOnInit() {}
-  logout() {}
+
+  ngOnInit() {
+    this.loginService.isLogged().subscribe((e) => {
+      this.isLogged = e;
+    });
+  }
+  logout() {
+    this.loginService.logOut();
+  }
 }

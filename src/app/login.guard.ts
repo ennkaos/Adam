@@ -27,7 +27,9 @@ export class LoginGuard implements CanActivate {
     const expectedRole = route.data['expectedRole'];
     this.loginService.isLogged().subscribe((e) => {
       this.isLogged = e;
+      console.log(e);
     });
+    console.log(this.isLogged);
     if (this.isLogged || role === expectedRole) {
       return true;
     } else {

@@ -11,7 +11,7 @@ import { Observable, map, of } from 'rxjs';
   providedIn: 'root',
 })
 export class LoginService {
-  url: string = 'http://localhost:3000';
+  url: string = '/api';
   urlMock: string = 'http://localhost:3000';
   token: string;
 
@@ -28,11 +28,15 @@ export class LoginService {
     }),
   };
 
-  loginRequest(profileForm: FormGroup): ActiveToast<any> {
+  loginRequest(profileForm: FormGroup) {
     try {
       if (!this.token) {
-        this.http
-          .post(this.url + '/Login/', profileForm, this.httpOptions)
+        return this.http
+          .post(
+            this.url + '/Login/Login',
+            { ...profileForm, name: '1' },
+            this.httpOptions
+          )
           .subscribe((response: LoggedUser) => {
             if (response) {
               localStorage.setItem('email', response.email);
@@ -40,6 +44,7 @@ export class LoginService {
               localStorage.setItem('role', response.role);
               localStorage.setItem('name', response.name);
               if (this.isLogged()) {
+                this.router.navigate(['home']);
                 return this.toast.success(
                   response.message + 'Autentificat cu succes'
                 );
@@ -54,7 +59,6 @@ export class LoginService {
       } else {
         return this.toast.error('Esti deja autentificat');
       }
-      return this.toast.show('WTF');
     } catch (error) {
       return this.toast.error(error);
     }
@@ -67,9 +71,14 @@ export class LoginService {
       const name = localStorage.getItem('name');
       const email = localStorage.getItem('email');
       return this.http
-        .post(this.url, { token: localToken, name, email }, this.httpOptions)
+        .post(
+          this.url + '/Login/ValidatetToken',
+          { token: localToken, name, email },
+          this.httpOptions
+        )
         .pipe(
           map((r: any) => {
+            console.log(r);
             return !!r;
           })
         );
@@ -86,5 +95,25 @@ export class LoginService {
       this.router.navigate(['login']);
     }
   }
-  // register() {}
+  register(Form: UsersModels): ActiveToast<any> {
+    if (!!Form) {
+      this.http
+        .post(
+          this.url + '/Login/Register',
+          { name: Form.name, email: Form.email, password: Form.password },
+          this.httpOptions
+        )
+        .subscribe((response: LoggedUser) => {
+          if (response) {
+            this.router.navigate(['home']);
+            return this.toast.success('Inregistrare cu succes');
+          } else {
+            return this.toast.success('Inregistrarea a esuat');
+          }
+        });
+      return this.toast.success('Inregistrare cu succes');
+    } else {
+      return this.toast.success('Inregistrarea a esuat');
+    }
+  }
 }

@@ -20,35 +20,54 @@ const routes: Routes = [
     path: 'home',
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
     canActivate: [LoginGuard],
+    data: {
+      expectedRole: 0 || 2,
+    },
   },
   {
     path: 'materii',
     loadChildren: () =>
       import('./materii/materii.module').then((m) => m.MateriiModule),
+    canActivate: [LoginGuard],
+    data: {
+      expectedRole: 0 || 2,
+    },
   },
   {
     path: 'rezervari',
     loadChildren: () =>
       import('./rezervari/rezervari.module').then((m) => m.RezervariModule),
     canActivate: [LoginGuard],
+    data: {
+      expectedRole: 0 || 2,
+    },
   },
   {
     path: 'accounts',
     loadChildren: () =>
       import('./accounts/accounts.module').then((m) => m.AccountsModule),
     canActivate: [LoginGuard],
+    data: {
+      expectedRole: 0 || 2,
+    },
   },
   {
     path: 'roluri',
     loadChildren: () =>
       import('./roluri/roluri.module').then((m) => m.RoluriModule),
     canActivate: [LoginGuard],
+    data: {
+      expectedRole: 0 || 2,
+    },
   },
   {
     path: 'add-room',
     loadChildren: () =>
       import('./add-room/add-room.module').then((m) => m.AddRoomModule),
     canActivate: [LoginGuard],
+    data: {
+      expectedRole: 0 || 2,
+    },
   },
 
   { path: '**', component: PageNotFoundComponent },
