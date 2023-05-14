@@ -5,8 +5,9 @@
     <div class="card-header">
       <h3>{{ router?.toUpperCase() }} Materie</h3>
     </div>
+
     <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="card-body">
-      <div class="d-flex flex-row g-3 justify-content-around needs-validation">
+      <div class="d-flex flex-column g-3 justify-content-around">
         <div>
           <label for="nume" class="m-3">Nume:</label>
           <input
@@ -38,9 +39,9 @@
       >
         Reseteaza
       </div>
+      <app-btn-sticky-back></app-btn-sticky-back>
     </form>
   </div>
-  <app-btn-sticky-back></app-btn-sticky-back>
 </ng-container>
 <ng-template #loading4>
   <div class="spinner-border mx-auto" role="status">

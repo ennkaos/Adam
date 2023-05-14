@@ -10,7 +10,7 @@ import { Observable, tap } from 'rxjs';
 export class MateriiService {
   materii!: Observable<MateriiModel[]>;
   materie!: Observable<MateriiModel>;
-  url: String = '/api';
+  url: String = 'http://localhost:3000';
   urlMock: string = 'http://localhost:3000';
   constructor(public http: HttpClient, private toastr: ToastrService) {}
   httpOptions = {
@@ -48,7 +48,7 @@ export class MateriiService {
     console.log(id, data);
     try {
       this.http
-        .post(this.url + '/MaterieModels/' + id, { ...data }, this.httpOptions)
+        .put(this.url + '/MaterieModels/' + id, { ...data }, this.httpOptions)
         .subscribe((response) => console.log(HttpStatusCode.Accepted));
       return this.toastr.success('Sala a fost modificata cu succes');
     } catch (error) {

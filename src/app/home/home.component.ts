@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { SerieModel } from '../models/SerieModel';
-import { ScheduleService } from '../services/schedule.service';
+import { ScheduleService } from './services/schedule.service';
 import { days, hours, scheduleDay, serie } from '../models/scheduleModel';
 
 @Component({

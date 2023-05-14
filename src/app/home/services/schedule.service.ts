@@ -1,8 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-import { Schedule } from '../models/Schedule';
-import { SerieModel } from '../models/SerieModel';
+import { SerieModel } from '../../models/SerieModel';
 
 @Injectable({
   providedIn: 'root',

@@ -11,7 +11,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./login/login.module').then((m) => m.LoginModule),
   },
-
+  {
+    path: 'register',
+    loadChildren: () =>
+      import('./login/login.module').then((m) => m.LoginModule),
+  },
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
@@ -45,12 +49,6 @@ const routes: Routes = [
     loadChildren: () =>
       import('./add-room/add-room.module').then((m) => m.AddRoomModule),
     canActivate: [LoginGuard],
-  },
-
-  {
-    path: 'register',
-    loadChildren: () =>
-      import('./register/register.module').then((m) => m.RegisterModule),
   },
 
   { path: '**', component: PageNotFoundComponent },

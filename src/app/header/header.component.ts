@@ -9,12 +9,6 @@ import { LoginService } from '../login.service';
 export class HeaderComponent {
   isLogged!: boolean;
   constructor(private loginService: LoginService) {}
-  ngOnInit() {
-    this.isLogged = this.loginService.isLogged();
-  }
-  logout() {
-    this.isLogged = this.loginService.isLogged();
-    this.loginService.logOut();
-
-  }
+  ngOnInit() {}
+  logout() {}
 }
