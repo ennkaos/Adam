@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ActiveToast, ToastrService } from 'ngx-toastr';
 import { Observable, tap } from 'rxjs';
 import { RoomsModel } from 'src/app/models/RoomsModel';
+import { enviroment } from 'src/enviroment/enviroments';
 
 @Injectable({
   providedIn: 'root',
@@ -10,8 +11,7 @@ import { RoomsModel } from 'src/app/models/RoomsModel';
 export class AddRoomService {
   rooms!: Observable<RoomsModel[]>;
   room!: Observable<RoomsModel>;
-  url: String = 'http://localhost:3000';
-  urlMock: string = 'http://localhost:3000';
+  url: string = enviroment.mode === 'Bucur' ? 'http://localhost:3000' : '/api';
 
   constructor(public http: HttpClient, private toastr: ToastrService) {}
 

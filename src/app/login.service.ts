@@ -6,13 +6,14 @@ import { UsersModels } from './models/UsersModels';
 import { FormGroup } from '@angular/forms';
 import { LoggedUser } from './models/LoggedUser';
 import { Observable, map, of } from 'rxjs';
+import { enviroment } from 'src/enviroment/enviroments';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  url: string = '/api';
-  urlMock: string = 'http://localhost:3000';
+  url: string = enviroment.mode === 'Bucur' ? 'http://localhost:3000' : '/api';
+
   token: string;
 
   constructor(

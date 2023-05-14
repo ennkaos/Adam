@@ -1,16 +1,49 @@
 <ng-container *ngIf="materii$ | async as Rooms; else loading4">
-  <div
-    style="z-index: 1"
-    class="card mt-3 border-shadow container mx-auto"
-    *ngIf="this.materiiResult.length != 0"
-  >
-    <h2 class="">Lista Sali</h2>
-    <table class="table table-hover bg-white">
+  <div class="d-flex flex-row w-100 justify-content-between">
+    <h2>Lista Materii</h2>
+    <app-search-bar
+      [data2]="materiiResult"
+      (eventEmitter)="filter($event)"
+      [key]="'name'"
+    ></app-search-bar>
+  </div>
+  <div style="z-index: 1" class="card mt-3 border-shadow container mx-auto">
+    <table
+      *ngIf="materiiResult.length > 0; else notfound"
+      class="table table-hover bg-white"
+    >
       <thead>
         <tr>
-          <td scope="row">#</td>
-          <td scope="row">Nume</td>
-          <td scope="row">An Materie</td>
+          <td scope="row">
+            <div class="d-flex flex-row">
+              <p>#</p>
+              <app-sort
+                [data]="materiiResult"
+                (eventEmitter)="sort($event)"
+                [key]="'id'"
+              ></app-sort>
+            </div>
+          </td>
+          <td scope="row">
+            <div class="d-flex flex-row">
+              <p>Nume</p>
+              <app-sort
+                [data]="materiiResult"
+                (eventEmitter)="sort($event)"
+                [key]="'name'"
+              ></app-sort>
+            </div>
+          </td>
+          <td scope="row">
+            <div class="d-flex flex-row">
+              <p>An Materie</p>
+              <app-sort
+                [data]="materiiResult"
+                (eventEmitter)="sort($event)"
+                [key]="'anMaterie'"
+              ></app-sort>
+            </div>
+          </td>
         </tr>
       </thead>
       <tbody>
@@ -54,6 +87,9 @@
       </tbody>
     </table>
   </div>
+  <ng-template #notfound>
+    <h1>Not found</h1>
+  </ng-template>
   <div class="container m-5 d-flex justify-content-end">
     <button
       class="btn btn-success"

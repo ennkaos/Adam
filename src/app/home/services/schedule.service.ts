@@ -2,12 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { SerieModel } from '../../models/SerieModel';
+import { enviroment } from 'src/enviroment/enviroments';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ScheduleService {
-  url: String = '/api';
+  url: string = enviroment.mode === 'Bucur' ? 'http://localhost:3000' : '/api';
   schedule!: Observable<SerieModel>;
 
   constructor(public http: HttpClient) {}

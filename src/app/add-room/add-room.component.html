@@ -1,17 +1,59 @@
 <ng-container *ngIf="rooms$ | async as Rooms; else loading4">
-  <div
-    style="z-index: 1"
-    class="card mt-3 border-shadow container mx-auto"
-    *ngIf="this.roomsResult.length != 0"
-  >
-    <h2 class="">Lista Sali</h2>
-    <table class="table table-hover bg-white">
+  <div style="z-index: 1" class="card mt-3 border-shadow container mx-auto">
+    <div class="d-flex flex-row w-100 justify-content-between">
+      <h2 class="m-3">Lista Sali</h2>
+      <app-search-bar
+        [data2]="roomsResult"
+        (eventEmitter)="filter($event)"
+        [key]="'name'"
+      ></app-search-bar>
+    </div>
+    <table
+      *ngIf="this.roomsResult.length != 0; else notfound"
+      class="table table-hover bg-white"
+    >
       <thead>
         <tr>
-          <td scope="row">#</td>
-          <td scope="row">Nume</td>
-          <td scope="row">Capacitate</td>
-          <td scope="row">Sala de curs</td>
+          <td scope="row">
+            <div class="d-flex flex-row">
+              <p>#</p>
+              <app-sort
+                [data]="roomsResult"
+                (eventEmitter)="sort($event)"
+                [key]="'id'"
+              ></app-sort>
+            </div>
+          </td>
+          <td scope="row">
+            <div class="d-flex flex-row">
+              <p>Nume</p>
+              <app-sort
+                [data]="roomsResult"
+                (eventEmitter)="sort($event)"
+                [key]="'name'"
+              ></app-sort>
+            </div>
+          </td>
+          <td scope="row">
+            <div class="d-flex flex-row">
+              <p>Capacitate</p>
+              <app-sort
+                [data]="roomsResult"
+                (eventEmitter)="sort($event)"
+                [key]="'capacity'"
+              ></app-sort>
+            </div>
+          </td>
+          <td scope="row">
+            <div class="d-flex flex-row">
+              <p>Sala de curs</p>
+              <app-sort
+                [data]="roomsResult"
+                (eventEmitter)="sort($event)"
+                [key]="'labRoom'"
+              ></app-sort>
+            </div>
+          </td>
           <td scope="row">Editeaza</td>
           <td scope="row">Sterge</td>
         </tr>
@@ -67,6 +109,9 @@
         </tr>
       </tbody>
     </table>
+    <ng-template #notfound>
+      <h1>Not Found</h1>
+    </ng-template>
   </div>
   <div class="container m-5 d-flex justify-content-end">
     <button

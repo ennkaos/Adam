@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ActiveToast, ToastrService } from 'ngx-toastr';
 import { MateriiModel } from '../../models/MateriiModel';
 import { Observable, tap } from 'rxjs';
+import { enviroment } from 'src/enviroment/enviroments';
 
 @Injectable({
   providedIn: 'root',
@@ -10,8 +11,7 @@ import { Observable, tap } from 'rxjs';
 export class MateriiService {
   materii!: Observable<MateriiModel[]>;
   materie!: Observable<MateriiModel>;
-  url: String = 'http://localhost:3000';
-  urlMock: string = 'http://localhost:3000';
+  url: string = enviroment.mode === 'Bucur' ? 'http://localhost:3000' : '/api';
   constructor(public http: HttpClient, private toastr: ToastrService) {}
   httpOptions = {
     headers: new HttpHeaders({

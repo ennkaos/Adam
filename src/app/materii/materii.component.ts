@@ -13,10 +13,9 @@ export class MateriiComponent {
   materii$!: Observable<MateriiModel[]>;
   materiiResult!: MateriiModel[];
   subscriptionMaterii!: Subscription;
-  constructor(
-    public materiiService: MateriiService,
-    private toastr: ToastrService
-  ) {}
+  initialData: MateriiModel[];
+
+  constructor(public materiiService: MateriiService) {}
 
   ngOnInit(): void {
     this.materii$ = this.materiiService.get();
@@ -24,13 +23,22 @@ export class MateriiComponent {
       console.log('Subscription Started ...');
 
       this.materiiResult = e;
+      this.initialData = e;
     });
+  }
+  filter($event) {
+    if ($event) {
+      this.materiiResult = $event;
+    } else {
+      this.materiiResult = this.initialData;
+    }
+  }
+  sort($event) {
+    this.materiiResult = $event;
   }
   delete(id: number | undefined): void {
     if (id) this.materiiService.delete(id);
-
     this.materiiResult = this.materiiResult.filter((e) => e.id !== id);
-    //this.ngOnInit();
-    //window.location.reload();
+    this.initialData = this.initialData.filter((e) => e.id !== id);
   }
 }
