@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ErrorHandler, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ActiveToast, ToastrModule, ToastrService } from 'ngx-toastr';
+import { ActiveToast, ToastrService } from 'ngx-toastr';
 import { UsersModels } from './models/UsersModels';
 import { FormGroup } from '@angular/forms';
 import { LoggedUser } from './models/LoggedUser';
@@ -95,21 +95,20 @@ export class LoginService {
       this.router.navigate(['login']);
     }
   }
-  register(Form: UsersModels): ActiveToast<any> {
-    if (!!Form) {
+  register(form: FormGroup<any>): ActiveToast<any> {
+    if (!!form) {
       this.http
         .post(
           this.url + '/Login/Register',
-          { name: Form.name, email: Form.email, password: Form.password },
+          {
+            name: form.value.name,
+            email: form.value.email,
+            password: form.value.password,
+          },
           this.httpOptions
         )
-        .subscribe((response: LoggedUser) => {
-          if (response) {
-            this.router.navigate(['home']);
-            return this.toast.success('Inregistrare cu succes');
-          } else {
-            return this.toast.success('Inregistrarea a esuat');
-          }
+        .subscribe((response: UsersModels) => {
+          this.loginRequest(form);
         });
       return this.toast.success('Inregistrare cu succes');
     } else {

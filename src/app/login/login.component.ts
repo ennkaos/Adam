@@ -9,6 +9,8 @@ import {
 import { LoginService } from '../login.service';
 import { UsersModels } from '../models/UsersModels';
 import { ActivatedRoute, Router } from '@angular/router';
+import { createPasswordStrengthValidator } from '../validators/validate-password';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +28,8 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private loginService: LoginService,
-    public route: Router
+    public route: Router,
+    private toast: ToastrService
   ) {}
   ngOnInit(): void {
     this.isAdmin = true;
@@ -37,36 +40,32 @@ export class LoginComponent {
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required, Validators.minLength(4)]],
           })
-        : this.fb.group(
-            {
-              name: ['', [Validators.required]],
-              email: ['', [Validators.required, Validators.email]],
-              password: ['', [Validators.required, Validators.minLength(4)]],
-              confirmPassword: [
-                '',
-                [Validators.required, Validators.minLength(4)],
+        : this.fb.group({
+            name: ['', [Validators.required]],
+            email: ['', [Validators.required, Validators.email]],
+            password: [
+              '',
+              [
+                Validators.required,
+                Validators.minLength(4),
+                createPasswordStrengthValidator(),
               ],
-            },
-            {
-              validators: MustMatch('password', 'confirmPassword'),
-            }
-          );
+            ],
+          });
   }
   get f() {
     return this.form.controls;
   }
-  onSubmit(form: FormGroup) {
+  onSumbit(form: FormGroup) {
     this.submitted = true;
-    console.log(form);
-    if (this.form.invalid) return;
-    const email = this.form.value.email;
-    const password = this.form.value.password;
-
-    console.log(this.form.value);
-
-    this.loginService.loginRequest(this.form.value);
+    console.log(form.value);
+    if (this.form.invalid) return this.toast.error('Autentificarea a esuat');
+    return this.loginService.loginRequest(this.form.value);
   }
-}
-function MustMatch(arg0: string, arg1: string): any {
-  throw new Error('Function not implemented.');
+  onRegister(form: FormGroup) {
+    this.submitted = true;
+    console.log(form.value);
+    if (this.form.invalid) return this.toast.error('Inregistrarea a esuat');
+    return this.loginService.register(this.form);
+  }
 }
