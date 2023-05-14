@@ -8,6 +8,7 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LoginService } from './login.service';
+import { enviroment } from 'src/enviroment/enviroments';
 
 @Injectable({
   providedIn: 'root',
@@ -23,19 +24,22 @@ export class LoginGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    // const role: string = localStorage.getItem('role');
-    // const expectedRole = route.data['expectedRole'];
-    // this.loginService.isLogged().subscribe((e) => {
-    //   this.isLogged = e;
-    //   console.log(e);
-    // });
-    // console.log(this.isLogged);
-    // if (this.isLogged || role === expectedRole) {
-    //   return true;
-    // } else {
-    //   this.router.navigate(['login']);
-    //   return false;
-    // }
-    return true;
+    if (enviroment.mode === 'Adam') {
+      const role: string = localStorage.getItem('role');
+      const expectedRole = route.data['expectedRole'];
+      this.loginService.isLogged().subscribe((e) => {
+        this.isLogged = e;
+        console.log(e);
+      });
+      console.log(this.isLogged);
+      if (this.isLogged || role === expectedRole) {
+        return true;
+      } else {
+        this.router.navigate(['login']);
+        return false;
+      }
+    } else {
+      return true;
+    }
   }
 }
