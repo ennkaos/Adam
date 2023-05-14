@@ -37,6 +37,7 @@ export class HomeComponent {
       console.log('Subscription Started ...');
 
       this.scheduleResult = e;
+
       console.log(this.scheduleResult);
       this.clearArray();
       console.log(this.scheduleResult);

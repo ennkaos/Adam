@@ -25,9 +25,12 @@
 </div>
 <ng-container
   class="d-flex justify-content-center align-items-center"
-  *ngIf="schedule | async as schedule; else newDeb"
+  *ngIf="schedule | async as schedule"
 >
-  <div class="d-flex flex-row mt-5" *ngIf="this.scheduleResult">
+  <div
+    class="d-flex flex-row mt-5"
+    *ngIf="this.scheduleResult.grupe; else notfound"
+  >
     <div class="d-flex flex-column ms-x3">
       <div style="height: 50px">
         <h5>Days</h5>
@@ -86,7 +89,5 @@
       </div>
     </div>
   </div>
+  <ng-template #notfound><h5>Not Found</h5></ng-template>
 </ng-container>
-<ng-template #newDeb>
-  <!-- <app-spinner></app-spinner> -->
-</ng-template>
