@@ -5,12 +5,13 @@ import { ActiveToast, ToastrModule, ToastrService } from 'ngx-toastr';
 import { UsersModels } from './models/UsersModels';
 import { FormGroup } from '@angular/forms';
 import { LoggedUser } from './models/LoggedUser';
+import { Observable, map, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  url: String = 'http://localhost:3000';
+  url: string = 'http://localhost:3000';
   urlMock: string = 'http://localhost:3000';
   token: string;
 
@@ -59,12 +60,21 @@ export class LoginService {
     }
   }
 
-  isLogged(): boolean {
-    this.token = localStorage.getItem('token');
-    if (this.token && this.token?.length > 0) {
-      return true;
+  isLogged(): Observable<boolean> {
+    const response: Observable<boolean> = of(false);
+    const localToken = localStorage.getItem('token');
+    if (localToken && localToken?.length > 0) {
+      const name = localStorage.getItem('name');
+      const email = localStorage.getItem('email');
+      return this.http
+        .post(this.url, { token: localToken, name, email }, this.httpOptions)
+        .pipe(
+          map((r: any) => {
+            return !!r;
+          })
+        );
     } else {
-      return false;
+      return response;
     }
   }
 
