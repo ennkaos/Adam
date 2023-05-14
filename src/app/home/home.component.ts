@@ -107,8 +107,12 @@ export class HomeComponent {
   onChangeSerieSelect(event): void {
     // this.unsubscribeSchedule();
     this.selectedSerie = event.target.value;
-    console.log(this.selectedSerie);
-    this.subscribeSchedule(this.selectedSerie);
+    //server Mock
+    const value = this.selectedSerie.slice(0, 1);
+    this.subscribeSchedule(value);
+    //server Adam
+    // console.log(this.selectedSerie);
+    // this.subscribeSchedule(this.selectedSerie);
   }
   filterArray() {
     this.scheduleDay.map((day: any) => {
