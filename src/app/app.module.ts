@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,8 +8,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-
-import { BtnStickyBackComponent } from './shared/btn-sticky-back/btn-sticky-back.component';
 import { SharedModule } from './shared/shared/shared.module';
 
 @NgModule({

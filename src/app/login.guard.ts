@@ -23,18 +23,19 @@ export class LoginGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    const role: string = localStorage.getItem('role');
-    const expectedRole = route.data['expectedRole'];
-    this.loginService.isLogged().subscribe((e) => {
-      this.isLogged = e;
-      console.log(e);
-    });
-    console.log(this.isLogged);
-    if (this.isLogged || role === expectedRole) {
-      return true;
-    } else {
-      this.router.navigate(['login']);
-      return false;
-    }
+    // const role: string = localStorage.getItem('role');
+    // const expectedRole = route.data['expectedRole'];
+    // this.loginService.isLogged().subscribe((e) => {
+    //   this.isLogged = e;
+    //   console.log(e);
+    // });
+    // console.log(this.isLogged);
+    // if (this.isLogged || role === expectedRole) {
+    //   return true;
+    // } else {
+    //   this.router.navigate(['login']);
+    //   return false;
+    // }
+    return true;
   }
 }

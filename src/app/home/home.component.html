@@ -6,15 +6,18 @@
           <a class="navbar-brand" href="#">Selectare serii</a>
         </div>
         <div class="d-flex flex-row">
-          <div *ngFor="let item of serie" class="active">
-            <button
-              class="btn btn-success m-3"
-              [disabled]="selectedSerie === item"
-              (click)="onChangeSerieSelect(item)"
-            >
+          <select
+            (change)="onChangeSerieSelect($event)"
+            class="form-select"
+            aria-label="Default select example"
+          >
+            <option value="" disabled selected="selected">
+              Seleacteaza Serie
+            </option>
+            <option *ngFor="let item of serie" [ngValue]="item">
               {{ item }}
-            </button>
-          </div>
+            </option>
+          </select>
         </div>
       </div>
     </nav>
@@ -85,7 +88,5 @@
   </div>
 </ng-container>
 <ng-template #newDeb>
-  <!-- <div class="spinner-border" role="status">
-    <span class="sr-only">Loading...</span>
-  </div> -->
+  <!-- <app-spinner></app-spinner> -->
 </ng-template>

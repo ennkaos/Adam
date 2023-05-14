@@ -10,7 +10,7 @@ import { RoomsModel } from 'src/app/models/RoomsModel';
 export class AddRoomService {
   rooms!: Observable<RoomsModel[]>;
   room!: Observable<RoomsModel>;
-  url: String = '/api';
+  url: String = 'http://localhost:3000';
   urlMock: string = 'http://localhost:3000';
 
   constructor(public http: HttpClient, private toastr: ToastrService) {}

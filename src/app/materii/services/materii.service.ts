@@ -10,7 +10,7 @@ import { Observable, tap } from 'rxjs';
 export class MateriiService {
   materii!: Observable<MateriiModel[]>;
   materie!: Observable<MateriiModel>;
-  url: String = '/api';
+  url: String = 'http://localhost:3000';
   urlMock: string = 'http://localhost:3000';
   constructor(public http: HttpClient, private toastr: ToastrService) {}
   httpOptions = {

@@ -10,7 +10,7 @@ import { days, hours, scheduleDay, serie } from '../models/scheduleModel';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
-  selectedSerie: any = null;
+  selectedSerie: string;
   serie!: string[];
   showSerie!: SerieModel;
   index: number = 0;
@@ -104,9 +104,10 @@ export class HomeComponent {
     });
   }
 
-  onChangeSerieSelect(event: string): void {
+  onChangeSerieSelect(event): void {
     // this.unsubscribeSchedule();
-    this.selectedSerie = event;
+    this.selectedSerie = event.target.value;
+    console.log(this.selectedSerie);
     this.subscribeSchedule(this.selectedSerie);
   }
   filterArray() {
