@@ -64,7 +64,7 @@
         aria-labelledby="tab-login"
         [ngClass]="{ 'active show': route.url === '/login' }"
       >
-        <form [formGroup]="form" (ngSubmit)="onRegister(form)">
+        <form [formGroup]="form" (ngSubmit)="onSumbit(form)">
           <!-- Email input -->
           <div class="form-outline mb-4">
             <input

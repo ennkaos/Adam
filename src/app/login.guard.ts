@@ -14,7 +14,6 @@ import { enviroment } from 'src/enviroment/enviroments';
   providedIn: 'root',
 })
 export class LoginGuard implements CanActivate {
-  isLogged: boolean = false;
   constructor(private loginService: LoginService, private router: Router) {}
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -27,18 +26,10 @@ export class LoginGuard implements CanActivate {
     if (enviroment.mode === 'Adam') {
       const role: string = localStorage.getItem('role');
       const expectedRole = route.data['expectedRole'];
-      this.loginService.isLogged().subscribe((e) => {
-        this.isLogged = e;
-        console.log(e);
-      });
-      console.log(this.isLogged);
-      if (this.isLogged || role === expectedRole) {
-        return true;
-      } else {
-        this.router.navigate(['login']);
-        return false;
-      }
+
+      return !!this.loginService.getUser() && role == expectedRole;
     } else {
+      this.router.navigate(['login']);
       return true;
     }
   }

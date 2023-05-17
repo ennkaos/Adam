@@ -48,7 +48,7 @@ export class MateriiService {
     console.log(id, data);
     try {
       this.http
-        .put(this.url + '/MaterieModels/' + id, { ...data }, this.httpOptions)
+        .post(this.url + '/MaterieModels/' + id, { ...data }, this.httpOptions)
         .subscribe((response) => console.log(HttpStatusCode.Accepted));
       return this.toastr.success('Sala a fost modificata cu succes');
     } catch (error) {

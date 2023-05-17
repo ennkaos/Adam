@@ -50,7 +50,7 @@ export class AddRoomService {
     console.log(id, data);
     try {
       this.http
-        .put(this.url + '/Rooms/' + id, data, this.httpOptions)
+        .post(this.url + '/Rooms/' + id, data, this.httpOptions)
         .subscribe((response) => console.log(response));
       return this.toastr.success('Sala a fost modificata cu succes');
     } catch (error) {

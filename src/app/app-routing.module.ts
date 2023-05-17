@@ -21,7 +21,7 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
     canActivate: [LoginGuard],
     data: {
-      expectedRole: 0 || 2,
+      expectedRole: 0,
     },
   },
   {
@@ -30,7 +30,7 @@ const routes: Routes = [
       import('./materii/materii.module').then((m) => m.MateriiModule),
     canActivate: [LoginGuard],
     data: {
-      expectedRole: 0 || 2,
+      expectedRole: 0,
     },
   },
   {
@@ -39,7 +39,7 @@ const routes: Routes = [
       import('./rezervari/rezervari.module').then((m) => m.RezervariModule),
     canActivate: [LoginGuard],
     data: {
-      expectedRole: 0 || 2,
+      expectedRole: 0,
     },
   },
   {
@@ -48,7 +48,7 @@ const routes: Routes = [
       import('./accounts/accounts.module').then((m) => m.AccountsModule),
     canActivate: [LoginGuard],
     data: {
-      expectedRole: 0 || 2,
+      expectedRole: 0,
     },
   },
   {
@@ -57,7 +57,7 @@ const routes: Routes = [
       import('./roluri/roluri.module').then((m) => m.RoluriModule),
     canActivate: [LoginGuard],
     data: {
-      expectedRole: 0 || 2,
+      expectedRole: 0,
     },
   },
   {
@@ -66,7 +66,7 @@ const routes: Routes = [
       import('./add-room/add-room.module').then((m) => m.AddRoomModule),
     canActivate: [LoginGuard],
     data: {
-      expectedRole: 0 || 2,
+      expectedRole: 0,
     },
   },
 

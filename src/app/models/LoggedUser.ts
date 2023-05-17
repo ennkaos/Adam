@@ -3,5 +3,5 @@ export interface LoggedUser {
   token: string;
   email: string;
   name: string;
-  role: string;
+  role: number;
 }

@@ -5,23 +5,30 @@ import { ActiveToast, ToastrService } from 'ngx-toastr';
 import { UsersModels } from './models/UsersModels';
 import { FormGroup } from '@angular/forms';
 import { LoggedUser } from './models/LoggedUser';
-import { Observable, map, of } from 'rxjs';
+import { BehaviorSubject, Observable, map, of } from 'rxjs';
 import { enviroment } from 'src/enviroment/enviroments';
+import { Role } from './models/roles';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
   url: string = enviroment.mode === 'Bucur' ? 'http://localhost:3000' : '/api';
-
+  response: Observable<boolean> = of(false);
   token: string;
+  loggedInSubject: BehaviorSubject<{ isLoggedIn: boolean; userRole: string }> =
+    new BehaviorSubject({ isLoggedIn: false, userRole: '' });
+  logged: Observable<boolean>;
+  role: Role;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private toast: ToastrService,
     private http: HttpClient
-  ) {}
+  ) {
+    this.token = this.getUser();
+  }
   httpOptions = {
     headers: new HttpHeaders({
       'Content-type': 'application/json;charset=UTF-8',
@@ -30,8 +37,8 @@ export class LoginService {
   };
 
   loginRequest(profileForm: FormGroup) {
-    try {
-      if (!this.token) {
+    if (!this.getUser()) {
+      try {
         return this.http
           .post(
             this.url + '/Login/Login',
@@ -39,61 +46,79 @@ export class LoginService {
             this.httpOptions
           )
           .subscribe((response: LoggedUser) => {
-            if (response) {
+            if (!!response) {
               localStorage.setItem('email', response.email);
               localStorage.setItem('token', response.token);
-              localStorage.setItem('role', response.role);
+              localStorage.setItem('role', response.role.toString());
               localStorage.setItem('name', response.name);
-              if (this.isLogged()) {
-                this.router.navigate(['home']);
-                return this.toast.success(
-                  response.message + 'Autentificat cu succes'
-                );
-              } else {
-                return this.toast.success('Autentificarea a esuat');
-              }
+              this.token = response.token;
+              this.loggedInSubject.next({
+                isLoggedIn: true,
+                userRole: localStorage.getItem('role'),
+              });
+              this.router.navigate(['home']);
+              return this.toast.success(
+                response.message + 'Autentificat cu succes'
+              );
             } else {
               localStorage.clear();
               return this.toast.success('Autentificarea a esuat');
             }
           });
-      } else {
-        return this.toast.error('Esti deja autentificat');
+      } catch (error) {
+        return this.toast.error(error);
       }
-    } catch (error) {
-      return this.toast.error(error);
+    } else {
+      return this.toast.error('Trebuie sa te autentifici!');
     }
   }
 
-  isLogged(): Observable<boolean> {
-    const response: Observable<boolean> = of(false);
-    const localToken = localStorage.getItem('token');
-    if (localToken && localToken?.length > 0) {
-      const name = localStorage.getItem('name');
-      const email = localStorage.getItem('email');
-      return this.http
+  getUser(): any {
+    return !!localStorage.getItem('name') &&
+      !!localStorage.getItem('email') &&
+      !!localStorage.getItem('token') &&
+      !!localStorage.getItem('role')
+      ? true
+      : false;
+  }
+
+  isLogged(): Observable<{ isLoggedIn: boolean; userRole: string }> {
+    const user = this.getUser();
+    if (user) {
+      this.http
         .post(
           this.url + '/Login/ValidatetToken',
-          { token: localToken, name, email },
+          {
+            token: localStorage.getItem('token'),
+            name: localStorage.getItem('name'),
+            email: localStorage.getItem('email'),
+          },
           this.httpOptions
         )
-        .pipe(
-          map((r: any) => {
-            console.log(r);
-            return !!r;
-          })
-        );
+        .subscribe((r) => {
+          return this.loggedInSubject.next({
+            isLoggedIn: !!r,
+            userRole: localStorage.getItem('role') || '',
+          });
+        });
     } else {
-      return response;
+      this.loggedInSubject.next(this.loggedInSubject.getValue());
     }
+
+    return this.loggedInSubject.asObservable();
   }
 
   logOut() {
-    if (this.isLogged()) {
+    if (this.getUser()) {
       localStorage.clear();
+      this.loggedInSubject.next({
+        isLoggedIn: false,
+        userRole: '',
+      });
+
       this.router.navigate(['login']);
     } else {
-      this.router.navigate(['login']);
+      this.router.navigate(['register']);
     }
   }
   register(form: FormGroup<any>): ActiveToast<any> {
