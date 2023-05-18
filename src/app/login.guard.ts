@@ -29,7 +29,6 @@ export class LoginGuard implements CanActivate {
 
       return !!this.loginService.getUser() && role == expectedRole;
     } else {
-      this.router.navigate(['login']);
       return true;
     }
   }

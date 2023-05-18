@@ -3,7 +3,6 @@ import { Observable, Subscription } from 'rxjs';
 import { SerieModel } from '../models/SerieModel';
 import { ScheduleService } from './services/schedule.service';
 import { days, hours, scheduleDay, serie } from '../models/scheduleModel';
-import { enviroment } from 'src/enviroment/enviroments';
 
 @Component({
   selector: 'app-home',
@@ -110,15 +109,11 @@ export class HomeComponent {
     // this.unsubscribeSchedule();
     this.selectedSerie = event.target.value;
     //server Mock
-    console.log(enviroment.mode);
-    if (enviroment.mode === 'Bucur') {
-      const value = this.selectedSerie.slice(0, 1);
-      this.subscribeSchedule(value);
-    } else {
-      //server Adam
-      console.log(this.selectedSerie);
-      this.subscribeSchedule(this.selectedSerie);
-    }
+    const value = this.selectedSerie.slice(0, 1);
+    this.subscribeSchedule(value);
+    //server Adam
+    // console.log(this.selectedSerie);
+    // this.subscribeSchedule(this.selectedSerie);
   }
   filterArray() {
     this.scheduleDay.map((day: any) => {

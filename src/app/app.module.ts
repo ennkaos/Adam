@@ -9,7 +9,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { SharedModule } from './shared/shared/shared.module';
-import { SearchBarComponent } from './shared/search-bar/search-bar.component';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, PageNotFoundComponent],

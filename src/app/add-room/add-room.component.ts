@@ -23,6 +23,7 @@ export class AddRoomComponent {
     this.rooms$ = this.addroomService.getRooms();
     this.rooms$.subscribe((e) => {
       console.log('Subscription Started ...');
+      console.log(e);
       this.roomsResult = e;
       this.initialData = e;
     });

@@ -5,5 +5,6 @@ export interface UsersModels {
   name: string;
   email: EmailValidator;
   password: string;
-  token: string;
+  token?: string;
+  role: number;
 }
