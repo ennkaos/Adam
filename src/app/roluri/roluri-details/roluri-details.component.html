@@ -1,1 +1,64 @@
-<p>roluri-details works!</p>
+<ng-container *ngIf="user$ | async as UsersModels; else loading4">
+  <div class="card container mt-3">
+    <div class="card-header">
+      <h3>{{ router?.toUpperCase() }} Utilizatori</h3>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" class="card-body">
+      <div class="d-flex flex-column g-3 justify-content-around">
+        <div>
+          <label for="nume" class="m-3">Nume:</label>
+          <input
+            id="nume"
+            class="m-3 form-control validationCustom01"
+            type="text"
+            formControlName="name"
+          />
+        </div>
+
+        <div class="">
+          <label for="anMaterie" class="m-3">Email: </label>
+          <input
+            class="m-3 form-control"
+            id="anMaterie"
+            type="email"
+            formControlName="email"
+          />
+        </div>
+        <!-- <div class="">
+          <label for="anMaterie" class="m-3">An Materie: </label>
+          <input
+            class="m-3 form-control"
+            id="anMaterie"
+            type="number"
+            formControlName="anMaterie"
+          />
+        </div> -->
+        <div class="">
+          <label for="password" class="m-3">Parola: </label>
+          <input
+            class="m-3 form-control"
+            id="password"
+            type="password"
+            formControlName="password"
+          />
+        </div>
+      </div>
+      <button *ngIf="editable" type="submit" class="btn btn-primary m-5">
+        Salveaza
+      </button>
+      <div
+        *ngIf="editable"
+        type="reset"
+        (click)="onReset()"
+        class="btn btn-secondary m-5"
+      >
+        Reseteaza
+      </div>
+      <app-btn-sticky-back></app-btn-sticky-back>
+    </form>
+  </div>
+</ng-container>
+<ng-template #loading4>
+  <app-spinner></app-spinner>
+</ng-template>

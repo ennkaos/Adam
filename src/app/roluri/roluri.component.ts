@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
 import { UsersModels } from '../models/UsersModels';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, forkJoin } from 'rxjs';
 import { RoluriService } from './services/roluri.service';
 import { ToastrService } from 'ngx-toastr';
+import { LoginService } from '../login.service';
+import { LoggedUser } from '../models/LoggedUser';
+import { Router } from '@angular/router';
+import { EmailValidator } from '@angular/forms';
 
 @Component({
   selector: 'app-roluri',
@@ -11,23 +15,42 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class RoluriComponent {
   users$!: Observable<UsersModels[]>;
+  user$!: Observable<LoggedUser>;
+  loggedUser: LoggedUser;
   usersResult!: UsersModels[];
   sortResult: Subject<UsersModels[]> = new Subject();
   initialData: any[];
   showPassword: boolean = false;
   constructor(
     public usersService: RoluriService,
-    private toastr: ToastrService
+    public loginService: LoginService,
+    private toastr: ToastrService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.users$ = this.usersService.getUsers();
-    this.users$.subscribe((e) => {
-      console.log('Subscription Started ...');
-      console.log(e);
-      this.usersResult = e;
-      this.initialData = e;
-    });
+    const role = localStorage.getItem('role');
+    if (role === '0') {
+      this.users$ = this.usersService.getUsers();
+      this.users$.subscribe((e) => {
+        console.log('Subscription Started ...');
+        console.log(e);
+
+        this.usersResult = e;
+        this.initialData = e;
+      });
+    } else {
+      this.user$ = this.loginService.getLoggedInUser();
+      this.user$.subscribe((e) => {
+        this.usersResult.push({
+          name: e.name,
+          email: e.email,
+          token: e.token,
+          role: e.role,
+        });
+      });
+      this.router.navigate(['roluri/details/' + localStorage.getItem('id')]);
+    }
   }
   showPasswordClick() {
     this.showPassword = !this.showPassword;

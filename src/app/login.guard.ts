@@ -23,13 +23,10 @@ export class LoginGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (enviroment.mode === 'Adam') {
-      const role: string = localStorage.getItem('role');
-      const expectedRole = route.data['expectedRole'];
-
-      return !!this.loginService.getUser() && role == expectedRole;
-    } else {
-      return true;
-    }
+    const role: string = localStorage.getItem('role');
+    const expectedRole: any[] = route.data['expectedRole'];
+    return (
+      !!this.loginService.getUser() && expectedRole.some((e) => (e = role))
+    );
   }
 }

@@ -26,7 +26,7 @@ export class RoluriService {
       this.http
         .post(this.url + '/UsersModels/', profileForm, this.httpOptions)
         .subscribe((response) => console.log(response));
-      return this.toastr.success('Sala a fost adaugata cu succes');
+      return this.toastr.success('Account a fost adaugat cu succes');
     } catch (error) {
       return this.toastr.error('Ceva nu a mers bine');
     }

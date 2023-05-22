@@ -17,7 +17,20 @@ export class LoginService {
   response: Observable<boolean> = of(false);
   token: string;
   loggedInSubject: BehaviorSubject<{ isLoggedIn: boolean; userRole: string }> =
-    new BehaviorSubject({ isLoggedIn: false, userRole: '' });
+    enviroment.mode === 'Adam'
+      ? new BehaviorSubject({ isLoggedIn: false, userRole: '' })
+      : new BehaviorSubject({
+          isLoggedIn: true,
+          userRole: localStorage.getItem('role'),
+        });
+  loggedInProfile: BehaviorSubject<LoggedUser> = new BehaviorSubject({
+    id: 1,
+    message: '',
+    token: '',
+    email: '',
+    name: '',
+    role: 2,
+  });
   logged: Observable<boolean>;
   role: Role;
 
@@ -39,32 +52,58 @@ export class LoginService {
   loginRequest(profileForm: FormGroup) {
     if (!this.getUser()) {
       try {
-        return this.http
-          .post(
-            this.url + '/Login/Login',
-            { ...profileForm, name: '1' },
-            this.httpOptions
-          )
-          .subscribe((response: LoggedUser) => {
-            if (!!response) {
-              localStorage.setItem('email', response.email);
-              localStorage.setItem('token', response.token);
-              localStorage.setItem('role', response.role.toString());
-              localStorage.setItem('name', response.name);
-              this.token = response.token;
-              this.loggedInSubject.next({
-                isLoggedIn: true,
-                userRole: localStorage.getItem('role'),
-              });
-              this.router.navigate(['home']);
-              return this.toast.success(
-                response.message + 'Autentificat cu succes'
-              );
-            } else {
-              localStorage.clear();
-              return this.toast.success('Autentificarea a esuat');
-            }
+        if (enviroment.mode === 'Adam') {
+          return this.http
+            .post(
+              this.url + '/Login/Login',
+              { ...profileForm, name: '1' },
+              this.httpOptions
+            )
+            .subscribe((response: LoggedUser) => {
+              if (!!response) {
+                localStorage.setItem('id', response.id.toString());
+                localStorage.setItem('email', response.email);
+                localStorage.setItem('token', response.token);
+                localStorage.setItem('role', response.role.toString());
+                localStorage.setItem('name', response.name);
+                this.token = response.token;
+                this.loggedInSubject.next({
+                  isLoggedIn: true,
+                  userRole: localStorage.getItem('role'),
+                });
+                this.loggedInProfile.next({
+                  id: response.id,
+                  name: response.name,
+                  email: response.email,
+                  token: response.token,
+                  message: response.message,
+                  role: response.role,
+                });
+                this.router.navigate(['home']);
+                return this.toast.success(
+                  response.message + 'Autentificat cu succes'
+                );
+              } else {
+                localStorage.clear();
+                return this.toast.success('Autentificarea a esuat');
+              }
+            });
+        } else {
+          localStorage.setItem('id', '1');
+          localStorage.setItem('email', 'string@string1.com');
+          localStorage.setItem(
+            'token',
+            'askdnq9uweh2938ey2hsdnkbfsiug2873uhevfbjsd'
+          );
+          localStorage.setItem('role', '2');
+          localStorage.setItem('name', 'Alex');
+          this.loggedInSubject.next({
+            isLoggedIn: true,
+            userRole: localStorage.getItem('role'),
           });
+          this.router.navigate(['home']);
+          return this.toast.success('200' + 'Autentificat cu succes');
+        }
       } catch (error) {
         return this.toast.error(error);
       }
@@ -74,7 +113,8 @@ export class LoginService {
   }
 
   getUser(): any {
-    return !!localStorage.getItem('name') &&
+    return !!localStorage.getItem('id') &&
+      !!localStorage.getItem('name') &&
       !!localStorage.getItem('email') &&
       !!localStorage.getItem('token') &&
       !!localStorage.getItem('role')
@@ -82,9 +122,13 @@ export class LoginService {
       : false;
   }
 
+  getLoggedInUser(): Observable<LoggedUser> {
+    return this.loggedInProfile.asObservable();
+  }
+
   isLogged(): Observable<{ isLoggedIn: boolean; userRole: string }> {
     const user = this.getUser();
-    if (user) {
+    if (user && enviroment.mode === 'Adam') {
       this.http
         .post(
           this.url + '/Login/ValidatetToken',

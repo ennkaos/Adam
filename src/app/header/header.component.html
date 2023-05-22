@@ -20,7 +20,11 @@
       <ul class="navbar-nav navbar-expand-lg">
         <li class="nav-item">
           <a
-            *ngIf="logged.userRole === '0' || '1' || '2'"
+            *ngIf="
+              logged.userRole == '0' ||
+              logged.userRole == '1' ||
+              logged.userRole == '2'
+            "
             class="nav-link text-success"
             routerLink="/home"
             routerLinkActive="active"
@@ -48,23 +52,14 @@
             >Materii</a
           >
         </li>
-        <li class="nav-item">
-          <a
-            *ngIf="logged.userRole === '0'"
-            class="nav-link text-success"
-            routerLink="/accounts"
-            routerLinkActive="active"
-            ariaCurrentWhenActive="page"
-            >Accounts</a
-          >
-        </li>
+
         <a
-          *ngIf="logged.userRole === '0'"
+          *ngIf="logged.userRole === '0' || logged.userRole == '2'"
           class="nav-link text-success"
           routerLink="/roluri"
           routerLinkActive="active"
           ariaCurrentWhenActive="page"
-          >Roluri</a
+          >{{ logged.userRole === "0" ? "Roluri" : "Profil" }}</a
         >
         <li class="nav-item">
           <a

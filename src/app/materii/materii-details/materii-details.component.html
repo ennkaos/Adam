@@ -1,6 +1,4 @@
-<ng-container
-  *ngIf="materii$ || materii$ | async as MateriiModel; else loading4"
->
+<ng-container *ngIf="materii$ | async as MateriiModel; else loading4">
   <div class="card container mt-3">
     <div class="card-header">
       <h3>{{ router?.toUpperCase() }} Materie</h3>
