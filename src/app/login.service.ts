@@ -23,13 +23,12 @@ export class LoginService {
           isLoggedIn: true,
           userRole: localStorage.getItem('role'),
         });
-  loggedInProfile: BehaviorSubject<LoggedUser> = new BehaviorSubject({
+  loggedInProfile: BehaviorSubject<UsersModels> = new BehaviorSubject({
     id: 1,
-    message: '',
-    token: '',
-    email: '',
-    name: '',
-    role: 2,
+    token: localStorage.getItem('token'),
+    email: localStorage.getItem('email'),
+    name: localStorage.getItem('name'),
+    role: Number(localStorage.getItem('role')),
   });
   logged: Observable<boolean>;
   role: Role;
@@ -76,7 +75,6 @@ export class LoginService {
                   name: response.name,
                   email: response.email,
                   token: response.token,
-                  message: response.message,
                   role: response.role,
                 });
                 this.router.navigate(['home']);
@@ -95,7 +93,7 @@ export class LoginService {
             'token',
             'askdnq9uweh2938ey2hsdnkbfsiug2873uhevfbjsd'
           );
-          localStorage.setItem('role', '2');
+          localStorage.setItem('role', '0');
           localStorage.setItem('name', 'Alex');
           this.loggedInSubject.next({
             isLoggedIn: true,
@@ -122,7 +120,7 @@ export class LoginService {
       : false;
   }
 
-  getLoggedInUser(): Observable<LoggedUser> {
+  getLoggedInUser(): Observable<UsersModels> {
     return this.loggedInProfile.asObservable();
   }
 

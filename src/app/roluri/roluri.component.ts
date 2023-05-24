@@ -15,7 +15,7 @@ import { EmailValidator } from '@angular/forms';
 })
 export class RoluriComponent {
   users$!: Observable<UsersModels[]>;
-  user$!: Observable<LoggedUser>;
+  user$!: Observable<UsersModels>;
   loggedUser: LoggedUser;
   usersResult!: UsersModels[];
   sortResult: Subject<UsersModels[]> = new Subject();

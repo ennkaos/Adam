@@ -1,3 +1,5 @@
+import { Role } from './roles';
+
 export const serie: any = [
   '1AA',
   '2AA',
@@ -13,6 +15,7 @@ export const serie: any = [
   '3AC',
   '4AC',
 ];
+export const Roles: Role[] = [0, 1, 2];
 export const scheduleDay: any[] = [
   {
     day: 'Monday',

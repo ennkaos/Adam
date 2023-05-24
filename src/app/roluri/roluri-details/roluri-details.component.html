@@ -1,64 +1,117 @@
-<ng-container *ngIf="user$ | async as UsersModels; else loading4">
+<ng-container *ngIf="user$ | async as UserModel; else loading4">
   <div class="card container mt-3">
-    <div class="card-header">
-      <h3>{{ router?.toUpperCase() }} Utilizatori</h3>
-    </div>
+    <form
+      [formGroup]="profileForm"
+      class="card-body d-flex flex-row justify-content-around w-100"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="d-flex flex-column g-3 justify-content-around">
+        <div
+          class="rounded-circle bg-success d-flex align-items-center justify-content-center"
+          style="width: 150px; height: 150px"
+        >
+          <h1 style="font-size: 70px">
+            {{ profileForm.value.name.charAt(0) }}
+          </h1>
+        </div>
 
-    <form (ngSubmit)="onSubmit()" class="card-body">
+        <div class="d-flex flex-column justify-content-center">
+          <p>
+            Nume:
+            <span class="text-success text-break">
+              {{ profileForm.value.name }}</span
+            >
+          </p>
+        </div>
+        <div class="d-flex flex-column justify-content-center">
+          <p>
+            Email:
+            <span class="text-success text-break">
+              {{ profileForm.value.email }}</span
+            >
+          </p>
+        </div>
+        <div class="d-flex flex-column justify-content-center">
+          <p *ngIf="!editable">
+            Permisiuni:
+            <span class="text-success text-break">
+              {{ profileForm.value.role | roles }}</span
+            >
+          </p>
+          <div *ngIf="userRole === '0' && editable">
+            <label for="email" class="m-3">Permisiuni</label>
+            <select
+              formControlName="role"
+              class="form-select"
+              aria-label="Default select example"
+            >
+              <option [selected]="item" *ngFor="let item of roles">
+                {{ item | roles }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex ms-3" style="height: 330px">
+        <div class="vr"></div>
+      </div>
       <div class="d-flex flex-column g-3 justify-content-around">
         <div>
           <label for="nume" class="m-3">Nume:</label>
           <input
+            maxlength="25"
             id="nume"
             class="m-3 form-control validationCustom01"
             type="text"
             formControlName="name"
           />
         </div>
-
-        <div class="">
-          <label for="anMaterie" class="m-3">Email: </label>
+        <div>
+          <label for="email" class="m-3">Email:</label>
           <input
-            class="m-3 form-control"
-            id="anMaterie"
+            maxlength="25"
+            id="email"
+            class="m-3 form-control validationCustom01"
             type="email"
             formControlName="email"
           />
         </div>
-        <!-- <div class="">
-          <label for="anMaterie" class="m-3">An Materie: </label>
+        <div
+          *ngIf="profileForm.value.role === 1 || profileForm.value.role === 2"
+        >
+          <label for="password" class="m-3">Parola Noua:</label>
           <input
-            class="m-3 form-control"
-            id="anMaterie"
-            type="number"
-            formControlName="anMaterie"
-          />
-        </div> -->
-        <div class="">
-          <label for="password" class="m-3">Parola: </label>
-          <input
-            class="m-3 form-control"
+            maxlength="20"
             id="password"
+            class="m-3 form-control validationCustom01"
+            current-password
             type="password"
             formControlName="password"
           />
         </div>
       </div>
-      <button *ngIf="editable" type="submit" class="btn btn-primary m-5">
-        Salveaza
-      </button>
-      <div
-        *ngIf="editable"
-        type="reset"
-        (click)="onReset()"
-        class="btn btn-secondary m-5"
-      >
-        Reseteaza
+      <div class="d-flex ms-3" style="height: 330px">
+        <div class="vr"></div>
       </div>
-      <app-btn-sticky-back></app-btn-sticky-back>
+      <div class="card-header d-flex flex-column justify-content-around">
+        <h3>Actiuni</h3>
+        <div class="d-flex flex-column justify-content-around">
+          <h5>Editeaza Profilul</h5>
+          <button class="btn btn-success">
+            {{ editable ? "Salveaza" : "Modifica" }}
+          </button>
+        </div>
+        <div class="d-flex flex-column justify-content-around">
+          <h5>Sterge Profilul</h5>
+          <button class="btn btn-danger">Sterge</button>
+        </div>
+      </div>
     </form>
+
+    <app-btn-sticky-back class="align-self-end mb-2"></app-btn-sticky-back>
   </div>
 </ng-container>
+
 <ng-template #loading4>
   <app-spinner></app-spinner>
 </ng-template>
