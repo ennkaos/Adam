@@ -24,7 +24,7 @@ export class RoluriService {
     try {
       console.log(profileForm);
       this.http
-        .post(this.url + '/UsersModels/', profileForm, this.httpOptions)
+        .post(this.url + '/UserModels/', profileForm, this.httpOptions)
         .subscribe((response) => console.log(response));
       return this.toastr.success('Userul a fost adaugat cu succes');
     } catch (error) {
@@ -35,7 +35,7 @@ export class RoluriService {
   getUsers(): Observable<UsersModels[]> {
     try {
       this.users$ = this.http
-        .get(this.url + '/UsersModels/', this.httpOptions)
+        .get(this.url + '/UserModels/', this.httpOptions)
         .pipe(
           tap((result: any) => {
             JSON.stringify(result);
@@ -50,7 +50,7 @@ export class RoluriService {
     console.log(id, data);
     try {
       this.http
-        .put(this.url + '/UsersModels/' + id, data, this.httpOptions)
+        .post(this.url + '/UserModels/' + id, data, this.httpOptions)
         .subscribe((response) => console.log(response));
       return this.toastr.success('Userul a fost modificata cu succes');
     } catch (error) {
@@ -62,7 +62,7 @@ export class RoluriService {
     try {
       console.log(id);
       this.http
-        .delete(this.url + '/UsersModels/' + id, this.httpOptions)
+        .delete(this.url + '/UserModels/' + id, this.httpOptions)
         .subscribe((response) => console.log(response));
       return this.toastr.success('Userul a fost stears cu succes');
     } catch (error) {
@@ -72,7 +72,7 @@ export class RoluriService {
   getUser(id: number): Observable<UsersModels> {
     try {
       this.user$ = this.http
-        .get(this.url + '/UsersModels/' + id, this.httpOptions)
+        .get(this.url + '/UserModels/' + id, this.httpOptions)
         .pipe(
           tap((result: any) => {
             console.log(JSON.stringify(result));

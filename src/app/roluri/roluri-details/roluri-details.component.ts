@@ -50,10 +50,8 @@ export class RoluriDetailsComponent {
       role: [1],
     });
     this.profileForm.disable();
-    this.user$ =
-      this.userRole && this.userRole === '0'
-        ? this.roluriService.getUser(Number(this.userId))
-        : this.loginService.getLoggedInUser();
+    this.user$ = this.roluriService.getUser(Number(this.userId));
+
     this.subscription = this.user$.subscribe((e) => {
       this.userResult = e;
       this.profileForm.controls['id'].setValue(this.userId);
@@ -65,9 +63,20 @@ export class RoluriDetailsComponent {
 
   onSubmit() {
     if (this.editable) {
-      if (Number(this.userId) != this.userResult.id && this.userRole === '0') {
+      console.log(Number(this.userId), this.userResult.id);
+      if (this.userId === localStorage.getItem('id')) {
+        this.roluriService.updateUser(
+          this.userResult.id,
+          this.profileForm.value
+        );
+        this.router2.navigate(['home']);
         console.log('asdasd');
       } else {
+        this.roluriService.updateUser(
+          Number(this.userId),
+          this.profileForm.value
+        );
+        this.router2.navigate(['roluri']);
         console.log('Secomd');
       }
     } else {

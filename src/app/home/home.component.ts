@@ -109,11 +109,11 @@ export class HomeComponent {
     // this.unsubscribeSchedule();
     this.selectedSerie = event.target.value;
     //server Mock
-    const value = this.selectedSerie.slice(0, 1);
-    this.subscribeSchedule(value);
+    //const value = this.selectedSerie.slice(0, 1);
+    //this.subscribeSchedule(value);
     //server Adam
-    // console.log(this.selectedSerie);
-    // this.subscribeSchedule(this.selectedSerie);
+    console.log(this.selectedSerie);
+    this.subscribeSchedule(this.selectedSerie);
   }
   filterArray() {
     this.scheduleDay.map((day: any) => {
