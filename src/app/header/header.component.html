@@ -1,30 +1,24 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container">
-    <!-- <a class="navbar-brand" href="#">Navbar</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button> -->
     <ng-container
       *ngIf="isLogged$ | async"
       class="collapse navbar-collapse"
       id="navbarSupportedContent"
     >
-      <ul class="navbar-nav navbar-expand-lg">
+      <div
+        *ngIf="logged.isLoggedIn"
+        class="rounded-circle bg-success d-flex align-items-center justify-content-center"
+        style="width: 40px; height: 40px"
+        routerLink="{{ 'roluri/details/' + logged.id }}"
+      >
+        <h1 style="font-size: 20px">
+          {{ logged.isLoggedIn ? logged.name.charAt(0) : "" }}
+        </h1>
+      </div>
+      <ul *ngIf="logged.isLoggedIn" class="navbar-nav navbar-expand-lg">
         <li class="nav-item">
           <a
-            *ngIf="
-              logged.userRole == '0' ||
-              logged.userRole == '1' ||
-              logged.userRole == '2'
-            "
+            *ngIf="logged.role === 0 || logged.role == 1 || logged.role == 2"
             class="nav-link text-success"
             routerLink="/home"
             routerLinkActive="active"
@@ -34,7 +28,7 @@
         </li>
         <li class="nav-item">
           <a
-            *ngIf="logged.userRole === '0'"
+            *ngIf="logged.role === 0"
             class="nav-link text-success"
             routerLink="/rezervari"
             routerLinkActive="active"
@@ -44,7 +38,7 @@
         </li>
         <li class="nav-item">
           <a
-            *ngIf="logged.userRole === '0'"
+            *ngIf="logged.role === 0"
             class="nav-link text-success"
             routerLink="/materii"
             routerLinkActive="active"
@@ -54,16 +48,16 @@
         </li>
 
         <a
-          *ngIf="logged.userRole === '0' || logged.userRole == '2'"
+          *ngIf="logged.role === 0 || logged.role == 2"
           class="nav-link text-success"
           routerLink="/roluri"
           routerLinkActive="active"
           ariaCurrentWhenActive="page"
-          >{{ logged.userRole === "0" ? "Roluri" : "Profil" }}</a
+          >{{ logged.role === 0 ? "Roluri" : "Profil" }}</a
         >
         <li class="nav-item">
           <a
-            *ngIf="logged.userRole === '0'"
+            *ngIf="logged.role === 0"
             class="nav-link text-success"
             routerLink="/add-room"
             routerLinkActive="active"

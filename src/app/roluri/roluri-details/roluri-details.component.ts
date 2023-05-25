@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { LoginService } from 'src/app/login.service';
 import { UsersModels } from 'src/app/models/UsersModels';
 import { RoluriService } from '../services/roluri.service';
@@ -17,6 +17,7 @@ import { Roles } from 'src/app/models/scheduleModel';
 export class RoluriDetailsComponent {
   user$: Observable<UsersModels> = new Observable<UsersModels>();
   router!: string | undefined;
+  subscription: Subscription;
   profileForm!: FormGroup;
   editable: boolean = false;
   roles: Role[];
@@ -53,7 +54,7 @@ export class RoluriDetailsComponent {
       this.userRole && this.userRole === '0'
         ? this.roluriService.getUser(Number(this.userId))
         : this.loginService.getLoggedInUser();
-    this.user$.subscribe((e) => {
+    this.subscription = this.user$.subscribe((e) => {
       this.userResult = e;
       this.profileForm.controls['id'].setValue(this.userId);
       this.profileForm.controls['name'].setValue(this.userResult.name);
@@ -64,12 +65,27 @@ export class RoluriDetailsComponent {
 
   onSubmit() {
     if (this.editable) {
-      console.log('onsubmit()');
+      if (Number(this.userId) != this.userResult.id && this.userRole === '0') {
+        console.log('asdasd');
+      } else {
+        console.log('Secomd');
+      }
     } else {
       console.log('onEdit()');
       this.profileForm.enable();
       this.editable = true;
     }
   }
-  onReset() {}
+  onReset() {
+    if (this.userRole === '0') {
+      this.roluriService.deleteUser(this.profileForm.value.id);
+      this.router2.navigate(['roluri']);
+    } else {
+      this.roluriService.deleteUser(this.profileForm.value.id);
+      this.loginService.logOut();
+    }
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 }

@@ -44,6 +44,7 @@ export class RoluriComponent {
       this.user$.subscribe((e) => {
         this.usersResult.push({
           name: e.name,
+          isLoggedIn: true,
           email: e.email,
           token: e.token,
           role: e.role,

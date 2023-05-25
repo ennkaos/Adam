@@ -32,7 +32,7 @@
           </p>
         </div>
         <div class="d-flex flex-column justify-content-center">
-          <p *ngIf="!editable">
+          <p *ngIf="!editable || userRole !== '0'">
             Permisiuni:
             <span class="text-success text-break">
               {{ profileForm.value.role | roles }}</span
@@ -103,7 +103,7 @@
         </div>
         <div class="d-flex flex-column justify-content-around">
           <h5>Sterge Profilul</h5>
-          <button class="btn btn-danger">Sterge</button>
+          <button (click)="onReset()" class="btn btn-danger">Sterge</button>
         </div>
       </div>
     </form>

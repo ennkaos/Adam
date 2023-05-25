@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
-  MaxValidator,
-  MinValidator,
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';

@@ -26,7 +26,7 @@ export class RoluriService {
       this.http
         .post(this.url + '/UsersModels/', profileForm, this.httpOptions)
         .subscribe((response) => console.log(response));
-      return this.toastr.success('Account a fost adaugat cu succes');
+      return this.toastr.success('Userul a fost adaugat cu succes');
     } catch (error) {
       return this.toastr.error('Ceva nu a mers bine');
     }
@@ -52,7 +52,7 @@ export class RoluriService {
       this.http
         .put(this.url + '/UsersModels/' + id, data, this.httpOptions)
         .subscribe((response) => console.log(response));
-      return this.toastr.success('Sala a fost modificata cu succes');
+      return this.toastr.success('Userul a fost modificata cu succes');
     } catch (error) {
       return this.toastr.error('Ceva nu a functionat ..');
     }
@@ -64,7 +64,7 @@ export class RoluriService {
       this.http
         .delete(this.url + '/UsersModels/' + id, this.httpOptions)
         .subscribe((response) => console.log(response));
-      return this.toastr.success('Sala a fost stearsa cu succes');
+      return this.toastr.success('Userul a fost stears cu succes');
     } catch (error) {
       return this.toastr.error('Ceva a mers gresit..');
     }

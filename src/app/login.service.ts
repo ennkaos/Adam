@@ -16,20 +16,13 @@ export class LoginService {
   url: string = enviroment.mode === 'Bucur' ? 'http://localhost:3000' : '/api';
   response: Observable<boolean> = of(false);
   token: string;
-  loggedInSubject: BehaviorSubject<{ isLoggedIn: boolean; userRole: string }> =
-    enviroment.mode === 'Adam'
-      ? new BehaviorSubject({ isLoggedIn: false, userRole: '' })
-      : new BehaviorSubject({
-          isLoggedIn: true,
-          userRole: localStorage.getItem('role'),
-        });
-  loggedInProfile: BehaviorSubject<UsersModels> = new BehaviorSubject({
-    id: 1,
-    token: localStorage.getItem('token'),
-    email: localStorage.getItem('email'),
+  loggedInSubject: BehaviorSubject<UsersModels> = new BehaviorSubject({
+    isLoggedIn: true,
     name: localStorage.getItem('name'),
+    email: localStorage.getItem('email'),
     role: Number(localStorage.getItem('role')),
   });
+
   logged: Observable<boolean>;
   role: Role;
 
@@ -67,16 +60,14 @@ export class LoginService {
                 localStorage.setItem('name', response.name);
                 this.token = response.token;
                 this.loggedInSubject.next({
-                  isLoggedIn: true,
-                  userRole: localStorage.getItem('role'),
-                });
-                this.loggedInProfile.next({
                   id: response.id,
+                  isLoggedIn: true,
+                  token: response.token,
                   name: response.name,
                   email: response.email,
-                  token: response.token,
-                  role: response.role,
+                  role: Number(localStorage.getItem('role')),
                 });
+
                 this.router.navigate(['home']);
                 return this.toast.success(
                   response.message + 'Autentificat cu succes'
@@ -93,11 +84,20 @@ export class LoginService {
             'token',
             'askdnq9uweh2938ey2hsdnkbfsiug2873uhevfbjsd'
           );
-          localStorage.setItem('role', '0');
           localStorage.setItem('name', 'Alex');
+          localStorage.setItem('role', '0');
+          const id: number = Number(localStorage.getItem('id'));
+          const email: string = localStorage.getItem('email');
+          const token: string = localStorage.getItem('token');
+          const role: number = Number(localStorage.getItem('role'));
+          const name: string = localStorage.getItem('name');
           this.loggedInSubject.next({
+            id: id,
             isLoggedIn: true,
-            userRole: localStorage.getItem('role'),
+            token: token,
+            name: name,
+            email: email,
+            role: Number(role),
           });
           this.router.navigate(['home']);
           return this.toast.success('200' + 'Autentificat cu succes');
@@ -121,10 +121,10 @@ export class LoginService {
   }
 
   getLoggedInUser(): Observable<UsersModels> {
-    return this.loggedInProfile.asObservable();
+    return this.loggedInSubject.asObservable();
   }
 
-  isLogged(): Observable<{ isLoggedIn: boolean; userRole: string }> {
+  isLogged(): Observable<UsersModels> {
     const user = this.getUser();
     if (user && enviroment.mode === 'Adam') {
       this.http
@@ -139,12 +139,23 @@ export class LoginService {
         )
         .subscribe((r) => {
           return this.loggedInSubject.next({
+            id: Number(localStorage.getItem('id')),
             isLoggedIn: !!r,
-            userRole: localStorage.getItem('role') || '',
+            token: localStorage.getItem('token'),
+            name: localStorage.getItem('name'),
+            email: localStorage.getItem('email'),
+            role: Number(localStorage.getItem('role')),
           });
         });
     } else {
-      this.loggedInSubject.next(this.loggedInSubject.getValue());
+      this.loggedInSubject.next({
+        id: Number(localStorage.getItem('id')),
+        isLoggedIn: true,
+        token: localStorage.getItem('token'),
+        name: localStorage.getItem('name'),
+        email: localStorage.getItem('email'),
+        role: Number(localStorage.getItem('role')),
+      });
     }
 
     return this.loggedInSubject.asObservable();
@@ -154,8 +165,12 @@ export class LoginService {
     if (this.getUser()) {
       localStorage.clear();
       this.loggedInSubject.next({
+        id: 0,
         isLoggedIn: false,
-        userRole: '',
+        token: '',
+        name: '',
+        email: '',
+        role: 0,
       });
 
       this.router.navigate(['login']);

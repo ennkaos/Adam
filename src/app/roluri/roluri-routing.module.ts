@@ -10,7 +10,7 @@ const routes: Routes = [
     component: RoluriDetailsComponent,
   },
   {
-    path: 'update/:id',
+    path: 'details/:id',
     component: RoluriDetailsComponent,
   },
 ];
