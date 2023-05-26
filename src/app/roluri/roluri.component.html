@@ -54,7 +54,6 @@
               ></app-sort>
             </div>
           </td>
-          <td scope="row">Editeaza</td>
           <td scope="row">Sterge</td>
         </tr>
       </thead>
@@ -87,16 +86,9 @@
             routerLinkActive="router-link-active"
             scope="row"
           >
-            {{ item.role }}
+            {{ item.role | roles }}
           </td>
 
-          <td
-            scope="row"
-            [routerLink]="['update/', item.id]"
-            routerLinkActive="router-link-active"
-          >
-            <i class="bi bi-pencil-fill text-primary"></i>
-          </td>
           <td scope="row">
             <i
               (click)="delete(item.id)"

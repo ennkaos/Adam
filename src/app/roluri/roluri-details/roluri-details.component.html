@@ -45,7 +45,11 @@
               class="form-select"
               aria-label="Default select example"
             >
-              <option [selected]="item" *ngFor="let item of roles">
+              <option
+                [selected]="item"
+                [ngValue]="item"
+                *ngFor="let item of roles"
+              >
                 {{ item | roles }}
               </option>
             </select>
@@ -76,9 +80,7 @@
             formControlName="email"
           />
         </div>
-        <div
-          *ngIf="profileForm.value.role === 1 || profileForm.value.role === 2"
-        >
+        <div>
           <label for="password" class="m-3">Parola Noua:</label>
           <input
             maxlength="20"

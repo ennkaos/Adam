@@ -8,12 +8,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class BtnStickyBackComponent {
   route!: string | undefined;
+  userId: string;
   constructor(private snapshot: ActivatedRoute, private router: Router) {}
   ngOnInit() {
     this.route = this.snapshot.parent?.snapshot.routeConfig?.path;
   }
 
   back() {
-    this.router.navigate([this.route]);
+    this.snapshot.url.subscribe((e) => (this.userId = e[0].path));
+    if (this.userId === localStorage.getItem('id')) {
+      this.router.navigate(['home']);
+    } else {
+      this.router.navigate([this.route]);
+    }
   }
 }

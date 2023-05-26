@@ -43,7 +43,7 @@ export class RoluriDetailsComponent {
       : null;
 
     this.profileForm = this.fb.group({
-      id: [''],
+      id: [1],
       name: ['', Validators.maxLength(20)],
       email: ['', Validators.email],
       password: ['', Validators.maxLength(20)],
@@ -54,7 +54,7 @@ export class RoluriDetailsComponent {
 
     this.subscription = this.user$.subscribe((e) => {
       this.userResult = e;
-      this.profileForm.controls['id'].setValue(this.userId);
+      this.profileForm.controls['id'].setValue(Number(this.userId));
       this.profileForm.controls['name'].setValue(this.userResult.name);
       this.profileForm.controls['email'].setValue(this.userResult.email);
       this.profileForm.controls['role'].setValue(this.userResult.role);
