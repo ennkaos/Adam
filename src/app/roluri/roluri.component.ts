@@ -4,9 +4,7 @@ import { Observable, Subject, forkJoin } from 'rxjs';
 import { RoluriService } from './services/roluri.service';
 import { ToastrService } from 'ngx-toastr';
 import { LoginService } from '../login.service';
-import { LoggedUser } from '../models/LoggedUser';
 import { Router } from '@angular/router';
-import { EmailValidator } from '@angular/forms';
 
 @Component({
   selector: 'app-roluri',
@@ -16,7 +14,6 @@ import { EmailValidator } from '@angular/forms';
 export class RoluriComponent {
   users$!: Observable<UsersModels[]>;
   user$!: Observable<UsersModels>;
-  loggedUser: LoggedUser;
   usersResult!: UsersModels[];
   sortResult: Subject<UsersModels[]> = new Subject();
   initialData: any[];

@@ -28,6 +28,16 @@
         </li>
         <li class="nav-item">
           <a
+            *ngIf="logged.role === 0 || logged.role == 1"
+            class="nav-link text-success"
+            routerLink="/requests"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+            >Cereri</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
             *ngIf="logged.role === 0"
             class="nav-link text-success"
             routerLink="/rezervari"

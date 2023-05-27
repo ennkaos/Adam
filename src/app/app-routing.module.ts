@@ -60,6 +60,15 @@ const routes: Routes = [
       expectedRole: [0],
     },
   },
+  {
+    path: 'requests',
+    loadChildren: () =>
+      import('./requests/requests.module').then((m) => m.RequestsModule),
+    canActivate: [LoginGuard],
+    data: {
+      expectedRole: [0, 1],
+    },
+  },
 
   { path: '**', component: PageNotFoundComponent },
 ];
