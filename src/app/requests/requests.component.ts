@@ -12,12 +12,6 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./requests.component.css'],
 })
 export class RequestsComponent {
-  updateStatus(arg0: number) {
-    throw new Error('Method not implemented.');
-  }
-  delete(arg0: number) {
-    throw new Error('Method not implemented.');
-  }
   cereri$!: Observable<Cereri[]>;
   role: string;
   name: string;
@@ -39,8 +33,20 @@ export class RequestsComponent {
         ? this.requestsService.getCereri()
         : this.requestsService.getCereriByEmail(this.email);
     this.cereri$.subscribe((cereri) => {
-      this.cereriResult = cereri;
-      this.initialData = cereri;
+      this.cereriResult = cereri.sort((a, b) =>
+        a['requestState'] < b['requestState']
+          ? -1
+          : a['requestState'] > b['requestState']
+          ? 1
+          : 0
+      );
+      this.initialData = cereri.sort((a, b) =>
+        a['requestState'] < b['requestState']
+          ? -1
+          : a['requestState'] > b['requestState']
+          ? 1
+          : 0
+      );
     });
   }
 
@@ -53,5 +59,28 @@ export class RequestsComponent {
     } else {
       this.cereriResult = this.initialData;
     }
+  }
+  updateStatus(
+    status: number,
+    id: number,
+    name: string,
+    email: string,
+    cerere: string
+  ) {
+    this.requestsService.update(id, {
+      id,
+      name,
+      email,
+      cerere,
+      requestState: status,
+    });
+    this.ngOnInit();
+  }
+  delete(arg0: number) {
+    this.requestsService.delete(arg0);
+    this.cereriResult = this.cereriResult.filter(
+      (cerere) => cerere.id !== arg0
+    );
+    this.initialData = this.initialData.filter((cerere) => cerere.id !== arg0);
   }
 }

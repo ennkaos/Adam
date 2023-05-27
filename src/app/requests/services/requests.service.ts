@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { Cereri } from '../../models/Cereri';
 import { enviroment } from 'src/enviroment/enviroments';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
+import { ActiveToast, ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
@@ -47,6 +47,28 @@ export class RequestsService {
       return this.cereri$;
     } catch (error) {
       throw error;
+    }
+  }
+  update(id: number, data: Cereri): ActiveToast<any> {
+    console.log(id, data);
+    try {
+      this.http
+        .post(this.url + '/RequestModels/' + id, { ...data }, this.httpOptions)
+        .subscribe((response) => console.log(JSON.stringify(response)));
+      return this.toastr.success('Cererea a fost modificata cu succes');
+    } catch (error) {
+      return this.toastr.error('Ceva nu a functionat ..');
+    }
+  }
+  delete(id: number): ActiveToast<any> {
+    try {
+      console.log(id);
+      this.http
+        .delete(this.url + '/RequestModels/' + id, this.httpOptions)
+        .subscribe((response) => console.log(response));
+      return this.toastr.success('Cererea a fost stearsa cu succes');
+    } catch (error) {
+      return this.toastr.error('Ceva a mers gresit..');
     }
   }
 }

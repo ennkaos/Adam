@@ -104,12 +104,50 @@
             routerLinkActive="router-link-active"
             scope="row"
           >
-            {{ item.requestState }}
+            <i
+              *ngIf="item.requestState === 1"
+              class="text-success m-1 bi bi-check-circle-fill"
+            ></i>
+            <i
+              *ngIf="item.requestState === 2"
+              class="text-danger m-1 bi bi-x-circle-fill"
+            ></i>
+
+            <i
+              *ngIf="item.requestState === 0"
+              class="text-info bi bi-hourglass-split"
+            ></i>
+          </td>
+          <td
+            *ngIf="role === '0' && item.requestState !== 0"
+            [routerLink]="role !== '0' ? ['details/', item.id] : ['./']"
+            routerLinkActive="router-link-active"
+            scope="row"
+          >
+            <i
+              *ngIf="item.requestState === 1"
+              class="text-success m-1 bi bi-check-circle-fill"
+            ></i>
+            <i
+              *ngIf="item.requestState === 2"
+              class="text-danger m-1 bi bi-x-circle-fill"
+            ></i>
           </td>
 
-          <td *ngIf="role === '0'" scope="row">
-            <i (click)="updateStatus(1)" class="bi bi-check-circle-fill"></i>
-            <i (click)="updateStatus(2)" class="bi bi-x-circle-fill"></i>
+          <td *ngIf="role === '0' && item.requestState === 0" scope="row">
+            <span>Accepta/Respinge: </span>
+            <i
+              (click)="
+                updateStatus(1, item.id, item.name, item.email, item.cerere)
+              "
+              class="text-success m-1 bi bi-check-circle-fill"
+            ></i>
+            <i
+              (click)="
+                updateStatus(2, item.id, item.name, item.email, item.cerere)
+              "
+              class="text-danger m-1 bi bi-x-circle-fill"
+            ></i>
           </td>
           <td scope="row">
             <i
