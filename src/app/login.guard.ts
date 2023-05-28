@@ -25,8 +25,11 @@ export class LoginGuard implements CanActivate {
     | UrlTree {
     const role: string = localStorage.getItem('role');
     const expectedRole: any[] = route.data['expectedRole'];
-    return (
-      !!this.loginService.getUser() && expectedRole.some((e) => (e = role))
-    );
+    if (!!this.loginService.getUser() && expectedRole.some((e) => (e = role))) {
+      return true;
+    } else {
+      this.router.navigate(['login']);
+      return false;
+    }
   }
 }

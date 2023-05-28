@@ -4,11 +4,13 @@ import { Cereri } from '../../models/Cereri';
 import { enviroment } from 'src/enviroment/enviroments';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActiveToast, ToastrService } from 'ngx-toastr';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RequestsService {
+  cerere$!: Observable<Cereri>;
   cereri$!: Observable<Cereri[]>;
   cereriByEmail$!: Observable<Cereri[]>;
   url: string = enviroment.mode === 'Bucur' ? 'http://localhost:3000' : '/api';
@@ -20,6 +22,17 @@ export class RequestsService {
       'Access-Control-Allow-Origin': '*',
     }),
   };
+
+  createRequest(profileForm: Cereri): ActiveToast<any> {
+    try {
+      this.http
+        .post(this.url + '/RequestModels/', profileForm, this.httpOptions)
+        .subscribe((response) => console.log(response));
+      return this.toastr.success('Cerere a fost adaugata cu succes');
+    } catch (error) {
+      return this.toastr.error('Ceva nu a mers bine');
+    }
+  }
 
   getCereriByEmail(email: string): Observable<Cereri[]> {
     try {
@@ -69,6 +82,21 @@ export class RequestsService {
       return this.toastr.success('Cererea a fost stearsa cu succes');
     } catch (error) {
       return this.toastr.error('Ceva a mers gresit..');
+    }
+  }
+  getRequestById(id: number): Observable<Cereri> {
+    try {
+      this.cerere$ = this.http
+        .get(this.url + '/RequestModels/' + id, this.httpOptions)
+        .pipe(
+          tap((result: any) => {
+            console.log(JSON.stringify(result));
+          })
+        );
+
+      return this.cerere$;
+    } catch (error) {
+      throw error;
     }
   }
 }

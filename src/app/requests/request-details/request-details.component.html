@@ -1,0 +1,102 @@
+<ng-container *ngIf="requests$ | async as Cereri; else loading4">
+  <div class="card container mt-3">
+    <div class="card-header">
+      <h3>{{ router?.toUpperCase() }} cerere</h3>
+    </div>
+
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="card-body">
+      <div class="d-flex flex-column g-3 justify-content-around">
+        <div class="d-flex flex-row justify-content-between">
+          <h3 *ngIf="router !== 'create'" class="ms-3">
+            Id :<span class="text-success"> {{ profileForm.value.id }} </span>
+          </h3>
+          <div *ngIf="profileForm.value.requestState === 1">
+            <span style="font-size: 50px">Status : </span>
+            <i
+              class="text-success m-1 bi bi-check-circle-fill"
+              style="font-size: 50px"
+            ></i>
+          </div>
+          <div *ngIf="profileForm.value.requestState === 2">
+            <span style="font-size: 50px">Status : </span>
+            <i
+              class="text-danger m-1 bi bi-x-circle-fill"
+              style="font-size: 50px"
+            ></i>
+          </div>
+          <div *ngIf="profileForm.value.requestState === 0">
+            <span style="font-size: 50px">Status : </span
+            ><i
+              class="text-info bi bi-hourglass-split"
+              style="font-size: 50px"
+            ></i>
+          </div>
+        </div>
+        <div>
+          <label for="nume" class="m-3">Nume:</label>
+          <input
+            id="nume"
+            class="m-3 form-control validationCustom01"
+            type="text"
+            formControlName="name"
+          />
+          <div *ngIf="profileForm.get('name').invalid && submitted">
+            <div
+              class="text-danger"
+              *ngIf="profileForm.get('name').hasError('required')"
+            >
+              Numele este obligatoriu!
+            </div>
+          </div>
+        </div>
+        <div *ngIf="userRole === '0' && router === 'details'">
+          <label for="email" class="m-3">Email:</label>
+          <input
+            id="email"
+            class="m-3 form-control validationCustom01"
+            type="email"
+            formControlName="email"
+          />
+        </div>
+        <div>
+          <label for="cerere" class="m-3">Cerere:</label>
+          <textarea
+            id="cerere"
+            class="m-3 form-control validationCustom01"
+            type="textarea"
+            formControlName="cerere"
+            rows="4"
+            cols="50"
+          ></textarea>
+          <div *ngIf="profileForm.get('cerere').invalid && submitted">
+            <div
+              class="text-danger"
+              *ngIf="profileForm.get('cerere').hasError('required')"
+            >
+              Descrierea cereri este obligatorie!
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-row justify-content-around">
+        <div>
+          <button *ngIf="editable" type="submit" class="btn btn-primary m-5">
+            Salveaza
+          </button>
+          <button
+            *ngIf="editable"
+            type="reset"
+            (click)="onReset()"
+            class="btn btn-secondary m-5"
+          >
+            Reseteaza
+          </button>
+        </div>
+        <app-btn-sticky-back></app-btn-sticky-back>
+      </div>
+    </form>
+  </div>
+</ng-container>
+<ng-template #loading4>
+  <app-spinner></app-spinner>
+</ng-template>
