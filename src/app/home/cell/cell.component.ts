@@ -10,19 +10,19 @@ export class CellComponent {
   @Input() item!: AppointmentModel;
 
   ngOnInit(): void {}
-  isOdd(parity: Parity): string {
-    if (parity === Parity.odd) {
+  isOdd(parity: number): string {
+    if (parity === 0) {
       return 'bg-success';
-    } else if (parity === Parity.even) {
+    } else if (parity === 1) {
       return 'bg-danger';
     } else {
       return 'bg-primary';
     }
   }
-  isTextOdd(parity: Parity): string {
-    if (parity === Parity.odd) {
+  isTextOdd(parity: number): string {
+    if (parity === 0) {
       return 'Saptamana Impara';
-    } else if (parity === Parity.even) {
+    } else if (parity === 1) {
       return 'Saptamana Para';
     } else {
       return 'Intotdeauna';

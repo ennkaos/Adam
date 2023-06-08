@@ -54,6 +54,36 @@
               ></app-sort>
             </div>
           </td>
+          <td scope="row">
+            <div class="d-flex flex-row">
+              <p>Materie</p>
+              <app-sort
+                [data]="usersResult"
+                (eventEmitter)="sort($event)"
+                [key]="'materie'"
+              ></app-sort>
+            </div>
+          </td>
+          <td scope="row">
+            <div class="d-flex flex-row">
+              <p>Serie</p>
+              <app-sort
+                [data]="usersResult"
+                (eventEmitter)="sort($event)"
+                [key]="'serie'"
+              ></app-sort>
+            </div>
+          </td>
+          <td scope="row">
+            <div class="d-flex flex-row">
+              <p>Grupa</p>
+              <app-sort
+                [data]="usersResult"
+                (eventEmitter)="sort($event)"
+                [key]="'grupa'"
+              ></app-sort>
+            </div>
+          </td>
           <td scope="row">Sterge</td>
         </tr>
       </thead>
@@ -87,6 +117,28 @@
             scope="row"
           >
             {{ item.role | roles }}
+          </td>
+          <td
+            [routerLink]="['details/', item.id]"
+            routerLinkActive="router-link-active"
+            scope="row"
+          >
+            {{ item.materie }}
+          </td>
+          <td
+            [routerLink]="['details/', item.id]"
+            routerLinkActive="router-link-active"
+            scope="row"
+          >
+            {{ item.serie }}
+          </td>
+
+          <td
+            [routerLink]="['details/', item.id]"
+            routerLinkActive="router-link-active"
+            scope="row"
+          >
+            {{ item.grupa }}
           </td>
 
           <td scope="row">

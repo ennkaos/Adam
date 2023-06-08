@@ -1,0 +1,376 @@
+<div class="container">
+  <ng-container
+    *ngIf="reservation$ | async as AppointmentsModel; else loading4"
+  >
+    <div class="card mt-3">
+      <div class="card-header">
+        <h3 style="text-transform: capitalize">{{ router }} Rezervari</h3>
+      </div>
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="card-body">
+        <div class="d-flex flex-column needs-validation" style="gap: 20px">
+          <div *ngIf="router === 'details'">
+            <label for="nume" class="">Id : </label>
+            <input
+              id="id"
+              class="form-control validationCustom01"
+              type="text"
+              formControlName="id"
+            />
+          </div>
+        </div>
+        <div>
+          <label for="email" class="m-3">Serie</label>
+          <select
+            #serie2
+            formControlName="serie"
+            class="form-select"
+            aria-label="Selecteaza Serie"
+            (change)="onChangeSerie(serie2.value)"
+          >
+            <option
+              *ngFor="let item of serie"
+              [selected]="item"
+              [ngValue]="item"
+            >
+              {{ item }}
+            </option>
+          </select>
+          <div *ngIf="profileForm.get('serie').invalid">
+            <div
+              class="text-danger"
+              *ngIf="profileForm.get('serie').hasError('required')"
+            >
+              Seria este obligatorie!
+            </div>
+          </div>
+        </div>
+        <div
+          *ngIf="
+            (profileForm.get('serie').valid ||
+              router === 'update' ||
+              router === 'details') &&
+              materii$ | async as MateriiModel
+          "
+        >
+          <label class="m-3" for="subjectName">Nume Materie: </label>
+          <select
+            #materie
+            formControlName="subjectName"
+            class="form-select"
+            aria-label="Selecteaza Materie"
+            (change)="onChangeMaterie(materie.value)"
+          >
+            <option
+              *ngFor="let item of materiiResult"
+              [selected]="item.name"
+              [ngValue]="item.name"
+            >
+              {{ item.name }}
+            </option>
+          </select>
+          <div *ngIf="profileForm.get('subjectName').invalid">
+            <div
+              class="text-danger"
+              *ngIf="profileForm.get('subjectName').hasError('required')"
+            >
+              Numele materiei este obligatoriu!
+            </div>
+          </div>
+        </div>
+        <div
+          *ngIf="
+            profileForm.get('subjectName').valid ||
+            router === 'update' ||
+            router === 'details'
+          "
+          class="d-flex flex-row justify-content-between mt-2"
+        >
+          <div>
+            <div class="form-check">
+              <input
+                #lab
+                class="form-check-input"
+                type="checkbox"
+                formControlName="isLab"
+                id="flexCheckDisabled"
+                (change)="onChangeIsLab()"
+              />
+              <label class="form-check-label" for="flexCheckDisabled">
+                Este Laborator (Adevarat/Fals):
+              </label>
+            </div>
+          </div>
+          <div>
+            <div
+              *ngIf="profileForm.value.isLab && router !== 'update'"
+              class="form-check"
+            >
+              <input
+                class="form-check-input"
+                type="checkbox"
+                formControlName="groups"
+                id="flexCheckDisabled"
+              />
+              <label class="form-check-label" for="flexCheckDisabled">
+                Pentru Ambele Subgrupe (Adevarat/Fals):
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          *ngIf="
+            (profileForm.value.isLab && profileForm.get('subjectName').valid) ||
+            (profileForm.value.isLab && router === 'update') ||
+            (profileForm.value.isLab && router === 'details')
+          "
+        >
+          <label class="m-3" for="grupa">Grupa: </label>
+          <select
+            formControlName="group"
+            class="form-select"
+            aria-label="Selecteaza Grupa"
+          >
+            <option
+              *ngFor="let item of grupa"
+              [selected]="item"
+              [ngValue]="item"
+            >
+              {{ item }}
+            </option>
+          </select>
+          <div *ngIf="profileForm.get('group').invalid">
+            <div
+              class="text-danger"
+              *ngIf="profileForm.get('group').hasError('required')"
+            >
+              Grupa este obligatorie!
+            </div>
+          </div>
+        </div>
+        <div
+          *ngIf="
+            (profileForm.value.isLab &&
+              !profileForm.value.groups &&
+              profileForm.get('subjectName').valid) ||
+            (profileForm.value.isLab &&
+              !profileForm.value.groups &&
+              router === 'update') ||
+            (profileForm.value.isLab &&
+              !profileForm.value.groups &&
+              router === 'details')
+          "
+        >
+          <label class="m-3" for="subgroup">Subgrupa: </label>
+          <select
+            formControlName="subgroup"
+            class="form-select"
+            aria-label="Selecteaza Subgrupa"
+          >
+            <option [ngValue]="1">1</option>
+            <option [ngValue]="2">2</option>
+          </select>
+          <div *ngIf="profileForm.get('subgroup').invalid">
+            <div
+              class="text-danger"
+              *ngIf="profileForm.get('subgroup').hasError('required')"
+            >
+              Subrupa este obligatorie!
+            </div>
+          </div>
+        </div>
+        <div
+          *ngIf="
+            profileForm.get('subjectName').valid ||
+            router === 'update' ||
+            router === 'details'
+          "
+        >
+          <label class="m-3" for="teacherName">Profesor: </label>
+          <select
+            formControlName="teacherName"
+            class="form-select"
+            aria-label="Selecteaza Profesor"
+          >
+            <option
+              *ngFor="let item of teachersResult"
+              [selected]="item.name"
+              [ngValue]="item.name"
+            >
+              {{ item.name }}
+            </option>
+          </select>
+          <div *ngIf="profileForm.get('teacherName').invalid">
+            <div
+              class="text-danger"
+              *ngIf="profileForm.get('teacherName').hasError('required')"
+            >
+              Profesorul este obligatoriu!
+            </div>
+          </div>
+        </div>
+        <div
+          *ngIf="
+            profileForm.get('teacherName').valid ||
+            router === 'update' ||
+            router === 'details'
+          "
+        >
+          <label class="m-3" for="roomName">Sala: </label>
+          <select
+            formControlName="roomName"
+            class="form-select"
+            aria-label="Selecteaza Sala"
+          >
+            <option
+              *ngFor="let item of roomsResult"
+              [selected]="item.name"
+              [ngValue]="item.name"
+            >
+              {{ item.name }}
+            </option>
+          </select>
+          <div *ngIf="profileForm.get('roomName').invalid">
+            <div
+              class="text-danger"
+              *ngIf="profileForm.get('roomName').hasError('required')"
+            >
+              Sala este obligatoriu!
+            </div>
+          </div>
+        </div>
+        <div
+          *ngIf="
+            profileForm.get('roomName').valid ||
+            router === 'update' ||
+            router === 'details'
+          "
+        >
+          <label class="m-3" for="dayNumber">Ziua: </label>
+          <select
+            formControlName="dayNumber"
+            class="form-select"
+            aria-label="Selecteaza Ziua"
+          >
+            <option *ngFor="let item of day" [selected]="item" [ngValue]="item">
+              {{ item | day }}
+            </option>
+          </select>
+          <div *ngIf="profileForm.get('dayNumber').invalid">
+            <div
+              class="text-danger"
+              *ngIf="profileForm.get('dayNumber').hasError('required')"
+            >
+              Ziua este obligatorie!
+            </div>
+          </div>
+        </div>
+        <div
+          *ngIf="
+            profileForm.get('dayNumber').valid ||
+            router === 'update' ||
+            router === 'details'
+          "
+        >
+          <label class="m-3" for="startTimeSlot">Ora de inceput: </label>
+          <select
+            formControlName="startTimeSlot"
+            class="form-select"
+            aria-label="Selecteaza ora de inceput"
+          >
+            <option
+              *ngFor="let item of startingTimeSlots"
+              [selected]="item"
+              [ngValue]="item"
+            >
+              {{ item | startingTimeSlot }}
+            </option>
+          </select>
+          <div *ngIf="profileForm.get('startTimeSlot').invalid">
+            <div
+              class="text-danger"
+              *ngIf="profileForm.get('startTimeSlot').hasError('required')"
+            >
+              Ora de inceput este obligatorie!
+            </div>
+          </div>
+        </div>
+        <div
+          *ngIf="
+            profileForm.get('startTimeSlot').valid ||
+            router === 'update' ||
+            router === 'details'
+          "
+        >
+          <label class="m-3" for="timeSlotsUsed">Durata </label>
+          <select
+            formControlName="timeSlotsUsed"
+            class="form-select"
+            aria-label="Selecteaza durata"
+          >
+            <option
+              *ngFor="let item of duration"
+              [selected]="item"
+              [ngValue]="item"
+            >
+              {{ item }}
+            </option>
+          </select>
+          <div *ngIf="profileForm.get('timeSlotsUsed').invalid">
+            <div
+              class="text-danger"
+              *ngIf="profileForm.get('timeSlotsUsed').hasError('required')"
+            >
+              Durata este obligatorie!
+            </div>
+          </div>
+        </div>
+        <div
+          *ngIf="
+            profileForm.get('timeSlotsUsed').valid ||
+            router === 'update' ||
+            router === 'details'
+          "
+        >
+          <label class="m-3" for="isOnParity">Paritate </label>
+          <select
+            formControlName="isOnParity"
+            class="form-select"
+            aria-label="Selecteaza paritatea"
+          >
+            <option
+              *ngFor="let item of parity"
+              [selected]="item"
+              [ngValue]="item"
+            >
+              {{ item | parity }}
+            </option>
+          </select>
+          <div *ngIf="profileForm.get('isOnParity').invalid">
+            <div
+              class="text-danger"
+              *ngIf="profileForm.get('isOnParity').hasError('required')"
+            >
+              Durata este obligatorie!
+            </div>
+          </div>
+        </div>
+        <div class="mt-2" style="display: flex; gap: 5px">
+          <button *ngIf="editable" type="submit" class="btn btn-primary">
+            Salveaza
+          </button>
+          <button
+            *ngIf="editable"
+            (click)="onReset()"
+            class="btn btn-secondary"
+          >
+            Reseteaza
+          </button>
+        </div>
+      </form>
+    </div>
+    <app-btn-sticky-back></app-btn-sticky-back>
+  </ng-container>
+  <ng-template #loading4>
+    <app-spinner></app-spinner>
+  </ng-template>
+</div>

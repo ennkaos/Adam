@@ -45,6 +45,9 @@ export class RoluriComponent {
           email: e.email,
           token: e.token,
           role: e.role,
+          materie: e.materie,
+          serie: e.serie,
+          grupa: e.grupa,
         });
       });
       this.router.navigate(['roluri/details/' + localStorage.getItem('id')]);

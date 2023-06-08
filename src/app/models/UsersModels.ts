@@ -8,4 +8,7 @@ export interface UsersModels {
   password?: string;
   token?: string;
   role: number;
+  serie?: string;
+  grupa?: string;
+  materie?: string;
 }

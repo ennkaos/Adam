@@ -11,6 +11,7 @@ import { enviroment } from 'src/enviroment/enviroments';
 export class MateriiService {
   materii!: Observable<MateriiModel[]>;
   materie!: Observable<MateriiModel>;
+  materieByYear: Observable<MateriiModel[]>;
   url: string = enviroment.mode === 'Bucur' ? 'http://localhost:3000' : '/api';
   constructor(public http: HttpClient, private toastr: ToastrService) {}
   httpOptions = {
@@ -78,6 +79,25 @@ export class MateriiService {
         );
 
       return this.materie;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  getMaterieByYear(year: number): Observable<MateriiModel[]> {
+    try {
+      this.materieByYear = this.http
+        .get(
+          this.url + '/MaterieModels/search?anMaterie=' + year,
+          this.httpOptions
+        )
+        .pipe(
+          tap((result: any) => {
+            console.log(JSON.stringify(result));
+          })
+        );
+
+      return this.materieByYear;
     } catch (error) {
       throw error;
     }

@@ -9,13 +9,15 @@ export const serie: any = [
   '2AB',
   '3AB',
   '4AB',
-  '4AC',
   '1AC',
   '2AC',
   '3AC',
   '4AC',
 ];
+export const grupe: string[] = ['1', '2', '3', '4'];
 export const Roles: Role[] = [0, 1, 2];
+export const Parity: number[] = [0, 1, 2];
+export const Day: number[] = [0, 1, 2, 3, 4];
 export const scheduleDay: any[] = [
   {
     day: 'Monday',
@@ -118,3 +120,7 @@ export const hours: string[] = [
   '18-19',
   '19-20',
 ];
+
+export const startingHours: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
+export const duration: number[] = [2, 3];

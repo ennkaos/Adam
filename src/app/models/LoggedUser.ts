@@ -5,4 +5,7 @@ export interface LoggedUser {
   email: string;
   name: string;
   role: number;
+  materie?: string;
+  serie?: string;
+  grupa?: string;
 }

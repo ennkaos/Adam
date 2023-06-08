@@ -7,7 +7,9 @@ import { LoginService } from 'src/app/login.service';
 import { UsersModels } from 'src/app/models/UsersModels';
 import { RoluriService } from '../services/roluri.service';
 import { Role } from 'src/app/models/roles';
-import { Roles } from 'src/app/models/scheduleModel';
+import { Roles, grupe, serie } from 'src/app/models/scheduleModel';
+import { MateriiModel } from 'src/app/models/MateriiModel';
+import { MateriiService } from 'src/app/materii/services/materii.service';
 
 @Component({
   selector: 'app-roluri-details',
@@ -24,15 +26,21 @@ export class RoluriDetailsComponent {
   userResult!: UsersModels;
   userId!: null | string;
   userRole: string;
+  materii$: Observable<MateriiModel[]>;
+  materii: MateriiModel[];
+  grupe: string[];
+  serii: string[];
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private loginService: LoginService,
     private roluriService: RoluriService,
-    private toastr: ToastrService,
+    private materiiService: MateriiService,
     private router2: Router
   ) {
     this.roles = Roles;
+    this.serii = serie;
+    this.grupe = grupe;
   }
   ngOnInit() {
     this.editable = false;
@@ -48,17 +56,28 @@ export class RoluriDetailsComponent {
       email: ['', Validators.email],
       password: ['', Validators.maxLength(20)],
       role: [1],
+      materie: [' '],
+      serie: [' '],
+      grupa: [' '],
     });
     this.profileForm.disable();
+    this.materii$ = this.materiiService.get();
     this.user$ = this.roluriService.getUser(Number(this.userId));
-
     this.subscription = this.user$.subscribe((e) => {
       this.userResult = e;
       this.profileForm.controls['id'].setValue(Number(this.userId));
       this.profileForm.controls['name'].setValue(this.userResult.name);
       this.profileForm.controls['email'].setValue(this.userResult.email);
       this.profileForm.controls['role'].setValue(this.userResult.role);
+      this.profileForm.controls['materie'].setValue(this.userResult.materie);
+      this.profileForm.controls['serie'].setValue(this.userResult.serie);
+      this.profileForm.controls['grupa'].setValue(this.userResult.grupa);
     });
+    if (this.profileForm.value.role === 1) {
+      this.materii$.subscribe((materii) => {
+        this.materii = materii;
+      });
+    }
   }
 
   onSubmit() {

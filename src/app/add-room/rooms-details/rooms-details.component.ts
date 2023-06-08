@@ -115,11 +115,9 @@ export class RoomsDetailsComponent {
     console.log(this.profileForm.touched, this.router);
     if (this.profileForm.touched) {
       if (this.router === 'create') {
-        this.profileForm.controls['name'].setValue(this.roomResult.name);
-        this.profileForm.controls['capacity'].setValue(
-          this.roomResult.capacity
-        );
-        this.profileForm.controls['labRoom'].setValue(this.roomResult.labRoom);
+        this.profileForm.controls['name'].setValue('');
+        this.profileForm.controls['capacity'].setValue(1);
+        this.profileForm.controls['labRoom'].setValue(true);
         this.toastr.success('Resetat cu success');
       } else if (this.router === 'update') {
         this.profileForm = this.fb.group({

@@ -11,6 +11,7 @@ import { enviroment } from 'src/enviroment/enviroments';
 export class RoluriService {
   users$!: Observable<UsersModels[]>;
   user$!: Observable<UsersModels>;
+  userByMaterie$!: Observable<UsersModels[]>;
   url: string = enviroment.mode === 'Bucur' ? 'http://localhost:3000' : '/api';
 
   constructor(public http: HttpClient, private toastr: ToastrService) {}
@@ -80,6 +81,22 @@ export class RoluriService {
         );
 
       return this.user$;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  getUserByMaterie(value: string): Observable<UsersModels[]> {
+    try {
+      this.userByMaterie$ = this.http
+        .get(this.url + '/UserModels/search?Materie=' + value, this.httpOptions)
+        .pipe(
+          tap((result: any) => {
+            console.log(JSON.stringify(result));
+          })
+        );
+
+      return this.userByMaterie$;
     } catch (error) {
       throw error;
     }

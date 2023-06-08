@@ -56,7 +56,7 @@
           </div>
         </div>
       </div>
-      <div class="d-flex ms-3" style="height: 330px">
+      <div class="d-flex ms-3" style="height: 630px">
         <div class="vr"></div>
       </div>
       <div class="d-flex flex-column g-3 justify-content-around">
@@ -91,8 +91,65 @@
             formControlName="password"
           />
         </div>
+        <div *ngIf="profileForm.value.role === 1">
+          <label for="materie" class="m-3">Materie</label>
+          <select
+            formControlName="materie"
+            class="form-select m-3"
+            aria-label="Default select example"
+          >
+            <option
+              [selected]="profileForm.value.materie"
+              [ngValue]="item.name"
+              *ngFor="let item of materii"
+            >
+              {{ item.name }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="profileForm.value.role === 2">
+          <label for="serie" class="m-3">Serie</label>
+          <select
+            formControlName="serie"
+            class="form-select m-3"
+            aria-label="Default select example"
+          >
+            <option
+              [selected]="item"
+              [ngValue]="item"
+              *ngFor="let item of serii"
+            >
+              {{ item }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="profileForm.value.role === 2 && editable">
+          <label for="grupa" class="m-3">Grupa</label>
+          <select
+            formControlName="grupa"
+            class="form-select m-3"
+            aria-label="Default select example"
+          >
+            <option
+              [selected]="item"
+              [ngValue]="item"
+              *ngFor="let item of grupe"
+            >
+              {{ item }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="profileForm.value.role === 2 && !editable">
+          <label for="grupa" class="m-3">Grupa:</label>
+          <input
+            id="grupa"
+            class="m-3 form-control validationCustom01"
+            type="text"
+            formControlName="grupa"
+          />
+        </div>
       </div>
-      <div class="d-flex ms-3" style="height: 330px">
+      <div class="d-flex ms-3" style="height: 630px">
         <div class="vr"></div>
       </div>
       <div class="card-header d-flex flex-column justify-content-around">

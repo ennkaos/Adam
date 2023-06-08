@@ -1,6 +1,8 @@
 export interface AppointmentModel {
   id: number;
 
+  name: string;
+
   groups: boolean;
 
   teacherName: string;
@@ -11,17 +13,18 @@ export interface AppointmentModel {
 
   roomName: string;
 
-  roomId: number;
-
   startTimeSlot: number;
 
   timeSlotsUsed: number;
 
-  IsOnParity: Parity;
+  isOnParity: number;
 
   isLab: boolean;
 
   group: string;
+
+  serie: string;
+  subgroup: number;
 }
 
 export enum Parity {

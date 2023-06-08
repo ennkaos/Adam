@@ -11,6 +11,7 @@ import { enviroment } from 'src/enviroment/enviroments';
 export class AddRoomService {
   rooms!: Observable<RoomsModel[]>;
   room!: Observable<RoomsModel>;
+  roomByMaterie: Observable<RoomsModel[]>;
   url: string = enviroment.mode === 'Bucur' ? 'http://localhost:3000' : '/api';
 
   constructor(public http: HttpClient, private toastr: ToastrService) {}
@@ -80,6 +81,21 @@ export class AddRoomService {
         );
 
       return this.room;
+    } catch (error) {
+      throw error;
+    }
+  }
+  getRoomByMaterie(value: boolean): Observable<RoomsModel[]> {
+    try {
+      this.roomByMaterie = this.http
+        .get(this.url + '/Rooms/search?labRoom=' + value, this.httpOptions)
+        .pipe(
+          tap((result: any) => {
+            console.log(JSON.stringify(result));
+          })
+        );
+
+      return this.roomByMaterie;
     } catch (error) {
       throw error;
     }

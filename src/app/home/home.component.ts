@@ -63,15 +63,27 @@ export class HomeComponent {
       e.subgrupe.forEach((subgroup) => {
         subgroup.week.forEach((day, index) => {
           let counter: number = 0;
-          day.reservations.forEach((app, indexHours) => {
-            if (app && !app.isLab && app.timeSlotsUsed === 2) {
-              this.scheduleDay[index].hours[counter].appointments.push(app);
+          day.reservations.forEach((reservations, indexHours) => {
+            if (
+              reservations &&
+              !reservations.isLab &&
+              reservations.timeSlotsUsed === 2
+            ) {
+              this.scheduleDay[index].hours[counter].appointments.push(
+                reservations
+              );
               this.scheduleDay[index].hours[counter + 1].appointments.push(
                 undefined
               );
               counter = counter + 2;
-            } else if (app && !app.isLab && app.timeSlotsUsed === 3) {
-              this.scheduleDay[index].hours[counter].appointments.push(app);
+            } else if (
+              reservations &&
+              !reservations.isLab &&
+              reservations.timeSlotsUsed === 3
+            ) {
+              this.scheduleDay[index].hours[counter].appointments.push(
+                reservations
+              );
               this.scheduleDay[index].hours[counter + 1].appointments.push(
                 undefined
               );
@@ -79,14 +91,26 @@ export class HomeComponent {
                 undefined
               );
               counter = counter + 3;
-            } else if (app && app.isLab && app.timeSlotsUsed === 2) {
-              this.scheduleDay[index].hours[counter].appointments.push(app);
+            } else if (
+              reservations &&
+              reservations.isLab &&
+              reservations.timeSlotsUsed === 2
+            ) {
+              this.scheduleDay[index].hours[counter].appointments.push(
+                reservations
+              );
               this.scheduleDay[index].hours[counter + 1].appointments.push(
                 undefined
               );
               counter = counter + 2;
-            } else if (app && app.isLab && app.timeSlotsUsed === 3) {
-              this.scheduleDay[index].hours[counter].appointments.push(app);
+            } else if (
+              reservations &&
+              reservations.isLab &&
+              reservations.timeSlotsUsed === 3
+            ) {
+              this.scheduleDay[index].hours[counter].appointments.push(
+                reservations
+              );
               this.scheduleDay[index].hours[counter + 1].appointments.push(
                 undefined
               );
@@ -94,8 +118,10 @@ export class HomeComponent {
                 undefined
               );
               counter = counter + 3;
-            } else if (app !== undefined && app === null) {
-              this.scheduleDay[index].hours[counter].appointments.push(app);
+            } else if (reservations !== undefined && reservations === null) {
+              this.scheduleDay[index].hours[counter].appointments.push(
+                reservations
+              );
 
               counter++;
             }
