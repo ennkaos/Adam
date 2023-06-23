@@ -33,20 +33,26 @@ export class RequestsComponent {
         ? this.requestsService.getCereri()
         : this.requestsService.getCereriByEmail(this.email);
     this.cereri$.subscribe((cereri) => {
-      this.cereriResult = cereri.sort((a, b) =>
-        a['requestState'] < b['requestState']
-          ? -1
-          : a['requestState'] > b['requestState']
-          ? 1
-          : 0
-      );
-      this.initialData = cereri.sort((a, b) =>
-        a['requestState'] < b['requestState']
-          ? -1
-          : a['requestState'] > b['requestState']
-          ? 1
-          : 0
-      );
+      this.cereriResult =
+        cereri.length > 0
+          ? cereri.sort((a, b) =>
+              a['requestState'] < b['requestState']
+                ? -1
+                : a['requestState'] > b['requestState']
+                ? 1
+                : 0
+            )
+          : [];
+      this.initialData =
+        cereri.length > 0
+          ? cereri.sort((a, b) =>
+              a['requestState'] < b['requestState']
+                ? -1
+                : a['requestState'] > b['requestState']
+                ? 1
+                : 0
+            )
+          : [];
     });
   }
 

@@ -63,7 +63,6 @@ export class RequestsService {
     }
   }
   update(id: number, data: Cereri): ActiveToast<any> {
-    console.log(id, data);
     try {
       this.http
         .post(this.url + '/RequestModels/' + id, { ...data }, this.httpOptions)
@@ -75,7 +74,6 @@ export class RequestsService {
   }
   delete(id: number): ActiveToast<any> {
     try {
-      console.log(id);
       this.http
         .delete(this.url + '/RequestModels/' + id, this.httpOptions)
         .subscribe((response) => console.log(response));

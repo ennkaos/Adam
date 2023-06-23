@@ -31,8 +31,6 @@ export class RoluriComponent {
       this.users$ = this.usersService.getUsers();
       this.users$.subscribe((e) => {
         console.log('Subscription Started ...');
-        console.log(e);
-
         this.usersResult = e;
         this.initialData = e;
       });
@@ -55,7 +53,6 @@ export class RoluriComponent {
   }
   showPasswordClick() {
     this.showPassword = !this.showPassword;
-    console.log(this.showPassword);
   }
   sort($event) {
     this.usersResult = $event;

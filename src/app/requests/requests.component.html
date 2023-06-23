@@ -1,7 +1,7 @@
 <ng-container *ngIf="cereri$ | async as cereri; else loading4">
   <div style="z-index: 1" class="card mt-3 border-shadow container mx-auto">
     <div class="d-flex flex-row w-100 justify-content-between">
-      <h2 class="m-3">Lista Conturi</h2>
+      <h2 class="m-3">Lista Sugestii</h2>
       <app-search-bar
         [data2]="cereriResult"
         (eventEmitter)="filter($event)"
@@ -9,7 +9,7 @@
       ></app-search-bar>
     </div>
     <table
-      *ngIf="this.cereriResult.length != 0; else notfound"
+      *ngIf="this.cereriResult?.length != 0; else notfound"
       class="table table-hover bg-white"
     >
       <thead>
@@ -156,20 +156,25 @@
             ></i>
           </td>
         </tr>
-        <button
-          *ngIf="role == '1'"
-          [routerLink]="['create']"
-          class="m-3 btn btn-success"
-        >
-          Creaza Cerere
-        </button>
       </tbody>
     </table>
+
     <ng-template #notfound>
       <h1>Not Found</h1>
     </ng-template>
   </div>
+  <div class="container m-5 d-flex justify-content-end">
+    <button
+      class="btn btn-success"
+      [routerLink]="['create']"
+      routerLinkActive="router-link-active"
+      *ngIf="role === '1'"
+    >
+      Adauga Sugestie
+    </button>
+  </div>
 </ng-container>
+
 <ng-template #loading4>
   <app-spinner></app-spinner>
 </ng-template>

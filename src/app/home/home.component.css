@@ -1,16 +1,17 @@
 
 .rowNull{
-  height: 41.33px !important;
+  height: 42.5px !important;
 }
 
 
 .table1{
   display:grid;
   grid-auto-flow: row;
-  height: 498.67px;
+  height: 510px;
 
 
 }
 .marginNegative{
   margin-top: -2px;
 }
+

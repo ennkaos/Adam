@@ -112,7 +112,6 @@ export class RoomsDetailsComponent {
     }
   }
   onReset() {
-    console.log(this.profileForm.touched, this.router);
     if (this.profileForm.touched) {
       if (this.router === 'create') {
         this.profileForm.controls['name'].setValue('');

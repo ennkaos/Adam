@@ -23,7 +23,6 @@ export class RoluriService {
   };
   createUser(profileForm: UsersModels): ActiveToast<any> {
     try {
-      console.log(profileForm);
       this.http
         .post(this.url + '/UserModels/', profileForm, this.httpOptions)
         .subscribe((response) => console.log(response));
@@ -48,12 +47,23 @@ export class RoluriService {
     }
   }
   updateUser(id: number, data: UsersModels): ActiveToast<any> {
-    console.log(id, data);
     try {
       this.http
         .post(this.url + '/UserModels/' + id, data, this.httpOptions)
-        .subscribe((response) => console.log(response));
-      return this.toastr.success('Userul a fost modificata cu succes');
+        .subscribe((response: UsersModels) => {
+          if (id.toString() === localStorage.getItem('id')) {
+            localStorage.setItem('id', response?.id.toString());
+            localStorage.setItem('email', response?.email.toString());
+            localStorage.setItem('token', response?.token);
+            localStorage.setItem('role', response?.role.toString());
+            localStorage.setItem('name', response?.name);
+            if (response.role === 2 && !!response.serie && !!response.grupa) {
+              localStorage.setItem('serie', response?.serie);
+              localStorage.setItem('grupa', response?.grupa);
+            }
+          }
+        });
+      return this.toastr.success('Userul a fost modificat cu succes');
     } catch (error) {
       return this.toastr.error('Ceva nu a functionat ..');
     }
@@ -61,7 +71,6 @@ export class RoluriService {
 
   deleteUser(id: number): ActiveToast<any> {
     try {
-      console.log(id);
       this.http
         .delete(this.url + '/UserModels/' + id, this.httpOptions)
         .subscribe((response) => console.log(response));

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable, Subject, switchMap } from 'rxjs';
+import { Observable, Subject, Subscription, switchMap } from 'rxjs';
 import { AddRoomService } from './services/add-room-service';
 import { RoomsModel } from '../models/RoomsModel';
 import { ToastrService } from 'ngx-toastr';
@@ -14,6 +14,7 @@ export class AddRoomComponent {
   roomsResult!: RoomsModel[];
   sortResult: Subject<RoomsModel[]> = new Subject();
   initialData: any[];
+  roomsSubscription: Subscription;
 
   constructor(
     public addroomService: AddRoomService,
@@ -21,9 +22,8 @@ export class AddRoomComponent {
   ) {}
   ngOnInit(): void {
     this.rooms$ = this.addroomService.getRooms();
-    this.rooms$.subscribe((e) => {
+    this.roomsSubscription = this.rooms$.subscribe((e) => {
       console.log('Subscription Started ...');
-      console.log(e);
       this.roomsResult = e;
       this.initialData = e;
     });
@@ -48,5 +48,8 @@ export class AddRoomComponent {
       this.toastr.error('Ceva a mers gresit ..');
       throw error;
     }
+  }
+  ngOnDestroy() {
+    this.roomsSubscription.unsubscribe();
   }
 }

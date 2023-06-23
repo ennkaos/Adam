@@ -35,12 +35,8 @@ export class HomeComponent {
     this.schedule = this.scheduleService.getSchedule(value);
     this.schedule.subscribe((e) => {
       console.log('Subscription Started ...');
-
       this.scheduleResult = e;
-
-      console.log(this.scheduleResult);
       this.clearArray();
-      console.log(this.scheduleResult);
       //this.showSerie = this.scheduleResult;
       this.mappingArray();
       this.filterArray();
@@ -132,13 +128,7 @@ export class HomeComponent {
   }
 
   onChangeSerieSelect(event): void {
-    // this.unsubscribeSchedule();
     this.selectedSerie = event.target.value;
-    //server Mock
-    //const value = this.selectedSerie.slice(0, 1);
-    //this.subscribeSchedule(value);
-    //server Adam
-    console.log(this.selectedSerie);
     this.subscribeSchedule(this.selectedSerie);
   }
   filterArray() {

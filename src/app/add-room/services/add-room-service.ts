@@ -25,7 +25,6 @@ export class AddRoomService {
 
   createRoom(profileForm: RoomsModel): ActiveToast<any> {
     try {
-      console.log(profileForm);
       this.http
         .post(this.url + '/Rooms/', profileForm, this.httpOptions)
         .subscribe((response) => console.log(response));
@@ -48,11 +47,10 @@ export class AddRoomService {
     }
   }
   updateRoom(id: number, data: RoomsModel): ActiveToast<any> {
-    console.log(id, data);
     try {
       this.http
         .post(this.url + '/Rooms/' + id, data, this.httpOptions)
-        .subscribe((response) => console.log(response));
+        .subscribe();
       return this.toastr.success('Sala a fost modificata cu succes');
     } catch (error) {
       return this.toastr.error('Ceva nu a functionat ..');
@@ -61,10 +59,7 @@ export class AddRoomService {
 
   deleteRoom(id: number): ActiveToast<any> {
     try {
-      console.log(id);
-      this.http
-        .delete(this.url + '/Rooms/' + id, this.httpOptions)
-        .subscribe((response) => console.log(response));
+      this.http.delete(this.url + '/Rooms/' + id, this.httpOptions).subscribe();
       return this.toastr.success('Sala a fost stearsa cu succes');
     } catch (error) {
       return this.toastr.error('Ceva a mers gresit..');

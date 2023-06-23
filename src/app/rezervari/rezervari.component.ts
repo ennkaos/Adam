@@ -27,7 +27,6 @@ export class RezervariComponent {
     this.appointments$ = this.rezervariService.getAppointments();
     this.appointments$.subscribe((appointments) => {
       console.log('subscription started...');
-      console.log(appointments);
       this.appointmentsResult = appointments;
     });
   }

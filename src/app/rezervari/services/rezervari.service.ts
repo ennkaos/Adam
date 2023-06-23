@@ -45,7 +45,6 @@ export class RezervariService {
     }
   }
   update(id: number, data: AppointmentModel): ActiveToast<any> {
-    console.log(id, data);
     try {
       this.http
         .post(
@@ -61,7 +60,6 @@ export class RezervariService {
   }
   delete(id: number): ActiveToast<any> {
     try {
-      console.log(id);
       this.http
         .delete(this.url + '/ReservationModel/' + id, this.httpOptions)
         .subscribe((response) => console.log(response));

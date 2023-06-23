@@ -1,15 +1,15 @@
-<ng-container *ngIf="materii$ | async as Rooms; else loading4">
+<ng-container *ngIf="serii$ | async as SeriiModel; else loading4">
   <div style="z-index: 1" class="card mt-3 border-shadow container mx-auto">
     <div class="d-flex flex-row w-100 justify-content-between">
-      <h2>Lista Materii</h2>
+      <h2>Lista Serii</h2>
       <app-search-bar
-        [data2]="materiiResult"
+        [data2]="seriiResult"
         (eventEmitter)="filter($event)"
         [key]="'name'"
       ></app-search-bar>
     </div>
     <table
-      *ngIf="materiiResult.length > 0; else notfound"
+      *ngIf="seriiResult.length > 0; else notfound"
       class="table table-hover bg-white"
     >
       <thead>
@@ -18,7 +18,7 @@
             <div class="d-flex flex-row">
               <p>#</p>
               <app-sort
-                [data]="materiiResult"
+                [data]="seriiResult"
                 (eventEmitter)="sort($event)"
                 [key]="'id'"
               ></app-sort>
@@ -28,7 +28,7 @@
             <div class="d-flex flex-row">
               <p>Nume</p>
               <app-sort
-                [data]="materiiResult"
+                [data]="seriiResult"
                 (eventEmitter)="sort($event)"
                 [key]="'name'"
               ></app-sort>
@@ -36,18 +36,28 @@
           </td>
           <td scope="row">
             <div class="d-flex flex-row">
-              <p>An Materie</p>
+              <p>An Studiu</p>
               <app-sort
-                [data]="materiiResult"
+                [data]="seriiResult"
                 (eventEmitter)="sort($event)"
-                [key]="'anMaterie'"
+                [key]="'anStudiu'"
+              ></app-sort>
+            </div>
+          </td>
+          <td scope="row">
+            <div class="d-flex flex-row">
+              <p>Numar Studenti</p>
+              <app-sort
+                [data]="seriiResult"
+                (eventEmitter)="sort($event)"
+                [key]="'nrStudenti'"
               ></app-sort>
             </div>
           </td>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of materiiResult">
+        <tr *ngFor="let item of seriiResult">
           <td
             [routerLink]="['details/', item.id]"
             routerLinkActive="router-link-active"
@@ -67,7 +77,14 @@
             routerLinkActive="router-link-active"
             scope="row"
           >
-            {{ item.anMaterie }}
+            {{ item.anStudiu }}
+          </td>
+          <td
+            [routerLink]="['details/', item.id]"
+            routerLinkActive="router-link-active"
+            scope="row"
+          >
+            {{ item.nrStudenti }}
           </td>
 
           <td
@@ -96,7 +113,7 @@
       [routerLink]="['create']"
       routerLinkActive="router-link-active"
     >
-      Adauga Materie
+      Adauga Serie
     </button>
   </div>
 </ng-container>

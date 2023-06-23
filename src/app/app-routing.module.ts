@@ -34,12 +34,29 @@ const routes: Routes = [
     },
   },
   {
+    path: 'serii',
+    loadChildren: () =>
+      import('./serii/serii.module').then((m) => m.SeriiModule),
+    canActivate: [LoginGuard],
+    data: {
+      expectedRole: [0],
+    },
+  },
+  {
     path: 'rezervari',
     loadChildren: () =>
       import('./rezervari/rezervari.module').then((m) => m.RezervariModule),
     canActivate: [LoginGuard],
     data: {
       expectedRole: [0, 1],
+    },
+  },
+  {
+    path: 'orar',
+    loadChildren: () => import('./orar/orar.module').then((m) => m.OrarModule),
+    canActivate: [LoginGuard],
+    data: {
+      expectedRole: [2],
     },
   },
   {

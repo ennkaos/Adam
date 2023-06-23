@@ -60,7 +60,6 @@ export class RequestDetailsComponent {
       );
       this.requests$.subscribe((e) => {
         this.requestsResult = e;
-        console.log(this.requestsResult);
         this.profileForm.controls['id'].setValue(this.requestsId);
         this.profileForm.controls['name'].setValue(this.requestsResult.name);
         this.profileForm.controls['email'].setValue(this.requestsResult.email);

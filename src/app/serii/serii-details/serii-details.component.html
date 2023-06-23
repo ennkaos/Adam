@@ -1,0 +1,55 @@
+<ng-container *ngIf="serii$ | async as MateriiModel; else loading4">
+  <div class="card container mt-3">
+    <div class="card-header">
+      <h3>{{ router?.toUpperCase() }} Materie</h3>
+    </div>
+
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="card-body">
+      <div class="d-flex flex-column g-3 justify-content-around">
+        <div>
+          <label for="nume" class="m-3">Nume:</label>
+          <input
+            id="nume"
+            class="m-3 form-control validationCustom01"
+            type="text"
+            formControlName="name"
+          />
+        </div>
+
+        <div class="">
+          <label for="anStudiu" class="m-3">An Studiu: </label>
+          <input
+            class="m-3 form-control"
+            id="anStudiu"
+            type="number"
+            formControlName="anStudiu"
+          />
+        </div>
+        <div class="">
+          <label for="nrStudenti" class="m-3">Numarul de studenti: </label>
+          <input
+            class="m-3 form-control"
+            id="nrStudenti"
+            type="number"
+            formControlName="nrStudenti"
+          />
+        </div>
+      </div>
+      <button *ngIf="editable" type="submit" class="btn btn-primary m-5">
+        Salveaza
+      </button>
+      <div
+        *ngIf="editable"
+        type="reset"
+        (click)="onReset()"
+        class="btn btn-secondary m-5"
+      >
+        Reseteaza
+      </div>
+      <app-btn-sticky-back></app-btn-sticky-back>
+    </form>
+  </div>
+</ng-container>
+<ng-template #loading4>
+  <app-spinner></app-spinner>
+</ng-template>

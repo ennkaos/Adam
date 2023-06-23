@@ -58,13 +58,11 @@ export class LoginComponent {
   }
   onSumbit(form: FormGroup) {
     this.submitted = true;
-    console.log(form.value);
     if (this.form.invalid) return this.toast.error('Autentificarea a esuat');
     return this.loginService.loginRequest(this.form.value);
   }
   onRegister(form: FormGroup) {
     this.submitted = true;
-    console.log(form.value);
     if (this.form.invalid) return this.toast.error('Inregistrarea a esuat');
     return this.loginService.register(this.form);
   }

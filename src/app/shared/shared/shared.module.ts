@@ -5,6 +5,8 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 import { SortComponent } from '../sort/sort.component';
 import { SearchBarComponent } from '../search-bar/search-bar.component';
 import { FormsModule } from '@angular/forms';
+import { CellComponent } from 'src/app/home/cell/cell.component';
+import { RowComponent } from 'src/app/home/row/row.component';
 
 @NgModule({
   declarations: [
@@ -12,6 +14,8 @@ import { FormsModule } from '@angular/forms';
     SpinnerComponent,
     SortComponent,
     SearchBarComponent,
+    CellComponent,
+    RowComponent,
   ],
   imports: [CommonModule, FormsModule],
   exports: [
@@ -19,6 +23,8 @@ import { FormsModule } from '@angular/forms';
     SpinnerComponent,
     SortComponent,
     SearchBarComponent,
+    CellComponent,
+    RowComponent,
   ],
 })
 export class SharedModule {}

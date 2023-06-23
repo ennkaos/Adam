@@ -20,7 +20,6 @@ export class HeaderComponent {
   ngOnInit() {
     this.isLogged$ = this.loginService.isLogged();
     this.subscription = this.isLogged$.subscribe((e) => {
-      console.log('Logged in State', e);
       this.logged = e;
     });
   }

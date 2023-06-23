@@ -117,7 +117,6 @@ export class RezervariDetailsComponent {
         ? this.rezervariService.getAppointmentById(Number(this.reservationId))
         : EMPTY;
       this.reservation$.subscribe((e) => {
-        console.log(e);
         this.reservationResult = e;
 
         this.profileForm.controls['name'].setValue(this.reservationResult.name);
@@ -168,11 +167,6 @@ export class RezervariDetailsComponent {
           this.reservationResult.isLab
         );
         this.teachers$.subscribe((teachers) => {
-          console.log(
-            this.profileForm.value.isLab,
-            this.profileForm.value.materie,
-            this.profileForm.value.serie
-          );
           this.teachersResult = teachers;
         });
         this.materii$.subscribe((materii) => {
@@ -207,14 +201,12 @@ export class RezervariDetailsComponent {
       if (!this.profileForm.value.isLab) {
         this.profileForm.controls['group'].setValue('1');
       }
-      console.log(this.profileForm.value);
       this.rezervariService.createAppointment(this.profileForm.value);
       this.router2.navigate(['home']);
     } else {
       if (!this.profileForm.value.isLab) {
         this.profileForm.controls['group'].setValue('1');
       }
-      console.log(this.profileForm.value);
       this.rezervariService.update(
         Number(this.reservationId),
         this.profileForm.value
@@ -224,7 +216,6 @@ export class RezervariDetailsComponent {
   }
   onReset() {}
   onChangeSerie(value: string) {
-    console.log(value.substring(3, 4));
     this.materii$ = this.materiiService.getMaterieByYear(
       Number(value.substring(3, 4))
     );
@@ -234,7 +225,6 @@ export class RezervariDetailsComponent {
   }
 
   onChangeMaterie(value: string) {
-    console.log(value.substring(3, value.length));
     this.teachers$ = this.roluriService.getUserByMaterie(
       value.substring(3, value.length)
     );

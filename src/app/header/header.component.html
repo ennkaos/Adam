@@ -28,12 +28,32 @@
         </li>
         <li class="nav-item">
           <a
+            *ngIf="logged.role == 2"
+            class="nav-link text-success"
+            routerLink="/orar"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+            >Orarul Meu</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
             *ngIf="logged.role === 0 || logged.role == 1"
             class="nav-link text-success"
             routerLink="/requests"
             routerLinkActive="active"
             ariaCurrentWhenActive="page"
             >Cereri</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            *ngIf="logged.role === 0"
+            class="nav-link text-success"
+            routerLink="/serii"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+            >Serii</a
           >
         </li>
         <li class="nav-item">

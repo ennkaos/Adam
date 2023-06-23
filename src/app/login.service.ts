@@ -5,33 +5,38 @@ import { ActiveToast, ToastrService } from 'ngx-toastr';
 import { UsersModels } from './models/UsersModels';
 import { FormGroup } from '@angular/forms';
 import { LoggedUser } from './models/LoggedUser';
-import { BehaviorSubject, Observable, map, of, throwError } from 'rxjs';
-import { enviroment } from 'src/enviroment/enviroments';
+import {
+  BehaviorSubject,
+  Observable,
+  catchError,
+  map,
+  of,
+  throwError,
+} from 'rxjs';
 import { Role } from './models/roles';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  url: string = enviroment.mode === 'Bucur' ? 'http://localhost:3000' : '/api';
+  url: string = '/api';
   response: Observable<boolean> = of(false);
   token: string;
   loggedInSubject: BehaviorSubject<UsersModels> = new BehaviorSubject({
-    isLoggedIn: true,
-    name: localStorage.getItem('name'),
-    email: localStorage.getItem('email'),
-    role: Number(localStorage.getItem('role')),
-    materie: localStorage.getItem('materie'),
-    serie: localStorage.getItem('serie'),
-    grupa: localStorage.getItem('grupa'),
+    isLoggedIn: false,
+    name: null,
+    email: null,
+    role: null,
+    materie: null,
+    serie: null,
+    grupa: null,
   });
 
-  logged: Observable<boolean>;
+  logged: Observable<boolean> = of(false);
   role: Role;
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private toast: ToastrService,
     private http: HttpClient
   ) {
@@ -45,55 +50,51 @@ export class LoginService {
   };
 
   loginRequest(profileForm: FormGroup) {
-    if (!this.getUser()) {
-      try {
-        return this.http
-          .post(
-            this.url + '/Login/Login',
-            { ...profileForm, name: '1' },
-            this.httpOptions
-          )
-          .subscribe((response: LoggedUser) => {
-            if (!!response) {
-              localStorage.setItem('id', response.id.toString());
-              localStorage.setItem('email', response.email);
-              localStorage.setItem('token', response.token);
-              localStorage.setItem('role', response.role.toString());
-              localStorage.setItem('name', response.name);
-              if (response.role === 1 && !!response.materie)
-                localStorage.setItem('materie', response.materie);
+    if (this.getUser()) return this.toast.error('Esti deja autentificat');
+    try {
+      return this.http
+        .post(
+          this.url + '/Login/Login',
+          { ...profileForm, name: '1' },
+          this.httpOptions
+        )
+        .pipe(
+          catchError((error) => {
+            return this.toast.error('Credentialele sunt gresite') + error;
+          })
+        )
+        .subscribe((response: LoggedUser) => {
+          if (response?.id) {
+            localStorage.setItem('id', response?.id.toString());
+            localStorage.setItem('email', response?.email);
+            localStorage.setItem('token', response?.token);
+            localStorage.setItem('role', response?.role.toString());
+            localStorage.setItem('name', response?.name);
+            if (response.role === 1 && !!response?.materie)
+              localStorage.setItem('materie', response?.materie);
 
-              if (response.role === 2 && !!response.serie && !!response.grupa) {
-                localStorage.setItem('serie', response.serie);
-                localStorage.setItem('grupa', response.grupa);
-              }
-
-              this.token = response.token;
-              this.loggedInSubject.next({
-                id: response.id,
-                isLoggedIn: true,
-                token: response.token,
-                name: response.name,
-                email: response.email,
-                role: Number(localStorage.getItem('role')),
-                materie: localStorage.getItem('materie'),
-                serie: localStorage.getItem('serie'),
-                grupa: localStorage.getItem('grupa'),
-              });
-
-              this.router.navigate(['home']);
-              return this.toast.success(
-                response.message + 'Autentificat cu succes'
-              );
-            } else {
-              localStorage.clear();
-              return this.toast.success('Autentificarea a esuat');
+            if (response.role === 2 && !!response.serie && !!response.grupa) {
+              localStorage.setItem('serie', response?.serie);
+              localStorage.setItem('grupa', response?.grupa);
             }
-          });
-      } catch (error) {
-        return this.toast.error(error);
-      }
-    } else {
+
+            this.token = response?.token;
+            this.loggedInSubject.next({
+              id: response?.id,
+              isLoggedIn: true,
+              token: response?.token,
+              name: response?.name,
+              email: response?.email,
+              role: Number(localStorage.getItem('role')),
+              materie: localStorage.getItem('materie'),
+              serie: localStorage.getItem('serie'),
+              grupa: localStorage.getItem('grupa'),
+            });
+            this.router.navigate(['home']);
+            this.toast.success('Autentificat cu success');
+          }
+        });
+    } catch (error) {
       return this.toast.error('Trebuie sa te autentifici!');
     }
   }
@@ -125,10 +126,17 @@ export class LoginService {
           },
           this.httpOptions
         )
+        .pipe(
+          catchError((error) => {
+            localStorage.clear();
+            this.router.navigate(['login']);
+            return this.toast.error('Trebuie sa te autentifici') + error;
+          })
+        )
         .subscribe((r) => {
           return this.loggedInSubject.next({
             id: Number(localStorage.getItem('id')),
-            isLoggedIn: !!r,
+            isLoggedIn: this.getUser(),
             token: localStorage.getItem('token'),
             name: localStorage.getItem('name'),
             email: localStorage.getItem('email'),
@@ -155,7 +163,7 @@ export class LoginService {
         email: '',
         role: 0,
       });
-
+      this.toast.success('Ai fost deconectat');
       this.router.navigate(['login']);
     } else {
       this.router.navigate(['register']);
@@ -172,6 +180,11 @@ export class LoginService {
             password: form.value.password,
           },
           this.httpOptions
+        )
+        .pipe(
+          catchError((error) => {
+            return this.toast.error('Inregistrarea a esuat!') + error;
+          })
         )
         .subscribe((response: UsersModels) => {
           this.loginRequest(form);

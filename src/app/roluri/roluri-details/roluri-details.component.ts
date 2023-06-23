@@ -82,24 +82,20 @@ export class RoluriDetailsComponent {
 
   onSubmit() {
     if (this.editable) {
-      console.log(Number(this.userId), this.userResult.id);
       if (this.userId === localStorage.getItem('id')) {
         this.roluriService.updateUser(
           this.userResult.id,
           this.profileForm.value
         );
         this.router2.navigate(['home']);
-        console.log('asdasd');
       } else {
         this.roluriService.updateUser(
           Number(this.userId),
           this.profileForm.value
         );
         this.router2.navigate(['roluri']);
-        console.log('Secomd');
       }
     } else {
-      console.log('onEdit()');
       this.profileForm.enable();
       this.editable = true;
     }

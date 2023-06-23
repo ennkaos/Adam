@@ -8,7 +8,5 @@ import { enviroment } from 'src/enviroment/enviroments';
 })
 export class AppComponent {
   title = 'AdamProject';
-  ngOnInit() {
-    console.log(enviroment.mode);
-  }
+  ngOnInit() {}
 }

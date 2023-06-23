@@ -12,7 +12,7 @@ export class MateriiService {
   materii!: Observable<MateriiModel[]>;
   materie!: Observable<MateriiModel>;
   materieByYear: Observable<MateriiModel[]>;
-  url: string = enviroment.mode === 'Bucur' ? 'http://localhost:3000' : '/api';
+  url: string = '/api';
   constructor(public http: HttpClient, private toastr: ToastrService) {}
   httpOptions = {
     headers: new HttpHeaders({
@@ -46,7 +46,6 @@ export class MateriiService {
     }
   }
   update(id: number, data: MateriiModel): ActiveToast<any> {
-    console.log(id, data);
     try {
       this.http
         .post(this.url + '/MaterieModels/' + id, { ...data }, this.httpOptions)
@@ -59,7 +58,6 @@ export class MateriiService {
 
   delete(id: number): ActiveToast<any> {
     try {
-      console.log(id);
       this.http
         .delete(this.url + '/MaterieModels/' + id, this.httpOptions)
         .subscribe((response) => console.log(response));

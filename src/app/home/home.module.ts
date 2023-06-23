@@ -9,7 +9,7 @@ import { SharedModule } from '../shared/shared/shared.module';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [HomeComponent, CellComponent, RowComponent],
+  declarations: [HomeComponent],
   imports: [CommonModule, HomeRoutingModule, SharedModule, FormsModule],
 })
 export class HomeModule {}
