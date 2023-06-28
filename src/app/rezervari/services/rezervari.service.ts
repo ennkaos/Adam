@@ -53,7 +53,7 @@ export class RezervariService {
           this.httpOptions
         )
         .subscribe((response) => console.log(JSON.stringify(response)));
-      return this.toastr.success('Cererea a fost modificata cu succes');
+      return this.toastr.success('Activitatea a fost modificata cu succes');
     } catch (error) {
       return this.toastr.error('Ceva nu a functionat ..');
     }
@@ -63,7 +63,7 @@ export class RezervariService {
       this.http
         .delete(this.url + '/ReservationModel/' + id, this.httpOptions)
         .subscribe((response) => console.log(response));
-      return this.toastr.success('Cererea a fost stearsa cu succes');
+      return this.toastr.success('Activitatea a fost stearsa cu succes');
     } catch (error) {
       return this.toastr.error('Ceva a mers gresit..');
     }

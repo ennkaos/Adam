@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { EMPTY, Observable, of } from 'rxjs';
+import { EMPTY, Observable, Subscription, of } from 'rxjs';
 import { AppointmentModel } from 'src/app/models/AppointmentModel';
 import { RoomsModel } from 'src/app/models/RoomsModel';
 import { RezervariService } from '../services/rezervari.service';
@@ -20,6 +20,8 @@ import {
 } from 'src/app/models/scheduleModel';
 import { MateriiModel } from 'src/app/models/MateriiModel';
 import { UsersModels } from 'src/app/models/UsersModels';
+import { SeriiModel } from 'src/app/models/SeriiModel';
+import { SeriiService } from 'src/app/serii/services/serii.service';
 
 @Component({
   selector: 'app-rezervari-details',
@@ -30,7 +32,8 @@ export class RezervariDetailsComponent {
   reservation$?: Observable<AppointmentModel> =
     new Observable<AppointmentModel>();
   router!: string | undefined;
-  serie: string[];
+  serii$: Observable<SeriiModel[]>;
+  seriiSubscription: Subscription;
   selectedSerie: string;
   grupa: string[];
   day: number[];
@@ -52,20 +55,21 @@ export class RezervariDetailsComponent {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private rezervariService: RezervariService,
-    private toastr: ToastrService,
+    private seriiService: SeriiService,
     private router2: Router,
     private materiiService: MateriiService,
     private roluriService: RoluriService,
     private addroomService: AddRoomService
   ) {
     this.grupa = grupe;
-    this.serie = serie;
     this.day = Day;
     this.startingTimeSlots = startingHours;
     this.duration = duration;
     this.parity = Parity;
   }
   ngOnInit(): void {
+    this.serii$ = this.seriiService.get();
+    this.seriiSubscription = this.serii$.subscribe();
     this.router = this.route.snapshot.url.shift()?.path;
     this.reservationId = this.route.snapshot.paramMap.get('id')
       ? this.route.snapshot.paramMap.get('id')
@@ -197,21 +201,28 @@ export class RezervariDetailsComponent {
     }
   }
   onSubmit() {
-    if (this.router === 'create') {
-      if (!this.profileForm.value.isLab) {
-        this.profileForm.controls['group'].setValue('1');
+    // console.log(this.profileForm.value);
+    if (!this.profileForm.value.isLab) {
+      this.profileForm.controls['group'].setValue('1');
+    }
+    if (!this.profileForm.value.isLab) {
+      this.profileForm.controls['name'].setValue(' ');
+    }
+
+    if (!this.profileForm.invalid) {
+      if (this.router === 'create') {
+        this.rezervariService.createAppointment(this.profileForm.value);
+        this.router2.navigate(['home']);
+      } else {
+        if (!this.profileForm.value.isLab) {
+          this.profileForm.controls['group'].setValue('1');
+        }
+        this.rezervariService.update(
+          Number(this.reservationId),
+          this.profileForm.value
+        );
+        this.router2.navigate(['rezervari']);
       }
-      this.rezervariService.createAppointment(this.profileForm.value);
-      this.router2.navigate(['home']);
-    } else {
-      if (!this.profileForm.value.isLab) {
-        this.profileForm.controls['group'].setValue('1');
-      }
-      this.rezervariService.update(
-        Number(this.reservationId),
-        this.profileForm.value
-      );
-      this.router2.navigate(['rezervari']);
     }
   }
   onReset() {}
@@ -245,5 +256,8 @@ export class RezervariDetailsComponent {
     this.rooms$.subscribe((rooms) => {
       this.roomsResult = rooms;
     });
+  }
+  ngOnDestroy() {
+    !!this.seriiSubscription ? this.seriiSubscription.unsubscribe() : null;
   }
 }

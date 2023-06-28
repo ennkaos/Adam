@@ -1,7 +1,7 @@
 <ng-container *ngIf="appointments$ | async as appointments; else loading4">
   <div class="card mt-3 border-shadow m-5">
     <div class="d-flex flex-row justify-content-between">
-      <h2 class="m-3">Lista Rezervari</h2>
+      <h2 class="m-3">Lista Activitati</h2>
       <app-search-bar
         [data2]="appointmentsResult"
         (eventEmitter)="filter($event)"
@@ -253,14 +253,20 @@
             ></i>
           </td>
         </tr>
-        <button [routerLink]="['create']" class="m-3 btn btn-success">
-          Adauga activitate
-        </button>
       </tbody>
     </table>
     <ng-template #notfound>
-      <h1>Not Found</h1>
+      <h1>Nu exista activitati inca!</h1>
     </ng-template>
+  </div>
+  <div class="container m-5 d-flex justify-content-end">
+    <button
+      class="btn btn-success"
+      [routerLink]="['create']"
+      routerLinkActive="router-link-active"
+    >
+      Adauga Activitate
+    </button>
   </div>
 </ng-container>
 <ng-template #loading4>

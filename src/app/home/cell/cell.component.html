@@ -11,12 +11,26 @@
         {{ item.subjectName }}
       </div>
       <div *ngIf="!item.isLab" class="text-center font-small">(curs)</div>
+      <div
+        *ngIf="item.isLab && item.name == 'L'"
+        class="text-center font-small"
+      >
+        (Laborator)
+      </div>
+      <div
+        *ngIf="item.isLab && item.name == 'S'"
+        class="text-center font-small"
+      >
+        (Seminar)
+      </div>
     </div>
     <div class="text-center d-flex flex-column tran font-small">
       <div class="text-center font-small">
         {{ item.roomName }}
       </div>
-      <div class="text-center font-small">Prof. {{ item.teacherName }}</div>
+      <div *ngIf="!item.isLab" class="text-center font-small">
+        Prof. {{ item.teacherName }}
+      </div>
     </div>
   </div>
 </div>

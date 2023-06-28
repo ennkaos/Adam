@@ -38,6 +38,7 @@ export class LoginService {
   constructor(
     private router: Router,
     private toast: ToastrService,
+    private route: ActivatedRoute,
     private http: HttpClient
   ) {
     this.token = this.getUser();
@@ -189,8 +190,10 @@ export class LoginService {
         .subscribe((response: UsersModels) => {
           this.loginRequest(form);
         });
+      this.router.navigate(['login']);
       return this.toast.success('Inregistrare cu succes');
     } else {
+      this.router.navigate(['login']);
       return this.toast.success('Inregistrarea a esuat');
     }
   }

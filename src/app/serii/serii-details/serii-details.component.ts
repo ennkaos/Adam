@@ -77,10 +77,11 @@ export class SeriiDetailsComponent {
         !this.profileForm.controls['name'].errors &&
         !this.profileForm.controls['anStudiu'].errors
       ) {
-        if (!this.seriiId) this.toastr.warning('Nu exista Id-ul salii');
+        if (!this.seriiId) this.toastr.warning('Nu exista Id-ul seriei!');
         if (
           this.profileForm.controls['name'].dirty ||
-          this.profileForm.controls['anStudiu'].dirty
+          this.profileForm.controls['anStudiu'].dirty ||
+          this.profileForm.controls['nrStudenti'].dirty
         ) {
           if (
             this.profileForm.controls['anStudiu'].value <= 4 &&

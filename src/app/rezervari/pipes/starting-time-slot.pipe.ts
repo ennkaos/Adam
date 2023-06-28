@@ -28,8 +28,6 @@ export class StartingTimeSlotPipe implements PipeTransform {
         return '17:00';
       case 10:
         return '18:00';
-      case 11:
-        return '19:00';
 
       default:
         break;

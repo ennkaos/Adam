@@ -5,20 +5,23 @@
         <div class="navbar-header">
           <a class="navbar-brand" href="#">Selectare serii</a>
         </div>
-        <div class="d-flex flex-row">
+        <div class="d-flex flex-row" *ngIf="serii$ | async; else template2">
           <select
-            (change)="onChangeSerieSelect($event)"
+            name="lineaIntervento"
             class="form-select"
+            [ngModel]="selectedSerie"
+            (ngModelChange)="onChangeSerieSelect($event)"
             aria-label="Default select example"
           >
-            <option value="" disabled selected="selected">
+            <option [ngValue]="null" disabled selected="selected">
               Seleacteaza Serie
             </option>
-            <option *ngFor="let item of serie" [ngValue]="item">
-              {{ item }}
+            <option *ngFor="let item of serii$ | async" [ngValue]="item.name">
+              {{ item.name }}
             </option>
           </select>
         </div>
+        <ng-template #template2><app-spinner></app-spinner></ng-template>
       </div>
     </nav>
   </div>

@@ -25,7 +25,7 @@ export class CellComponent {
     } else if (parity === 1) {
       return 'Saptamana Para';
     } else {
-      return 'Intotdeauna';
+      return 'In fiecare saptamana';
     }
   }
 }

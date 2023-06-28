@@ -28,11 +28,11 @@
             (change)="onChangeSerie(serie2.value)"
           >
             <option
-              *ngFor="let item of serie"
-              [selected]="item"
-              [ngValue]="item"
+              *ngFor="let item of serii$ | async"
+              [selected]="item.name"
+              [ngValue]="item.name"
             >
-              {{ item }}
+              {{ item.name }}
             </option>
           </select>
           <div *ngIf="profileForm.get('serie').invalid">
@@ -96,10 +96,11 @@
                 (change)="onChangeIsLab()"
               />
               <label class="form-check-label" for="flexCheckDisabled">
-                Este Laborator (Adevarat/Fals):
+                Este Laborator?
               </label>
             </div>
           </div>
+
           <div>
             <div
               *ngIf="profileForm.value.isLab && router !== 'update'"
@@ -112,8 +113,35 @@
                 id="flexCheckDisabled"
               />
               <label class="form-check-label" for="flexCheckDisabled">
-                Pentru Ambele Subgrupe (Adevarat/Fals):
+                Pentru Ambele Subgrupe?
               </label>
+            </div>
+          </div>
+        </div>
+        <div
+          *ngIf="
+            (profileForm.value.isLab && profileForm.get('subjectName').valid) ||
+            (profileForm.value.isLab && router === 'update') ||
+            (profileForm.value.isLab && router === 'details')
+          "
+        >
+          <label for="name" class="m-3">Seminar/Laborator</label>
+          <select
+            #sOrL
+            formControlName="name"
+            class="form-select"
+            aria-label="Selecteaza tipul"
+          >
+            <option [ngValue]="null">Selecteaza Tipul</option>
+            <option [ngValue]="'L'">Laborator</option>
+            <option [ngValue]="'S'">Seminar</option>
+          </select>
+          <div *ngIf="profileForm.get('name').invalid">
+            <div
+              class="text-danger"
+              *ngIf="profileForm.get('name').hasError('required')"
+            >
+              Alegerea tipului este obligatorie!
             </div>
           </div>
         </div>

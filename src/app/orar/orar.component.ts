@@ -6,6 +6,8 @@ import { OrarService } from './services/orar.service';
 import { GroupModel } from '../models/GroupModel';
 import { UsersModels } from '../models/UsersModels';
 import { LoginService } from '../login.service';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-orar',
@@ -16,6 +18,7 @@ export class OrarComponent {
   serie!: string;
   grupa!: string;
   index: number = 0;
+  router!: string | undefined;
   indexAr: number[] = [];
   scheduleDay: any;
   user$: Observable<UsersModels>;
@@ -27,7 +30,10 @@ export class OrarComponent {
   scheduleResult!: GroupModel;
   subscribtionSchedule!: Subscription;
 
-  constructor(public scheduleService: OrarService) {
+  constructor(
+    public scheduleService: OrarService,
+    private toastr: ToastrService
+  ) {
     this.scheduleDay = scheduleDay;
     this.hours = hours;
     this.days = days;
@@ -36,7 +42,9 @@ export class OrarComponent {
   ngOnInit(): void {
     this.serie = localStorage.getItem('serie');
     this.grupa = localStorage.getItem('grupa');
-
+    if (!this.serie && !this.grupa) {
+      this.toastr.warning('Trebuie sa completezi in profil seria si grupa!');
+    }
     this.schedule =
       this.grupa && this.serie
         ? this.scheduleService.getSchedule(this.serie, this.grupa)
